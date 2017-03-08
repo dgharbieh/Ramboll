@@ -1,0 +1,181 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit http://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <_PublishTargetUrl>C:\inetpub\wwwroot\legacy\Content\Legacy</_PublishTargetUrl>
+  </PropertyGroup>
+  <ItemGroup>
+    <File Include="App_Config/Include/Ramboll.Export.config">
+      <publishTime>03/07/2017 18:04:52</publishTime>
+    </File>
+    <File Include="bin/App_Config/Include/Ramboll.Export.config">
+      <publishTime>03/07/2017 18:04:52</publishTime>
+    </File>
+    <File Include="bin/includes/css/bootstrap-responsive.css">
+      <publishTime>07/27/2013 09:50:47</publishTime>
+    </File>
+    <File Include="bin/includes/css/bootstrap.css">
+      <publishTime>08/18/2014 07:08:13</publishTime>
+    </File>
+    <File Include="bin/includes/css/custom.css">
+      <publishTime>08/18/2014 07:57:03</publishTime>
+    </File>
+    <File Include="bin/includes/scripts/bootstrap.min.js">
+      <publishTime>07/27/2013 09:50:47</publishTime>
+    </File>
+    <File Include="bin/includes/scripts/jquery-1.7.2.min.js">
+      <publishTime>11/02/2012 06:38:37</publishTime>
+    </File>
+    <File Include="bin/includes/scripts/jquery-ui-1.8.18.custom.min.js">
+      <publishTime>11/02/2012 06:38:37</publishTime>
+    </File>
+    <File Include="bin/MappingFiles/Countries.csv">
+      <publishTime>03/07/2017 21:55:12</publishTime>
+    </File>
+    <File Include="bin/Microsoft.AI.Agent.Intercept.dll">
+      <publishTime>11/30/2016 16:07:42</publishTime>
+    </File>
+    <File Include="bin/Microsoft.AI.DependencyCollector.dll">
+      <publishTime>12/07/2016 11:45:42</publishTime>
+    </File>
+    <File Include="bin/Microsoft.AI.PerfCounterCollector.dll">
+      <publishTime>12/07/2016 11:50:34</publishTime>
+    </File>
+    <File Include="bin/Microsoft.AI.ServerTelemetryChannel.dll">
+      <publishTime>12/06/2016 15:15:48</publishTime>
+    </File>
+    <File Include="bin/Microsoft.AI.Web.dll">
+      <publishTime>12/07/2016 11:49:10</publishTime>
+    </File>
+    <File Include="bin/Microsoft.AI.WindowsServer.dll">
+      <publishTime>12/07/2016 11:50:34</publishTime>
+    </File>
+    <File Include="bin/Microsoft.ApplicationInsights.dll">
+      <publishTime>12/06/2016 15:09:52</publishTime>
+    </File>
+    <File Include="bin/Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll">
+      <publishTime>06/15/2015 02:06:24</publishTime>
+    </File>
+    <File Include="bin/Newtonsoft.Json.dll">
+      <publishTime>10/02/2013 12:10:10</publishTime>
+    </File>
+    <File Include="bin/RambollExportData.dll">
+      <publishTime>03/08/2017 00:25:06</publishTime>
+    </File>
+    <File Include="bin/roslyn/csc.exe">
+      <publishTime>06/18/2015 20:19:46</publishTime>
+    </File>
+    <File Include="bin/roslyn/Microsoft.Build.Tasks.CodeAnalysis.dll">
+      <publishTime>06/18/2015 20:19:46</publishTime>
+    </File>
+    <File Include="bin/roslyn/Microsoft.CodeAnalysis.CSharp.dll">
+      <publishTime>06/18/2015 20:19:46</publishTime>
+    </File>
+    <File Include="bin/roslyn/Microsoft.CodeAnalysis.dll">
+      <publishTime>06/18/2015 20:19:44</publishTime>
+    </File>
+    <File Include="bin/roslyn/Microsoft.CodeAnalysis.VisualBasic.dll">
+      <publishTime>06/18/2015 20:19:46</publishTime>
+    </File>
+    <File Include="bin/roslyn/Microsoft.CSharp.Core.targets">
+      <publishTime>06/18/2015 20:19:46</publishTime>
+    </File>
+    <File Include="bin/roslyn/Microsoft.VisualBasic.Core.targets">
+      <publishTime>06/18/2015 20:19:46</publishTime>
+    </File>
+    <File Include="bin/roslyn/System.Collections.Immutable.dll">
+      <publishTime>06/18/2015 20:19:46</publishTime>
+    </File>
+    <File Include="bin/roslyn/System.Reflection.Metadata.dll">
+      <publishTime>06/18/2015 20:19:46</publishTime>
+    </File>
+    <File Include="bin/roslyn/vbc.exe">
+      <publishTime>06/18/2015 20:19:46</publishTime>
+    </File>
+    <File Include="bin/roslyn/VBCSCompiler.exe">
+      <publishTime>06/18/2015 20:19:46</publishTime>
+    </File>
+    <File Include="bin/roslyn/VBCSCompiler.exe.config">
+      <publishTime>06/18/2015 20:19:46</publishTime>
+    </File>
+    <File Include="bin/Sitecore.Client.dll">
+      <publishTime>10/21/2015 23:14:34</publishTime>
+    </File>
+    <File Include="bin/Sitecore.Kernel.dll">
+      <publishTime>10/21/2015 23:14:38</publishTime>
+    </File>
+    <File Include="bin/sitecore/admin/ExporCountries.aspx">
+      <publishTime>03/07/2017 01:31:02</publishTime>
+    </File>
+    <File Include="bin/sitecore/admin/ExporCountries.aspx.cs">
+      <publishTime>03/07/2017 11:59:47</publishTime>
+    </File>
+    <File Include="bin/sitecore/admin/ExporCountries.aspx.designer.cs">
+      <publishTime>03/07/2017 01:40:48</publishTime>
+    </File>
+    <File Include="bin/sitecore/admin/ExportCounties.aspx">
+      <publishTime>03/07/2017 00:23:16</publishTime>
+    </File>
+    <File Include="bin/sitecore/admin/ExportCounties.aspx.cs">
+      <publishTime>03/07/2017 00:23:23</publishTime>
+    </File>
+    <File Include="bin/sitecore/admin/ExportCounties.aspx.designer.cs">
+      <publishTime>03/07/2017 00:23:33</publishTime>
+    </File>
+    <File Include="bin/sitecore/admin/ExportCountries.aspx">
+      <publishTime>03/07/2017 23:07:44</publishTime>
+    </File>
+    <File Include="bin/sitecore/admin/ExportCountries.aspx.cs">
+      <publishTime>03/07/2017 22:05:34</publishTime>
+    </File>
+    <File Include="bin/sitecore/admin/ExportCountries.aspx.designer.cs">
+      <publishTime>03/07/2017 22:06:00</publishTime>
+    </File>
+    <File Include="bin/sitecore/admin/ExportData.aspx">
+      <publishTime>03/07/2017 12:39:36</publishTime>
+    </File>
+    <File Include="bin/sitecore/admin/ExportData.aspx.cs">
+      <publishTime>03/07/2017 12:40:25</publishTime>
+    </File>
+    <File Include="bin/sitecore/admin/ExportData.aspx.designer.cs">
+      <publishTime>03/07/2017 00:23:33</publishTime>
+    </File>
+    <File Include="includes/css/bootstrap-responsive.css">
+      <publishTime>07/27/2013 09:50:47</publishTime>
+    </File>
+    <File Include="includes/css/bootstrap.css">
+      <publishTime>08/18/2014 07:08:13</publishTime>
+    </File>
+    <File Include="includes/css/custom.css">
+      <publishTime>08/18/2014 07:57:03</publishTime>
+    </File>
+    <File Include="includes/scripts/bootstrap.min.js">
+      <publishTime>07/27/2013 09:50:47</publishTime>
+    </File>
+    <File Include="includes/scripts/jquery-1.7.2.min.js">
+      <publishTime>11/02/2012 06:38:37</publishTime>
+    </File>
+    <File Include="includes/scripts/jquery-ui-1.8.18.custom.min.js">
+      <publishTime>11/02/2012 06:38:37</publishTime>
+    </File>
+    <File Include="MappingFiles/Countries.csv">
+      <publishTime>03/07/2017 21:55:12</publishTime>
+    </File>
+    <File Include="sitecore/admin/ExporCountries.aspx">
+      <publishTime>03/07/2017 01:31:02</publishTime>
+    </File>
+    <File Include="sitecore/admin/ExportCounties.aspx">
+      <publishTime>03/07/2017 00:23:16</publishTime>
+    </File>
+    <File Include="sitecore/admin/ExportCountries.aspx">
+      <publishTime>03/07/2017 23:07:44</publishTime>
+    </File>
+    <File Include="sitecore/admin/ExportData.aspx">
+      <publishTime>03/07/2017 12:39:36</publishTime>
+    </File>
+  </ItemGroup>
+</Project>

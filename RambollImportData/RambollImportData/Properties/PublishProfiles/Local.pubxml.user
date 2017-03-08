@@ -1,0 +1,139 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit http://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <_PublishTargetUrl>C:\inetpub\wwwroot\Ramboll8\Website</_PublishTargetUrl>
+  </PropertyGroup>
+  <ItemGroup>
+    <File Include="App_Config/Include/Ramboll.Import.config">
+      <publishTime>03/07/2017 18:04:52</publishTime>
+    </File>
+    <File Include="bin/includes/css/bootstrap-responsive.css">
+      <publishTime>03/07/2017 23:37:56</publishTime>
+    </File>
+    <File Include="bin/includes/css/bootstrap.css">
+      <publishTime>08/18/2014 07:08:13</publishTime>
+    </File>
+    <File Include="bin/includes/css/custom.css">
+      <publishTime>08/18/2014 07:57:03</publishTime>
+    </File>
+    <File Include="bin/includes/scripts/bootstrap.min.js">
+      <publishTime>07/27/2013 09:50:47</publishTime>
+    </File>
+    <File Include="bin/includes/scripts/jquery-1.7.2.min.js">
+      <publishTime>11/02/2012 06:38:37</publishTime>
+    </File>
+    <File Include="bin/includes/scripts/jquery-ui-1.8.18.custom.min.js">
+      <publishTime>11/02/2012 06:38:37</publishTime>
+    </File>
+    <File Include="bin/Microsoft.AI.Agent.Intercept.dll">
+      <publishTime>11/30/2016 16:07:42</publishTime>
+    </File>
+    <File Include="bin/Microsoft.AI.DependencyCollector.dll">
+      <publishTime>12/07/2016 11:45:42</publishTime>
+    </File>
+    <File Include="bin/Microsoft.AI.PerfCounterCollector.dll">
+      <publishTime>12/07/2016 11:50:34</publishTime>
+    </File>
+    <File Include="bin/Microsoft.AI.ServerTelemetryChannel.dll">
+      <publishTime>12/06/2016 15:15:48</publishTime>
+    </File>
+    <File Include="bin/Microsoft.AI.Web.dll">
+      <publishTime>12/07/2016 11:49:10</publishTime>
+    </File>
+    <File Include="bin/Microsoft.AI.WindowsServer.dll">
+      <publishTime>12/07/2016 11:50:34</publishTime>
+    </File>
+    <File Include="bin/Microsoft.ApplicationInsights.dll">
+      <publishTime>12/06/2016 15:09:52</publishTime>
+    </File>
+    <File Include="bin/Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll">
+      <publishTime>06/15/2015 02:06:24</publishTime>
+    </File>
+    <File Include="bin/RambollImportData.dll">
+      <publishTime>03/08/2017 01:17:45</publishTime>
+    </File>
+    <File Include="bin/RambollImportData.pdb">
+      <publishTime>03/08/2017 01:17:45</publishTime>
+    </File>
+    <File Include="bin/roslyn/csc.exe">
+      <publishTime>06/18/2015 20:19:46</publishTime>
+    </File>
+    <File Include="bin/roslyn/Microsoft.Build.Tasks.CodeAnalysis.dll">
+      <publishTime>06/18/2015 20:19:46</publishTime>
+    </File>
+    <File Include="bin/roslyn/Microsoft.CodeAnalysis.CSharp.dll">
+      <publishTime>06/18/2015 20:19:46</publishTime>
+    </File>
+    <File Include="bin/roslyn/Microsoft.CodeAnalysis.dll">
+      <publishTime>06/18/2015 20:19:44</publishTime>
+    </File>
+    <File Include="bin/roslyn/Microsoft.CodeAnalysis.VisualBasic.dll">
+      <publishTime>06/18/2015 20:19:46</publishTime>
+    </File>
+    <File Include="bin/roslyn/Microsoft.CSharp.Core.targets">
+      <publishTime>06/18/2015 20:19:46</publishTime>
+    </File>
+    <File Include="bin/roslyn/Microsoft.VisualBasic.Core.targets">
+      <publishTime>06/18/2015 20:19:46</publishTime>
+    </File>
+    <File Include="bin/roslyn/System.Collections.Immutable.dll">
+      <publishTime>06/18/2015 20:19:46</publishTime>
+    </File>
+    <File Include="bin/roslyn/System.Reflection.Metadata.dll">
+      <publishTime>06/18/2015 20:19:46</publishTime>
+    </File>
+    <File Include="bin/roslyn/vbc.exe">
+      <publishTime>06/18/2015 20:19:46</publishTime>
+    </File>
+    <File Include="bin/roslyn/VBCSCompiler.exe">
+      <publishTime>06/18/2015 20:19:46</publishTime>
+    </File>
+    <File Include="bin/roslyn/VBCSCompiler.exe.config">
+      <publishTime>06/18/2015 20:19:46</publishTime>
+    </File>
+    <File Include="bin/Sitecore.Client.dll">
+      <publishTime>07/29/2016 18:14:48</publishTime>
+    </File>
+    <File Include="bin/Sitecore.Kernel.dll">
+      <publishTime>07/29/2016 18:15:04</publishTime>
+    </File>
+    <File Include="includes/css/bootstrap-responsive.css">
+      <publishTime>03/07/2017 23:37:56</publishTime>
+    </File>
+    <File Include="includes/css/bootstrap.css">
+      <publishTime>08/18/2014 07:08:13</publishTime>
+    </File>
+    <File Include="includes/css/custom.css">
+      <publishTime>08/18/2014 07:57:03</publishTime>
+    </File>
+    <File Include="includes/scripts/bootstrap.min.js">
+      <publishTime>07/27/2013 09:50:47</publishTime>
+    </File>
+    <File Include="includes/scripts/jquery-1.7.2.min.js">
+      <publishTime>11/02/2012 06:38:37</publishTime>
+    </File>
+    <File Include="includes/scripts/jquery-ui-1.8.18.custom.min.js">
+      <publishTime>11/02/2012 06:38:37</publishTime>
+    </File>
+    <File Include="MappingFiles/Countries.csv">
+      <publishTime>03/07/2017 23:51:10</publishTime>
+    </File>
+    <File Include="sitecore/admin/ExportCounties.aspx">
+      <publishTime>03/07/2017 00:08:34</publishTime>
+    </File>
+    <File Include="sitecore/admin/ExportData.aspx">
+      <publishTime>03/07/2017 00:07:53</publishTime>
+    </File>
+    <File Include="sitecore/admin/ImportCounties.aspx">
+      <publishTime>03/08/2017 01:25:01</publishTime>
+    </File>
+    <File Include="sitecore/admin/ImportData.aspx">
+      <publishTime>03/07/2017 00:11:30</publishTime>
+    </File>
+  </ItemGroup>
+</Project>

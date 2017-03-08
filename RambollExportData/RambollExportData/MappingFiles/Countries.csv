@@ -1,0 +1,5 @@
+Start Path ,/sitecore/content/Home/Global/Countries,,
+Include Language,FALSE,,
+Include Version,FALSE,,
+Output Name,ExportedCountries,,
+Exported Fields,ID,Name,CountryName

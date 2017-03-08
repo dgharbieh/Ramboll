@@ -1,0 +1,16 @@
+/* bootstrap customisation
+------------------------------------------------------ */
+.table th, .table td { vertical-align: middle; }
+.alert { margin-bottom: 20px; }
+
+/* global
+------------------------------------------------------ */
+a {color: #0088cc;}
+::-moz-selection { background: #ccf1f8; color: #000; text-shadow: none; }
+::selection { background: #ccf1f8; color: #000; text-shadow: none; }
+.centered { text-align: center; }
+.contentContainer { position: relative; padding: 25px 0 40px; }
+.pageIntro { padding: 0; }
+.pageIntro h2 { margin-bottom: 0; }
+.pageIntro .page-header { margin: 0; }
+.pageIntro > p:last-child, .page-header > p:last-child { margin: 0; }
