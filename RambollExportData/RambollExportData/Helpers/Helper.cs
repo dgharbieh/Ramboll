@@ -124,6 +124,9 @@ namespace RambollExportData.Helpers
                     case "name":
                         fieldsValues = fieldsValues + item.Name;
                         break;
+                    case "path":
+                           fieldsValues = item.Paths.FullPath;
+                        break;
                     default:
                          fieldsValues = fieldsValues + ReplaceComma(item.Fields[fields[i].ToString()].Value);
                           break; 
@@ -137,6 +140,45 @@ namespace RambollExportData.Helpers
 
             return fieldsValues;
         }
+
+
+        public static void GetDataRowFields(DataTable data, Item item, ArrayList fields)
+        {       
+            DataRow row = data.NewRow();
+                      
+            for (var i = 0; i < fields.Count; i++)
+            {
+
+                switch (fields[i].ToString().Trim().ToLower())
+                {
+                    case "id":
+                        row[fields[i].ToString()] =  item.ID.ToString();
+                        break;
+                    case "name":
+                        row[fields[i].ToString()] = item.Name;
+                        break;
+                    case "path":
+                        row[fields[i].ToString()] = item.Paths.FullPath;
+                        break;
+                    default:
+                        row[fields[i].ToString()] = ReplaceComma(item.Fields[fields[i].ToString()].Value);
+                        break;
+                }
+            }
+            data.Rows.Add(row);
+        }
+
+         public static void SetDataTableColums(DataTable data,ArrayList fields)
+        {
+            foreach (var field in fields)
+            {
+                data.Columns.Add(field.ToString());
+            }
+         }
+
+
+         
+
     }
         
 }

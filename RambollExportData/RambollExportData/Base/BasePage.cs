@@ -15,5 +15,6 @@ namespace RambollExportData
         public bool IncludeLanguage = false;
         public bool IncludeVersions = false;
         public ArrayList Fields = new ArrayList();
+
     }
 }

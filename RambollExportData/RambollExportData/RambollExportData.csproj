@@ -124,6 +124,15 @@
       <DependentUpon>ExportData.aspx</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="sitecore\admin\ExportMediaGallery.aspx.cs">
+      <DependentUpon>ExportMediaGallery.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="sitecore\admin\ExportMediaGallery.aspx.designer.cs">
+      <DependentUpon>ExportMediaGallery.aspx</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
@@ -131,7 +140,11 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="includes\images\delete.png" />
     <Content Include="MappingFiles\Countries.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="sitecore\admin\ExportMediaGallery.aspx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="Properties\PublishProfiles\Local.pubxml" />

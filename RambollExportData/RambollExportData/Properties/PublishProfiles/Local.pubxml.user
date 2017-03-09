@@ -64,7 +64,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/02/2013 12:10:10</publishTime>
     </File>
     <File Include="bin/RambollExportData.dll">
-      <publishTime>03/08/2017 00:25:06</publishTime>
+      <publishTime>03/10/2017 01:38:01</publishTime>
+    </File>
+    <File Include="bin/RambollExportData.pdb">
+      <publishTime>03/10/2017 01:38:01</publishTime>
     </File>
     <File Include="bin/roslyn/csc.exe">
       <publishTime>06/18/2015 20:19:46</publishTime>
@@ -144,6 +147,15 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="bin/sitecore/admin/ExportData.aspx.designer.cs">
       <publishTime>03/07/2017 00:23:33</publishTime>
     </File>
+    <File Include="bin/sitecore/admin/ExportMediaGallery.aspx">
+      <publishTime>03/10/2017 01:36:14</publishTime>
+    </File>
+    <File Include="bin/sitecore/admin/ExportMediaGallery.aspx.cs">
+      <publishTime>03/10/2017 01:37:52</publishTime>
+    </File>
+    <File Include="bin/sitecore/admin/ExportMediaGallery.aspx.designer.cs">
+      <publishTime>03/10/2017 01:36:14</publishTime>
+    </File>
     <File Include="includes/css/bootstrap-responsive.css">
       <publishTime>07/27/2013 09:50:47</publishTime>
     </File>
@@ -152,6 +164,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="includes/css/custom.css">
       <publishTime>08/18/2014 07:57:03</publishTime>
+    </File>
+    <File Include="includes/images/delete.png">
+      <publishTime>03/10/2017 00:32:31</publishTime>
     </File>
     <File Include="includes/scripts/bootstrap.min.js">
       <publishTime>07/27/2013 09:50:47</publishTime>
@@ -176,6 +191,12 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="sitecore/admin/ExportData.aspx">
       <publishTime>03/07/2017 12:39:36</publishTime>
+    </File>
+    <File Include="sitecore/admin/ExportMediaGallery.aspx">
+      <publishTime>03/10/2017 01:36:14</publishTime>
+    </File>
+    <File Include="sitecore/admin/ExportMediaGalleryaspx.aspx">
+      <publishTime>03/08/2017 21:28:15</publishTime>
     </File>
   </ItemGroup>
 </Project>
