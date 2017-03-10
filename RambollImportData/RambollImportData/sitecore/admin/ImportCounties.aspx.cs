@@ -9,6 +9,8 @@ using Sitecore.SecurityModel;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using System.Data;
+using Sitecore.Data.Managers;
+using Sitecore.Collections;
 
 namespace RambollImportData.sitecore.admin
 {
@@ -87,11 +89,18 @@ namespace RambollImportData.sitecore.admin
         private void UpdateItem(Item Country, string OldId)
         {
 
-            Country.Editing.BeginEdit();
             try
             {
-                Country["Old Id"] = OldId;
-                Country.Editing.EndEdit();
+                foreach (var itemLanguage in Country.Languages)
+                {
+                    var item = Country.Database.GetItem(Country.ID, itemLanguage);
+                    if (item.Versions.Count > 0)
+                    {
+                        item.Editing.BeginEdit();
+                        item["Old Id"] = OldId;
+                        item.Editing.EndEdit();
+                    }
+                }
                 RecourdNumber += 1;
             }
             catch (Exception ex)

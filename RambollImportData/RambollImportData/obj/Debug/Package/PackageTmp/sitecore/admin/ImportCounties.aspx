@@ -18,7 +18,7 @@
 
                 <div class="row pageIntro">
                     <div class="span12">
-                        <h2>Import Countries</h2>
+                        <h2>Import Countries - Update</h2>
                     </div>
                 </div>
 
@@ -70,7 +70,8 @@
                     <asp:Panel ID="pnSuccess" Visible="false" CssClass="alert alert-success" runat="server">
                         <button type="button" class="close" data-dismiss="alert">&times;</button>
                         <strong>Success</strong> the import completed for <%=RecourdNumber.ToString() %> records from <%=TotalRecords %>.
-                       <br/> <%=NotMatchCountries %>
+                    <br/> <strong>Countries not match:</strong> 
+                         <br/> <%=NotMatchCountries %>
                     </asp:Panel>
                     <!-- success message end -->
 

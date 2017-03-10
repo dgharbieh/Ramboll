@@ -135,6 +135,9 @@ namespace RambollImportData.Helpers
                     case "name":
                         fieldsValues = fieldsValues + item.Name;
                         break;
+                    case "path":
+                        fieldsValues = item.Paths.FullPath;
+                        break;
                     default:
                          fieldsValues = fieldsValues + item.Fields[fields[i].ToString()].Value;
                           break; 
@@ -151,34 +154,68 @@ namespace RambollImportData.Helpers
 
 
 
-        //public static void CreateFile(string data, string fileName)
-        //{
+        public static void CreateFile(string data, string fileName)
+        {
 
-        //    try
-        //    {
+            try
+            {
 
-        //        fileName = Settings.GetSetting("FolderPath") + "\\" + fileName + ".csv";
-        //        // Delete the file if it exists.
-        //        if (File.Exists(fileName))
-        //        {
-        //            File.Delete(fileName);
-        //        }
+                fileName = Settings.GetSetting("FolderPath") + "\\" + fileName + ".csv";
+                // Delete the file if it exists.
+                if (File.Exists(fileName))
+                {
+                    File.Delete(fileName);
+                }
 
-        //        // Create the file.
-        //        using (FileStream fs = File.Create(fileName))
-        //        {
-        //            Byte[] info = new UTF8Encoding(true).GetBytes(data);
-        //            // Add some information to the file.
-        //            fs.Write(info, 0, info.Length);
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Log.WriteToFile("{0} :Exception" + ex.Message);
-        //        throw ex;
-        //    }
+                // Create the file.
+                using (FileStream fs = File.Create(fileName))
+                {
+                    Byte[] info = new UTF8Encoding(true).GetBytes(data);
+                    // Add some information to the file.
+                    fs.Write(info, 0, info.Length);
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.WriteToFile("{0} :Exception" + ex.Message);
+                throw ex;
+            }
 
-        //}
+        }
+
+        public static void GetDataRowFields(DataTable data, Item item, ArrayList fields)
+        {
+            DataRow row = data.NewRow();
+
+            for (var i = 0; i < fields.Count; i++)
+            {
+
+                switch (fields[i].ToString().Trim().ToLower())
+                {
+                    case "id":
+                        row[fields[i].ToString()] = item.ID.ToString();
+                        break;
+                    case "name":
+                        row[fields[i].ToString()] = item.Name;
+                        break;
+                    case "path":
+                        row[fields[i].ToString()] = item.Paths.FullPath;
+                        break;
+                    default:
+                        row[fields[i].ToString()] = ReplaceComma(item.Fields[fields[i].ToString()].Value);
+                        break;
+                }
+            }
+            data.Rows.Add(row);
+        }
+
+        public static void SetDataTableColums(DataTable data, ArrayList fields)
+        {
+            foreach (var field in fields)
+            {
+                data.Columns.Add(field.ToString());
+            }
+        }
 
     }
 

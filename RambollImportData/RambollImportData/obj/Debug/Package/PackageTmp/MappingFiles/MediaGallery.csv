@@ -1,0 +1,5 @@
+Start Path ,/sitecore/media library,,,,
+Include Language,FALSE,,,,
+Include Version,FALSE,,,,
+Output Name,ExportedMediaLibrary,,,,
+Exported Fields,ID,Path,Name,Height,Width

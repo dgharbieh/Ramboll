@@ -106,6 +106,15 @@
     <Compile Include="Helpers\Helper.cs" />
     <Compile Include="Helpers\Log.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="sitecore\admin\ExportMediaGallery.aspx.cs">
+      <DependentUpon>ExportMediaGallery.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="sitecore\admin\ExportMediaGallery.aspx.designer.cs">
+      <DependentUpon>ExportMediaGallery.aspx</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
     <Compile Include="sitecore\admin\ImportCounties.aspx.cs">
       <DependentUpon>ImportCounties.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -123,8 +132,14 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="includes\images\delete.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="MappingFiles\Countries.csv" />
     <Content Include="App_Config\Include\Ramboll.Import.config" />
+    <Content Include="MappingFiles\MediaGallery.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Properties\PublishProfiles\Local.pubxml" />
   </ItemGroup>
   <ItemGroup>
@@ -144,6 +159,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="includes\scripts\jquery-ui-1.8.18.custom.min.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="sitecore\admin\ExportMediaGallery.aspx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="sitecore\admin\ImportCounties.aspx" />

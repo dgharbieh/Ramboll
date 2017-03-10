@@ -1,4 +1,4 @@
-﻿using RambollExportData.Helpers;
+﻿using RambollImportData.Helpers;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.SecurityModel;
@@ -7,7 +7,7 @@ using System.Data;
 using System.Linq;
 using System.Web.UI.WebControls;
 
-namespace RambollExportData.sitecore.admin
+namespace RambollImportData.sitecore.admin
 {
     public partial class ExportMediaGallery : BasePage
     {
@@ -30,10 +30,10 @@ namespace RambollExportData.sitecore.admin
                 string w = txtWidth.Text;
                 Int32.TryParse(w, out Width);
                 data = new DataTable();
-                Helper.SetDataTableColums(data,this.Fields);
+                Helper.SetDataTableColums(data,this.ExportedFields);
 
 
-                CSV.AppendLine(Helper.GetHeader(this.Fields));
+                CSV.AppendLine(Helper.GetHeader(this.ExportedFields));
                 using (new SecurityDisabler())
                 {
 
@@ -78,8 +78,8 @@ namespace RambollExportData.sitecore.admin
                     if (width <= Width && height <= Height)
                     {
                        
-                        Helper.GetDataRowFields(data,item, Fields);          
-                        CSV.AppendLine(Helper.GetFieldsLine(item, Fields));
+                        Helper.GetDataRowFields(data,item, ExportedFields);          
+                        CSV.AppendLine(Helper.GetFieldsLine(item, ExportedFields));
                         RecourdNumber = RecourdNumber + 1;
                     }
                 }
@@ -104,8 +104,8 @@ namespace RambollExportData.sitecore.admin
         protected void GridItems_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             DataTable data = (DataTable)Cache["data"];
-            GridItems.DataSource = data;
             this.RecourdNumber = data.Rows.Count;
+            GridItems.DataSource = data;
             GridItems.PageIndex = e.NewPageIndex;
             GridItems.DataBind();
         }
