@@ -32,7 +32,7 @@
 
                 <form class="form-inline" id="form2" runat="server">
                      <fieldset>
-                       <strong> Start Path :</strong> <%=this.StartPath %>
+                       <strong> Start Path :</strong> <asp:TextBox ID="txtStartPath" Text="400" runat="server"></asp:TextBox>
                     </fieldset>
                     <fieldset>
                         <strong>Output Name :</strong> <%=this.OutputName %>

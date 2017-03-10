@@ -18,6 +18,10 @@ namespace RambollImportData.sitecore.admin
         protected void Page_Load(object sender, EventArgs e)
         {
             Helper.ParseMappingFile(this, "MediaGallery");
+            if (!Page.IsPostBack)
+            {
+                txtStartPath.Text = this.StartPath;
+            }
 
         }
 
@@ -38,8 +42,11 @@ namespace RambollImportData.sitecore.admin
                 {
 
                     Database masterDb = Helper.GetDatabase();
-                    Item parent = masterDb.GetItem(this.StartPath);
-                    GetData(parent);
+                    Item parent = masterDb.GetItem(txtStartPath.Text.Trim());
+                    if (parent != null)
+                    {
+                        GetData(parent);
+                    }
                     Cache["data"] = data;
                     GridItems.DataSource = data;
                     GridItems.DataBind();  
