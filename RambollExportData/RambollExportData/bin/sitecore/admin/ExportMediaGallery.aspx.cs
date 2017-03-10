@@ -3,11 +3,8 @@ using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.SecurityModel;
 using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace RambollExportData.sitecore.admin
@@ -21,7 +18,10 @@ namespace RambollExportData.sitecore.admin
         protected void Page_Load(object sender, EventArgs e)
         {
             Helper.ParseMappingFile(this, "MediaGallery");
-
+            if (!Page.IsPostBack)
+            {
+                txtStartPath.Text = this.StartPath;
+            }
         }
 
         protected void ExportData(object sender, EventArgs e)
@@ -41,8 +41,11 @@ namespace RambollExportData.sitecore.admin
                 {
 
                     Database masterDb = Helper.GetDatabase();
-                    Item parent = masterDb.GetItem(this.StartPath);
-                    GetData(parent);
+                    Item parent = masterDb.GetItem(txtStartPath.Text.Trim());
+                    if (parent != null)
+                    {
+                        GetData(parent);
+                    }
                     Cache["data"] = data;
                     GridItems.DataSource = data;
                     GridItems.DataBind();  
@@ -99,6 +102,7 @@ namespace RambollExportData.sitecore.admin
             item.Delete();
             data.Rows.RemoveAt(e.RowIndex);
             Cache["data"] = data;
+            this.RecourdNumber = data.Rows.Count;
             GridItems.DataSource = data;
             GridItems.DataBind();
 
@@ -107,6 +111,7 @@ namespace RambollExportData.sitecore.admin
         {
             DataTable data = (DataTable)Cache["data"];
             GridItems.DataSource = data;
+            this.RecourdNumber = data.Rows.Count;
             GridItems.PageIndex = e.NewPageIndex;
             GridItems.DataBind();
         }

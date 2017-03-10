@@ -29,14 +29,21 @@ namespace RambollExportData.sitecore.admin
                 using (new SecurityDisabler())
                 {
                     Database masterDb = Helper.GetDatabase();
-                    Item parent = masterDb.GetItem(this.StartPath);
+                        Item parent = masterDb.GetItem(this.StartPath);
+                        Helper.GenerateLanguagesFiles(parent, Fields, this.OutputName, this.Totals);
+                        //foreach (var item in parent.Children.AsEnumerable())
+                        //{
+                        //if (this.IncludeLanguage)
+                        //{
+                        //    CSV.AppendLine(Helper.GetFieldsLineWithLanguages(item, Fields));
+                        //}else
+                        //{
+                        //    CSV.AppendLine(Helper.GetFieldsLine(item, Fields));
+                        //}
 
-                    foreach (var item in parent.Children.AsEnumerable())
-                    {
-                        CSV.AppendLine(Helper.GetFieldsLine(item, Fields));
-                    }
-                    Helper.CreateFile(CSV.ToString(),this.OutputName);
-                    RecourdNumber = parent.Children.Count();
+                        //}
+                        //Helper.CreateFile(CSV.ToString(), this.OutputName );
+                        RecourdNumber = parent.Children.Count();
                 }
 
                 pnSuccess.Visible = true;

@@ -3,6 +3,8 @@ using Sitecore.ApplicationCenter.Applications;
 using Sitecore.Configuration;
 using Sitecore.Data;
 using Sitecore.Data.Items;
+using Sitecore.Data.Managers;
+using Sitecore.Globalization;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -109,6 +111,79 @@ namespace RambollExportData.Helpers
             return fieldsNames;
         }
 
+        public static  void GenerateLanguagesFiles(Item parent, ArrayList fields, string outputName, Dictionary<string, string> totals)
+        {
+
+            foreach (var lang in parent.Languages)
+            {
+                int total = 0;
+                StringBuilder CSV = new StringBuilder();
+                CSV.AppendLine(Helper.GetHeader(fields));
+                foreach (var item in parent.Children.AsEnumerable())
+                { 
+                    Item sub = GetDatabase().GetItem(item.ID, lang);
+                    string line = Helper.GetFieldsLineWithVersion(sub, fields);
+                    if (!string .IsNullOrEmpty(line))
+                    {
+                        CSV.AppendLine(line);
+                        total = total + item.Versions.Count;
+                    }
+                }
+                Helper.CreateFile(CSV.ToString(), outputName +"_" + lang.Name);
+
+                totals.Add(lang.Name.ToString(), total.ToString ());
+            }
+        }
+
+
+        public static string GetFieldsLineWithVersion(Item item, ArrayList fields)
+        {
+            string fieldsValues = string.Empty;
+
+            Item[] versions = item.Versions.GetVersions();
+
+            if (item.Versions.Count > 0)
+            {
+                foreach (Item version in versions)
+                {
+
+                    for (var i = 0; i < fields.Count; i++)
+                    {
+
+                        switch (fields[i].ToString().Trim().ToLower())
+                        {
+                            case "id":
+                                fieldsValues = fieldsValues + version.ID.ToString();
+                                break;
+                            case "name":
+                                fieldsValues = fieldsValues + version.Name;
+                                break;
+                            case "path":
+                                fieldsValues = fieldsValues + version.Paths.FullPath;
+                                break;
+                            case "version":
+                                fieldsValues = fieldsValues + version.Version.Number.ToString();
+                                break;
+                            default:
+                                fieldsValues = fieldsValues + ReplaceComma(version.Fields[fields[i].ToString()].Value);
+                                break;
+                        }
+
+                        if (i < fields.Count - 1)
+                        {
+                            fieldsValues = fieldsValues + "," ;
+                        }
+                    }   
+                    if (version.Version.Number < item.Versions.Count)
+                    { fieldsValues = fieldsValues + "\n"; }
+                }
+            }
+
+            return fieldsValues;
+        }
+
+
+
         public static string GetFieldsLine(Item item, ArrayList fields)
         {
             string fieldsValues = string.Empty;
@@ -125,20 +200,20 @@ namespace RambollExportData.Helpers
                         fieldsValues = fieldsValues + item.Name;
                         break;
                     case "path":
-                           fieldsValues = item.Paths.FullPath;
+                        fieldsValues = fieldsValues + item.Paths.FullPath;
                         break;
                     default:
-                         fieldsValues = fieldsValues + ReplaceComma(item.Fields[fields[i].ToString()].Value);
-                          break; 
+                        fieldsValues = fieldsValues + ReplaceComma(item.Fields[fields[i].ToString()].Value);
+                        break;
                 }
-      
+
                 if (i < fields.Count - 1)
                 {
                     fieldsValues = fieldsValues + ",";
                 }
-            }
+                }
 
-            return fieldsValues;
+                return fieldsValues;
         }
 
 

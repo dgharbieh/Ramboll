@@ -15,6 +15,7 @@ namespace RambollExportData
         public bool IncludeLanguage = false;
         public bool IncludeVersions = false;
         public ArrayList Fields = new ArrayList();
+        public Dictionary<string, string> Totals = new Dictionary<string, string>();
 
     }
 }

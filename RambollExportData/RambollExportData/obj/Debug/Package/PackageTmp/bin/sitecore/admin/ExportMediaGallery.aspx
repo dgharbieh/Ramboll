@@ -31,13 +31,33 @@
                 <hr />
 
                 <form class="form-inline" id="form2" runat="server">
+                     <fieldset>
+                       <strong> Start Path :</strong> <asp:TextBox ID="txtStartPath" Text="400" runat="server"></asp:TextBox>
+                    </fieldset>
                     <fieldset>
-                        Width&nbsp; :  
+                        <strong>Output Name :</strong> <%=this.OutputName %>
+                    </fieldset>
+                    <fieldset>
+                       <strong> Include Language :</strong> <%=this.IncludeLanguage.ToString() %>
+                    </fieldset>
+                    <fieldset>
+                        <strong>Include Versions :</strong> <%=this.IncludeVersions.ToString()%>
+                    </fieldset>
+                    <fieldset>
+                     <strong>Exported Fields :</strong>
+                          <% foreach (var field in this.Fields){%>              
+                         <%=field.ToString()%> |
+                         <%}%>
+                    </fieldset>
+                      <hr />
+
+                    <fieldset>
+                      <strong>  Width&nbsp; : </strong> 
                         <asp:TextBox ID="txtWidth" Text="270" runat="server"></asp:TextBox>
                     </fieldset>
                     <br />
                     <fieldset>
-                        Height :  
+                        <strong>Height :  </strong>
                         <asp:TextBox ID="txtHeight" Text="270" runat="server"></asp:TextBox>
                     </fieldset>
                    <br />

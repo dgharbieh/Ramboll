@@ -41,14 +41,9 @@
                     </fieldset>
                     <fieldset>
                      <strong>Exported Fields :</strong>
-                        <br /> 
                           <% foreach (var field in this.Fields){%>              
-                         <div >
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                         <%=field.ToString()%>
-                         </div>
-                         <%}%>
-                     
+                             <%=field.ToString()%> |
+                         <%}%>    
                     </fieldset>
 
                     <fieldset>
@@ -60,7 +55,12 @@
                     <!-- success message begin -->
                     <asp:Panel ID="pnSuccess" Visible="false" CssClass="alert alert-success" runat="server">
                         <button type="button" class="close" data-dismiss="alert">&times;</button>
-                        <strong>Success</strong> the export completed for <%=RecourdNumber.ToString() %> records.
+                        <strong>Success</strong> the export completed successfully.
+                        <br />
+                           <% foreach (var total in this.Totals){%>              
+                            <strong>language (<%=total.Key%>)   </strong>:<%=total.Value%> records.<br />
+                         <%}%> 
+                    
                     </asp:Panel>
                     <!-- success message end -->
 
