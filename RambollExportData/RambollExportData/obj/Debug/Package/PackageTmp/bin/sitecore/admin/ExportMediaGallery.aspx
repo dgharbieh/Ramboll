@@ -43,7 +43,6 @@
                    <br />
                      <fieldset>
                         <asp:Button ID="btnExport" runat="server" Text="Export to CSV" OnClick="ExportData" />
-                         <asp:Button ID="btnDelete" runat="server" Text="Delete" />
                     </fieldset>
 
                     <hr />
@@ -69,10 +68,10 @@
                         SelectedRowStyle-BackColor="Yellow" 
                         AllowPaging="true" 
                         AllowSorting="true"
-                        PageSize = "5" 
+                        PageSize = "20" 
                         AutoGenerateColumns="false" 
                         OnRowDeleting="GridItems_RowDeleting"
-                     OnPageIndexChanging="GridItems_PageIndexChanging"
+                       OnPageIndexChanging="GridItems_PageIndexChanging"
                       
                         >
                         <Columns>

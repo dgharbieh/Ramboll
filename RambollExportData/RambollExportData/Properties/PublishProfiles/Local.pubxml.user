@@ -36,6 +36,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="bin/MappingFiles/Countries.csv">
       <publishTime>03/07/2017 21:55:12</publishTime>
     </File>
+    <File Include="bin/MappingFiles/MediaGallery.csv">
+      <publishTime>03/10/2017 02:14:53</publishTime>
+    </File>
     <File Include="bin/Microsoft.AI.Agent.Intercept.dll">
       <publishTime>11/30/2016 16:07:42</publishTime>
     </File>
@@ -64,10 +67,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/02/2013 12:10:10</publishTime>
     </File>
     <File Include="bin/RambollExportData.dll">
-      <publishTime>03/10/2017 01:38:01</publishTime>
+      <publishTime>03/10/2017 02:15:49</publishTime>
     </File>
     <File Include="bin/RambollExportData.pdb">
-      <publishTime>03/10/2017 01:38:01</publishTime>
+      <publishTime>03/10/2017 02:15:49</publishTime>
     </File>
     <File Include="bin/roslyn/csc.exe">
       <publishTime>06/18/2015 20:19:46</publishTime>
@@ -148,13 +151,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/07/2017 00:23:33</publishTime>
     </File>
     <File Include="bin/sitecore/admin/ExportMediaGallery.aspx">
-      <publishTime>03/10/2017 01:36:14</publishTime>
+      <publishTime>03/10/2017 02:12:01</publishTime>
     </File>
     <File Include="bin/sitecore/admin/ExportMediaGallery.aspx.cs">
-      <publishTime>03/10/2017 01:37:52</publishTime>
+      <publishTime>03/10/2017 02:15:44</publishTime>
     </File>
     <File Include="bin/sitecore/admin/ExportMediaGallery.aspx.designer.cs">
-      <publishTime>03/10/2017 01:36:14</publishTime>
+      <publishTime>03/10/2017 01:50:27</publishTime>
     </File>
     <File Include="includes/css/bootstrap-responsive.css">
       <publishTime>07/27/2013 09:50:47</publishTime>
@@ -180,6 +183,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="MappingFiles/Countries.csv">
       <publishTime>03/07/2017 21:55:12</publishTime>
     </File>
+    <File Include="MappingFiles/MediaGallery.csv">
+      <publishTime>03/10/2017 02:14:53</publishTime>
+    </File>
     <File Include="sitecore/admin/ExporCountries.aspx">
       <publishTime>03/07/2017 01:31:02</publishTime>
     </File>
@@ -193,7 +199,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/07/2017 12:39:36</publishTime>
     </File>
     <File Include="sitecore/admin/ExportMediaGallery.aspx">
-      <publishTime>03/10/2017 01:36:14</publishTime>
+      <publishTime>03/10/2017 02:30:00</publishTime>
     </File>
     <File Include="sitecore/admin/ExportMediaGalleryaspx.aspx">
       <publishTime>03/08/2017 21:28:15</publishTime>

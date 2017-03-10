@@ -97,3 +97,4 @@ C:\Ramboll\Projects\Ramboll.git\RambollExportData\RambollExportData\bin\sitecore
 C:\Ramboll\Projects\Ramboll.git\RambollExportData\RambollExportData\bin\sitecore\admin\ExportMediaGallery.aspx.cs
 C:\Ramboll\Projects\Ramboll.git\RambollExportData\RambollExportData\bin\sitecore\admin\ExportMediaGallery.aspx.designer.cs
 C:\Ramboll\Projects\Ramboll.git\RambollExportData\RambollExportData\obj\Debug\RambollExportData.csprojResolveAssemblyReference.cache
+C:\Ramboll\Projects\Ramboll.git\RambollExportData\RambollExportData\bin\MappingFiles\MediaGallery.csv

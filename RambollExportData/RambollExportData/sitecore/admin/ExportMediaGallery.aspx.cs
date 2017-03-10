@@ -3,11 +3,8 @@ using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.SecurityModel;
 using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace RambollExportData.sitecore.admin
@@ -20,15 +17,8 @@ namespace RambollExportData.sitecore.admin
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            this.StartPath = "/sitecore/media library";
+            Helper.ParseMappingFile(this, "MediaGallery");
 
-            this.Fields.Add("ID");
-            this.Fields.Add("Path");
-            this.Fields.Add("Name");
-            this.Fields.Add("Height");
-            this.Fields.Add("Width");
-
-            this.OutputName = "ExportedMediaLibrary";
         }
 
         protected void ExportData(object sender, EventArgs e)
@@ -71,15 +61,12 @@ namespace RambollExportData.sitecore.admin
         private void GetData(Item  parent)
         {
 
-            if (parent.Children.Count == 0 || RecourdNumber ==10)
+            if (parent.Children.Count == 0 )
                 return;
 
             foreach (var item in parent.Children.AsEnumerable())
             {
-                if (RecourdNumber == 10)
-                {
-                    break;
-                }
+                
                 if (item.TemplateName.ToLower() == "image" || item.TemplateName.ToLower() == "jpeg")
                 {
                     int height = 0, width = 0;
@@ -87,7 +74,7 @@ namespace RambollExportData.sitecore.admin
                     Int32.TryParse(h, out height);
                     string w = item.Fields["Width"].Value;
                     Int32.TryParse(w, out width);
-
+                    //Check the condition
                     if (width <= Width && height <= Height)
                     {
                        
@@ -104,6 +91,9 @@ namespace RambollExportData.sitecore.admin
         protected void GridItems_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
             DataTable  data = (DataTable) Cache["data"];
+
+            Item item = Helper.GetDatabase().GetItem(data.Rows[e.RowIndex]["ID"].ToString());
+            item.Delete();
             data.Rows.RemoveAt(e.RowIndex);
             Cache["data"] = data;
             GridItems.DataSource = data;
