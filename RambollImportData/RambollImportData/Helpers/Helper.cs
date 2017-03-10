@@ -2,6 +2,7 @@
 using Sitecore.Configuration;
 using Sitecore.Data;
 using Sitecore.Data.Items;
+using Sitecore.Globalization;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -71,11 +72,23 @@ namespace RambollImportData.Helpers
             return Sitecore.Configuration.Factory.GetDatabase("master");
         }
 
+        public static Dictionary<string, DataTable> GetLanguagesDataTable(BasePage page)
+        {
+            Dictionary<string, DataTable> dataTables = new Dictionary<string, DataTable>();
 
-        public static DataTable GetDataTable(BasePage page)
+             foreach( var lang in GetDatabase().Languages)
+            {
+                dataTables.Add(lang.Name, GetDataTable(page, lang));
+            }
+            return dataTables;
+
+        }
+
+
+        public static DataTable GetDataTable(BasePage page, Language lang)
         {
             DataTable dt = new DataTable();
-             string   fileName = Settings.GetSetting("FolderPath") + "\\" + page.OutputName + ".csv";
+             string   fileName = Settings.GetSetting("FolderPath") + "\\" + page.OutputName + "_"+lang.Name+ ".csv";
             if (File.Exists(fileName))
             {
                 bool isheader = true;
@@ -136,7 +149,7 @@ namespace RambollImportData.Helpers
                         fieldsValues = fieldsValues + item.Name;
                         break;
                     case "path":
-                        fieldsValues = item.Paths.FullPath;
+                        fieldsValues = fieldsValues + item.Paths.FullPath;
                         break;
                     default:
                          fieldsValues = fieldsValues + item.Fields[fields[i].ToString()].Value;

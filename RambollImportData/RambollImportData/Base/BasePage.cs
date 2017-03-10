@@ -16,5 +16,6 @@ namespace RambollImportData
         public bool IncludeVersions = false;
         public ArrayList ExportedFields = new ArrayList();
         public ArrayList ImportedFields = new ArrayList();
+
     }
 }

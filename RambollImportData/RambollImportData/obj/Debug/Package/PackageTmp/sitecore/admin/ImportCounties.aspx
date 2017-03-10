@@ -40,23 +40,15 @@
                     </fieldset>
                     <fieldset>
                      <strong>Exported Fields :</strong>
-                        <br /> 
                           <% foreach (var field in this.ExportedFields){%>              
-                         <div >
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                         <%=field.ToString()%>
-                         </div>
+                         <%=field.ToString()%> |
                          <%}%>
                      
                     </fieldset>
                      <fieldset>
                      <strong>Imported Fields :</strong>
-                        <br /> 
                           <% foreach (var field in this.ImportedFields){%>              
-                         <div >
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                         <%=field.ToString()%>
-                         </div>
+                         <%=field.ToString()%> |
                          <%}%>
                      
                     </fieldset>
@@ -69,8 +61,26 @@
                     <!-- success message begin -->
                     <asp:Panel ID="pnSuccess" Visible="false" CssClass="alert alert-success" runat="server">
                         <button type="button" class="close" data-dismiss="alert">&times;</button>
-                        <strong>Success</strong> the import completed for <%=RecourdNumber.ToString() %> records from <%=TotalRecords %>.
-                    <br/> <strong>Countries not match:</strong> 
+                        <strong>Success</strong> the import completed successfully.
+                          <br/> <strong> Updated Countries:</strong>   
+                        <br />
+                           <% foreach (var total in this.UpdateTotals){%>              
+                            <strong>language (<%=total.Key%>)   </strong>:<%=total.Value%> records.<br />
+                         <%}%> 
+                        
+                         <br/> <strong> Inserted Versions Countries:</strong>   
+                        <br />
+                           <% foreach (var total in this.InsertedVersionsTotals){%>              
+                            <strong>language (<%=total.Key%>)   </strong>:<%=total.Value%> records.<br />
+                         <%}%> 
+
+                           <br/> <strong>Inserted New Countries:</strong>   
+                          <br />
+                           <% foreach (var total in this.InsertedNewTotals){%>              
+                            <strong>language (<%=total.Key%>)   </strong>:<%=total.Value%> records.<br />
+                         <%}%> 
+
+                        <br/> <strong>Countries not match:</strong> 
                          <br/> <%=NotMatchCountries %>
                     </asp:Panel>
                     <!-- success message end -->

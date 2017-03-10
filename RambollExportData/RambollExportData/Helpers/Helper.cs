@@ -39,7 +39,6 @@ namespace RambollExportData.Helpers
                         case "include language":
                             page.IncludeLanguage = (Fields[1].ToLower() == "true" ? true : false);
                             break;
-
                         case "include versions":
                             page.IncludeVersions = (Fields[1].ToLower() == "true" ? true : false);
                             break;
