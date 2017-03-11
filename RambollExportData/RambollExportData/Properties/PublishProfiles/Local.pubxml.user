@@ -33,6 +33,12 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="bin/includes/scripts/jquery-ui-1.8.18.custom.min.js">
       <publishTime>11/02/2012 06:38:37</publishTime>
     </File>
+    <File Include="bin/MappingFiles/Aliases.csv">
+      <publishTime>03/11/2017 15:00:08</publishTime>
+    </File>
+    <File Include="bin/MappingFiles/AliasesFolders.csv">
+      <publishTime>03/11/2017 14:40:56</publishTime>
+    </File>
     <File Include="bin/MappingFiles/Countries.csv">
       <publishTime>03/10/2017 23:07:12</publishTime>
     </File>
@@ -67,10 +73,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/02/2013 12:10:10</publishTime>
     </File>
     <File Include="bin/RambollExportData.dll">
-      <publishTime>03/10/2017 23:14:57</publishTime>
+      <publishTime>03/11/2017 15:30:05</publishTime>
     </File>
     <File Include="bin/RambollExportData.pdb">
-      <publishTime>03/10/2017 23:14:57</publishTime>
+      <publishTime>03/11/2017 15:30:05</publishTime>
     </File>
     <File Include="bin/roslyn/csc.exe">
       <publishTime>06/18/2015 20:19:46</publishTime>
@@ -123,6 +129,15 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="bin/sitecore/admin/ExporCountries.aspx.designer.cs">
       <publishTime>03/07/2017 01:40:48</publishTime>
     </File>
+    <File Include="bin/sitecore/admin/ExportAliases.aspx">
+      <publishTime>03/11/2017 15:18:20</publishTime>
+    </File>
+    <File Include="bin/sitecore/admin/ExportAliases.aspx.cs">
+      <publishTime>03/11/2017 15:29:59</publishTime>
+    </File>
+    <File Include="bin/sitecore/admin/ExportAliases.aspx.designer.cs">
+      <publishTime>03/11/2017 14:01:23</publishTime>
+    </File>
     <File Include="bin/sitecore/admin/ExportCounties.aspx">
       <publishTime>03/07/2017 00:23:16</publishTime>
     </File>
@@ -133,10 +148,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/07/2017 00:23:33</publishTime>
     </File>
     <File Include="bin/sitecore/admin/ExportCountries.aspx">
-      <publishTime>03/10/2017 23:11:12</publishTime>
+      <publishTime>03/11/2017 14:32:49</publishTime>
     </File>
     <File Include="bin/sitecore/admin/ExportCountries.aspx.cs">
-      <publishTime>03/10/2017 23:04:05</publishTime>
+      <publishTime>03/11/2017 14:31:26</publishTime>
     </File>
     <File Include="bin/sitecore/admin/ExportCountries.aspx.designer.cs">
       <publishTime>03/07/2017 22:06:00</publishTime>
@@ -151,10 +166,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/07/2017 00:23:33</publishTime>
     </File>
     <File Include="bin/sitecore/admin/ExportMediaGallery.aspx">
-      <publishTime>03/10/2017 20:36:47</publishTime>
+      <publishTime>03/11/2017 14:35:40</publishTime>
     </File>
     <File Include="bin/sitecore/admin/ExportMediaGallery.aspx.cs">
-      <publishTime>03/10/2017 02:15:44</publishTime>
+      <publishTime>03/11/2017 14:31:24</publishTime>
     </File>
     <File Include="bin/sitecore/admin/ExportMediaGallery.aspx.designer.cs">
       <publishTime>03/10/2017 20:36:47</publishTime>
@@ -180,6 +195,12 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="includes/scripts/jquery-ui-1.8.18.custom.min.js">
       <publishTime>11/02/2012 06:38:37</publishTime>
     </File>
+    <File Include="MappingFiles/Aliases.csv">
+      <publishTime>03/11/2017 15:00:08</publishTime>
+    </File>
+    <File Include="MappingFiles/AliasesFolders.csv">
+      <publishTime>03/11/2017 14:40:56</publishTime>
+    </File>
     <File Include="MappingFiles/Countries.csv">
       <publishTime>03/10/2017 23:07:12</publishTime>
     </File>
@@ -189,17 +210,20 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="sitecore/admin/ExporCountries.aspx">
       <publishTime>03/07/2017 01:31:02</publishTime>
     </File>
+    <File Include="sitecore/admin/ExportAliases.aspx">
+      <publishTime>03/11/2017 15:18:20</publishTime>
+    </File>
     <File Include="sitecore/admin/ExportCounties.aspx">
       <publishTime>03/07/2017 00:23:16</publishTime>
     </File>
     <File Include="sitecore/admin/ExportCountries.aspx">
-      <publishTime>03/10/2017 23:11:12</publishTime>
+      <publishTime>03/11/2017 14:32:49</publishTime>
     </File>
     <File Include="sitecore/admin/ExportData.aspx">
       <publishTime>03/07/2017 12:39:36</publishTime>
     </File>
     <File Include="sitecore/admin/ExportMediaGallery.aspx">
-      <publishTime>03/10/2017 20:36:47</publishTime>
+      <publishTime>03/11/2017 14:35:40</publishTime>
     </File>
     <File Include="sitecore/admin/ExportMediaGalleryaspx.aspx">
       <publishTime>03/08/2017 21:28:15</publishTime>

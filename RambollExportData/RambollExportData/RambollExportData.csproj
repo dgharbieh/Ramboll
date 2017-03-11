@@ -100,16 +100,23 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Base\BasePage.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
+    <Compile Include="Base\Result.cs" />
     <Compile Include="Helpers\Helper.cs" />
     <Compile Include="Helpers\Log.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="sitecore\admin\ExportCountries.aspx.cs">
-      <DependentUpon>ExportCountries.aspx</DependentUpon>
+    <Compile Include="sitecore\admin\ExportAliases.aspx.cs">
+      <DependentUpon>ExportAliases.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="sitecore\admin\ExportAliases.aspx.designer.cs">
+      <DependentUpon>ExportAliases.aspx</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="sitecore\admin\ExportCountries.aspx.cs">
+      <DependentUpon>ExportCountries.aspx</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="sitecore\admin\ExportCountries.aspx.designer.cs">
       <DependentUpon>ExportCountries.aspx</DependentUpon>
@@ -126,8 +133,8 @@
     </Compile>
     <Compile Include="sitecore\admin\ExportMediaGallery.aspx.cs">
       <DependentUpon>ExportMediaGallery.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="sitecore\admin\ExportMediaGallery.aspx.designer.cs">
       <DependentUpon>ExportMediaGallery.aspx</DependentUpon>
@@ -144,10 +151,19 @@
     <Content Include="MappingFiles\Countries.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="sitecore\admin\ExportAliases.aspx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="sitecore\admin\ExportMediaGallery.aspx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="MappingFiles\MediaGallery.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MappingFiles\AliasesFolders.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MappingFiles\Aliases.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="Properties\PublishProfiles\Local.pubxml" />

@@ -1,4 +1,5 @@
 ﻿using RambollExportData;
+using RambollExportData.Base;
 using Sitecore.ApplicationCenter.Applications;
 using Sitecore.Configuration;
 using Sitecore.Data;
@@ -22,8 +23,9 @@ namespace RambollExportData.Helpers
 {
     public class Helper
     {
-        public static void ParseMappingFile(BasePage page, string fileName)
+        public static void ParseMappingFile(ref Result page, string fileName)
         {
+            page = new Result();
  
             fileName = HttpContext.Current.Server.MapPath("/MappingFiles/") + fileName + ".csv";
             if (File.Exists(fileName))
@@ -44,6 +46,9 @@ namespace RambollExportData.Helpers
                             break;
                         case "output name":
                             page.OutputName = Fields[1];
+                            break;
+                        case "template name":
+                            page.TemplateName = Fields[1];
                             break;
                         case "exported fields":
                             for (var i = 1; i < Fields.Count(); i++)
@@ -110,7 +115,7 @@ namespace RambollExportData.Helpers
             return fieldsNames;
         }
 
-        public static  void GenerateLanguagesFiles(Item parent, ArrayList fields, string outputName, Dictionary<string, string> totals)
+        public static  void GenerateLanguagesFiles(Item parent, ArrayList fields, string outputName, Dictionary<string, int> totals)
         {
 
             foreach (var lang in parent.Languages)
@@ -130,7 +135,7 @@ namespace RambollExportData.Helpers
                 }
                 Helper.CreateFile(CSV.ToString(), outputName +"_" + lang.Name);
 
-                totals.Add(lang.Name.ToString(), total.ToString ());
+                totals.Add(lang.Name.ToString(), total);
             }
         }
 
@@ -201,6 +206,7 @@ namespace RambollExportData.Helpers
                     case "path":
                         fieldsValues = fieldsValues + item.Paths.FullPath;
                         break;
+
                     default:
                         fieldsValues = fieldsValues + ReplaceComma(item.Fields[fields[i].ToString()].Value);
                         break;

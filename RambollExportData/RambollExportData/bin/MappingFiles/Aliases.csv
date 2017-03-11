@@ -1,0 +1,6 @@
+Start Path ,/sitecore/content/Home/Aliases,,,,
+Include Language,TRUE,,,,
+Include Versions,TRUE,,,,
+Template Name,ComAlias,,,,
+Output Name,ExportedAliases,,,,
+Exported Fields,ID,Version,Path,Name,LinkTo

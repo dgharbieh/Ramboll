@@ -28,20 +28,21 @@
                 <form class="form-inline" id="form2" runat="server">
 
         <fieldset>
-                       <strong> Start Path :</strong> <%=this.StartPath %>
+                       <strong> Start Path :</strong> <%=Countries.StartPath %>
                     </fieldset>
                     <fieldset>
-                        <strong>Output Name :</strong> <%=this.OutputName %>
+                        <strong>Output Name :</strong> <%=Countries.OutputName %>
                     </fieldset>
                     <fieldset>
-                       <strong> Include Language :</strong> <%=this.IncludeLanguage.ToString() %>
+                       <strong> Include Language :</strong> <%=Countries.IncludeLanguage.ToString() %>
                     </fieldset>
                     <fieldset>
-                        <strong>Include Versions :</strong> <%=this.IncludeVersions.ToString()%>
+                        <strong>Include Versions :</strong> <%=Countries.IncludeVersions.ToString()%>
                     </fieldset>
                     <fieldset>
                      <strong>Exported Fields :</strong>
-                          <% foreach (var field in this.Fields){%>              
+                          <% foreach (var field in Countries.Fields)
+                             {%>              
                              <%=field.ToString()%> |
                          <%}%>    
                     </fieldset>
@@ -57,7 +58,8 @@
                         <button type="button" class="close" data-dismiss="alert">&times;</button>
                         <strong>Success</strong> the export completed successfully.
                         <br />
-                           <% foreach (var total in this.Totals){%>              
+                           <% foreach (var total in Countries.Totals)
+                              {%>              
                             <strong>language (<%=total.Key%>)   </strong>:<%=total.Value%> records.<br />
                          <%}%> 
                     

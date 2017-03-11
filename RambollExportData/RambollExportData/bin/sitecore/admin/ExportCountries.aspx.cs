@@ -1,4 +1,5 @@
-﻿using RambollExportData.Helpers;
+﻿using RambollExportData.Base;
+using RambollExportData.Helpers;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.SecurityModel;
@@ -12,12 +13,12 @@ using System.Web.UI.WebControls;
 
 namespace RambollExportData.sitecore.admin
 {
-    public partial class ExportCountries : BasePage
+    public partial class ExportCountries : System.Web.UI.Page
     {
-
+        public Result Countries;
         protected void Page_Load(object sender, EventArgs e)
         {
-            Helper.ParseMappingFile(this, "Countries");
+            Helper.ParseMappingFile(ref Countries, "Countries");
 
         }
 
@@ -25,25 +26,13 @@ namespace RambollExportData.sitecore.admin
         {
             try
             {
-                CSV.AppendLine(Helper.GetHeader(this.Fields));
+                Countries.CSV.AppendLine(Helper.GetHeader(Countries.Fields));
                 using (new SecurityDisabler())
                 {
                     Database masterDb = Helper.GetDatabase();
-                        Item parent = masterDb.GetItem(this.StartPath);
-                        Helper.GenerateLanguagesFiles(parent, Fields, this.OutputName, this.Totals);
-                        //foreach (var item in parent.Children.AsEnumerable())
-                        //{
-                        //if (this.IncludeLanguage)
-                        //{
-                        //    CSV.AppendLine(Helper.GetFieldsLineWithLanguages(item, Fields));
-                        //}else
-                        //{
-                        //    CSV.AppendLine(Helper.GetFieldsLine(item, Fields));
-                        //}
-
-                        //}
-                        //Helper.CreateFile(CSV.ToString(), this.OutputName );
-                        RecourdNumber = parent.Children.Count();
+                    Item parent = masterDb.GetItem(Countries.StartPath);
+                    Helper.GenerateLanguagesFiles(parent, Countries.Fields, Countries.OutputName, Countries.Totals);
+                    Countries.RecourdNumber = parent.Children.Count();
                 }
 
                 pnSuccess.Visible = true;

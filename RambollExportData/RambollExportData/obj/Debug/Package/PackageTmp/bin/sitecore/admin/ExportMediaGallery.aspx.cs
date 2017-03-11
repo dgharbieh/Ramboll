@@ -1,4 +1,5 @@
-﻿using RambollExportData.Helpers;
+﻿using RambollExportData.Base;
+using RambollExportData.Helpers;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.SecurityModel;
@@ -9,18 +10,19 @@ using System.Web.UI.WebControls;
 
 namespace RambollExportData.sitecore.admin
 {
-    public partial class ExportMediaGallery : BasePage
+    public partial class ExportMediaGallery : System.Web.UI.Page
     {
 
         public int Height=0, Width=0;
         public DataTable data;
+        public Result MediaGalleryItems;
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            Helper.ParseMappingFile(this, "MediaGallery");
+            Helper.ParseMappingFile(ref MediaGalleryItems, "MediaGallery");
             if (!Page.IsPostBack)
             {
-                txtStartPath.Text = this.StartPath;
+                txtStartPath.Text = MediaGalleryItems.StartPath;
             }
         }
 
@@ -33,10 +35,10 @@ namespace RambollExportData.sitecore.admin
                 string w = txtWidth.Text;
                 Int32.TryParse(w, out Width);
                 data = new DataTable();
-                Helper.SetDataTableColums(data,this.Fields);
+                Helper.SetDataTableColums(data, MediaGalleryItems.Fields);
 
 
-                CSV.AppendLine(Helper.GetHeader(this.Fields));
+                MediaGalleryItems.CSV.AppendLine(Helper.GetHeader(MediaGalleryItems.Fields));
                 using (new SecurityDisabler())
                 {
 
@@ -48,8 +50,8 @@ namespace RambollExportData.sitecore.admin
                     }
                     Cache["data"] = data;
                     GridItems.DataSource = data;
-                    GridItems.DataBind();  
-                    Helper.CreateFile(CSV.ToString(), this.OutputName);
+                    GridItems.DataBind();
+                    Helper.CreateFile(MediaGalleryItems.CSV.ToString(), MediaGalleryItems.OutputName);
                 }
 
                 pnSuccess.Visible = true;
@@ -83,10 +85,10 @@ namespace RambollExportData.sitecore.admin
                     //Check the condition
                     if (width <= Width && height <= Height)
                     {
-                       
-                        Helper.GetDataRowFields(data,item, Fields);          
-                        CSV.AppendLine(Helper.GetFieldsLine(item, Fields));
-                        RecourdNumber = RecourdNumber + 1;
+
+                        Helper.GetDataRowFields(data, item, MediaGalleryItems.Fields);
+                        MediaGalleryItems.CSV.AppendLine(Helper.GetFieldsLine(item, MediaGalleryItems.Fields));
+                        MediaGalleryItems.RecourdNumber = MediaGalleryItems.RecourdNumber + 1;
                     }
                 }
                 GetData(item);
@@ -102,7 +104,7 @@ namespace RambollExportData.sitecore.admin
             item.Delete();
             data.Rows.RemoveAt(e.RowIndex);
             Cache["data"] = data;
-            this.RecourdNumber = data.Rows.Count;
+            MediaGalleryItems.RecourdNumber = data.Rows.Count;
             GridItems.DataSource = data;
             GridItems.DataBind();
 
@@ -111,7 +113,7 @@ namespace RambollExportData.sitecore.admin
         {
             DataTable data = (DataTable)Cache["data"];
             GridItems.DataSource = data;
-            this.RecourdNumber = data.Rows.Count;
+            MediaGalleryItems.RecourdNumber = data.Rows.Count;
             GridItems.PageIndex = e.NewPageIndex;
             GridItems.DataBind();
         }
