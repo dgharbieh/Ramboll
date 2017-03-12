@@ -1,4 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ImportCounties.aspx.cs" Inherits="RambollImportData.sitecore.admin.ImportCounties" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,34 +27,34 @@
 
                 <form class="form-inline" id="form2" runat="server">
 
-        <fieldset>
-                       <strong> Start Path :</strong> <%=this.StartPath %>
+                    <fieldset>
+                        <strong>Start Path :</strong> <%=Countries.StartPath %>
                     </fieldset>
                     <fieldset>
-                        <strong>Output Name :</strong> <%=this.OutputName %>
+                        <strong>Output Name :</strong> <%=Countries.OutputName %>
                     </fieldset>
                     <fieldset>
-                       <strong> Include Language :</strong> <%=this.IncludeLanguage.ToString() %>
+                        <strong>Include Language :</strong> <%=Countries.IncludeLanguage.ToString() %>
                     </fieldset>
                     <fieldset>
-                        <strong>Include Versions :</strong> <%=this.IncludeVersions.ToString()%>
+                        <strong>Include Versions :</strong> <%=Countries.IncludeVersions.ToString()%>
                     </fieldset>
                     <fieldset>
-                     <strong>Exported Fields :</strong>
-                          <% foreach (var field in this.ExportedFields){%>              
-                         <%=field.ToString()%> |
+                        <strong>Exported Fields :</strong>
+                        <% foreach (var field in Countries.ExportedFields)
+                           {%>
+                        <%=field.ToString()%> |
                          <%}%>
-                     
-                    </fieldset>
-                     <fieldset>
-                     <strong>Imported Fields :</strong>
-                          <% foreach (var field in this.ImportedFields){%>              
-                         <%=field.ToString()%> |
-                         <%}%>
-                     
                     </fieldset>
                     <fieldset>
-                      <asp:Button ID="btnImport" runat="server" Text="Import from CSV" OnClick="ImportData" />
+                        <strong>Imported Fields :</strong>
+                        <% foreach (var field in Countries.ImportedFields)
+                           {%>
+                        <%=field.ToString()%> |
+                         <%}%>
+                    </fieldset>
+                    <fieldset>
+                        <asp:Button ID="btnImport" runat="server" Text="Import from CSV" OnClick="ImportData" />
                     </fieldset>
 
                     <hr />
@@ -62,26 +63,37 @@
                     <asp:Panel ID="pnSuccess" Visible="false" CssClass="alert alert-success" runat="server">
                         <button type="button" class="close" data-dismiss="alert">&times;</button>
                         <strong>Success</strong> the import completed successfully.
-                          <br/> <strong> Updated Countries:</strong>   
-                        <br />
-                           <% foreach (var total in this.UpdateTotals){%>              
-                            <strong>language (<%=total.Key%>)   </strong>:<%=total.Value%> records.<br />
-                         <%}%> 
-                        
-                         <br/> <strong> Inserted Versions Countries:</strong>   
-                        <br />
-                           <% foreach (var total in this.InsertedVersionsTotals){%>              
-                            <strong>language (<%=total.Key%>)   </strong>:<%=total.Value%> records.<br />
-                         <%}%> 
-
-                           <br/> <strong>Inserted New Countries:</strong>   
                           <br />
-                           <% foreach (var total in this.InsertedNewTotals){%>              
-                            <strong>language (<%=total.Key%>)   </strong>:<%=total.Value%> records.<br />
-                         <%}%> 
+                        <strong>Updated Countries:</strong>
+                        <br />
+                        <% foreach (var total in this.UpdateTotals)
+                            {%>
+                        <strong>language (<%=total.Key%>)   </strong>:<%=total.Value%> records.<br />
+                        <%}%>
 
-                        <br/> <strong>Countries not match:</strong> 
-                         <br/> <%=NotMatchCountries %>
+                        <br />
+                        <strong>Inserted Versions Countries:</strong>
+                        <br />
+                        <% foreach (var total in this.InsertedVersionsTotals)
+                            {%>
+                        <strong>language (<%=total.Key%>)   </strong>:<%=total.Value%> records.<br />
+                        <%}%>
+
+                        <br />
+                        <strong>Inserted New Countries:</strong>
+                        <br />
+                        <% foreach (var total in this.InsertedNewTotals)
+                            {%>
+                        <strong>language (<%=total.Key%>)   </strong>:<%=total.Value%> records.<br />
+                        <%}%>
+                        <% if (!string.IsNullOrEmpty(NotMatchCountries))
+                            {%>
+                        <br />
+                        <strong>Countries not match:</strong>
+                        <br />
+                        <%=NotMatchCountries %>
+
+                        <%}%>
                     </asp:Panel>
                     <!-- success message end -->
 

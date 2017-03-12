@@ -1,4 +1,5 @@
-﻿using Sitecore.ApplicationCenter.Applications;
+﻿using RambollImportData.Base;
+using Sitecore.ApplicationCenter.Applications;
 using Sitecore.Configuration;
 using Sitecore.Data;
 using Sitecore.Data.Items;
@@ -20,9 +21,9 @@ namespace RambollImportData.Helpers
 {
     public class Helper
     {
-        public static void ParseMappingFile(BasePage page, string fileName)
+        public static void ParseMappingFile(ref Result page, string fileName)
         {
- 
+            page = new Result();
             fileName = HttpContext.Current.Server.MapPath("/MappingFiles/") + fileName + ".csv";
             if (File.Exists(fileName))
             {
@@ -34,6 +35,10 @@ namespace RambollImportData.Helpers
                         case "start path":
                             page.StartPath = Fields[1];
                             break;
+                        case "export path":
+                            page.ExportPath = Fields[1];
+                            break;
+                            
                         case "include language":
                             page.IncludeLanguage = (Fields[1].ToLower() == "true" ? true : false);
                             break;
@@ -43,6 +48,9 @@ namespace RambollImportData.Helpers
                             break;
                         case "output name":
                             page.OutputName = Fields[1];
+                            break;
+                        case "template name":
+                            page.TemplateName = Fields[1];
                             break;
                         case "exported fields":
                             for (var i = 1; i < Fields.Count(); i++)
@@ -72,7 +80,7 @@ namespace RambollImportData.Helpers
             return Sitecore.Configuration.Factory.GetDatabase("master");
         }
 
-        public static Dictionary<string, DataTable> GetLanguagesDataTable(BasePage page)
+        public static Dictionary<string, DataTable> GetLanguagesDataTable(Result page)
         {
             Dictionary<string, DataTable> dataTables = new Dictionary<string, DataTable>();
 
@@ -85,10 +93,10 @@ namespace RambollImportData.Helpers
         }
 
 
-        public static DataTable GetDataTable(BasePage page, Language lang)
+        public static DataTable GetDataTable(Result page, Language lang = null)
         {
             DataTable dt = new DataTable();
-             string   fileName = Settings.GetSetting("FolderPath") + "\\" + page.OutputName + "_"+lang.Name+ ".csv";
+             string   fileName = Settings.GetSetting("FolderPath") + "\\" + page.OutputName + (lang==null?string .Empty: "_"+lang.Name)+ ".csv";
             if (File.Exists(fileName))
             {
                 bool isheader = true;

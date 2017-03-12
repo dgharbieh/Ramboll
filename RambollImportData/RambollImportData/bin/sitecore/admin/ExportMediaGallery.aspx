@@ -35,17 +35,18 @@
                        <strong> Start Path :</strong> <asp:TextBox ID="txtStartPath" Text="400" runat="server"></asp:TextBox>
                     </fieldset>
                     <fieldset>
-                        <strong>Output Name :</strong> <%=this.OutputName %>
+                        <strong>Output Name :</strong> <%=MediaGalleryItems.OutputName %>
                     </fieldset>
                     <fieldset>
-                       <strong> Include Language :</strong> <%=this.IncludeLanguage.ToString() %>
+                       <strong> Include Language :</strong> <%=MediaGalleryItems.IncludeLanguage.ToString() %>
                     </fieldset>
                     <fieldset>
-                        <strong>Include Versions :</strong> <%=this.IncludeVersions.ToString()%>
+                        <strong>Include Versions :</strong> <%=MediaGalleryItems.IncludeVersions.ToString()%>
                     </fieldset>
                     <fieldset>
                      <strong>Exported Fields :</strong>
-                          <% foreach (var field in this.ExportedFields){%>              
+                          <% foreach (var field in MediaGalleryItems.ExportedFields)
+                             {%>              
                          <%=field.ToString()%> |
                          <%}%>
                     </fieldset>
@@ -70,7 +71,7 @@
                     <!-- success message begin -->
                     <asp:Panel ID="pnSuccess" Visible="false" CssClass="alert alert-success" runat="server">
                         <button type="button" class="close" data-dismiss="alert">&times;</button>
-                        <strong>Success</strong> the export completed for <%=RecourdNumber %> records.
+                        <strong>Success</strong> the export completed for <%=MediaGalleryItems.RecourdNumber %> records.
                     </asp:Panel>
                     <!-- success message end -->
 

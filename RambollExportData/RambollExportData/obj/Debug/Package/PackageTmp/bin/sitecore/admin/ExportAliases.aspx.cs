@@ -31,8 +31,7 @@ namespace RambollExportData.sitecore.admin
             try
             {
                 Folders.CSV.AppendLine(Helper.GetHeader(Folders.Fields));
-                Aliases.CSV.AppendLine(Helper.GetHeader(Folders.Fields));
-
+              
                 using (new SecurityDisabler())
                 {
 
@@ -47,10 +46,11 @@ namespace RambollExportData.sitecore.admin
 
                         foreach (var lang in parent.Languages)
                         {
-                            Aliases.CSV.AppendLine(Helper.GetHeader(Folders.Fields));
+                            Aliases.CSV.AppendLine(Helper.GetHeader(Aliases.Fields));
                             Aliases.Totals.Add(lang.ToString(), 0);
                             GetMultiLanguageVersionData(Aliases,parent,lang );
                             Helper.CreateFile(Aliases.CSV.ToString(), Aliases.OutputName +"_" +lang );
+                            Aliases.CSV.Clear();
                         }
                     }           
                 
@@ -87,7 +87,13 @@ namespace RambollExportData.sitecore.admin
                     if (!string.IsNullOrEmpty(line))
                     {
                         resultItem.CSV.AppendLine(line);
+                        if (item.Versions.Count ==0)
+                        {
+                            resultItem.Totals[lang.ToString()] = resultItem.Totals[lang.ToString()] + 1;
+                        }else
+                        { 
                         resultItem.Totals[lang.ToString()] = resultItem.Totals[lang.ToString()] + item.Versions.Count;
+                        }
                     }
                 }
 

@@ -12,10 +12,11 @@ using System.Data;
 using Sitecore.Data.Managers;
 using Sitecore.Collections;
 using Sitecore.Globalization;
+using RambollImportData.Base;
 
 namespace RambollImportData.sitecore.admin
 {
-    public partial class ImportCounties : BasePage
+    public partial class ImportCounties : System.Web.UI.Page
     {
         public  string NotMatchCountries = "";
         public int UpdatedRecords =0;
@@ -24,10 +25,11 @@ namespace RambollImportData.sitecore.admin
         public Dictionary<string, string> InsertedVersionsTotals = new Dictionary<string, string>();
         public Dictionary<string, string> InsertedNewTotals = new Dictionary<string, string>();
         public Dictionary<string, string> UpdateTotals = new Dictionary<string, string>();
+        public Result Countries;
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            Helper.ParseMappingFile(this, "Countries");
+            Helper.ParseMappingFile(ref Countries, "Countries");
         }
 
         protected void ImportData(object sender, EventArgs e)
@@ -35,7 +37,7 @@ namespace RambollImportData.sitecore.admin
             try
             {
 
-                Dictionary<string, DataTable> dataTables = Helper.GetLanguagesDataTable(this);
+                Dictionary<string, DataTable> dataTables = Helper.GetLanguagesDataTable(Countries);
 
                 using (new SecurityDisabler())
                 {
@@ -45,7 +47,7 @@ namespace RambollImportData.sitecore.admin
                     {
                         UpdatedRecords = InsertedVersionsRecords = 0;
 
-                        Item parent = masterDb.GetItem(this.StartPath,lang);
+                        Item parent = masterDb.GetItem(Countries.StartPath, lang);
                         List<Item> countries = parent.Children.AsEnumerable().ToList();
                         DataTable data = dataTables[lang.Name];
                         foreach (DataRow row in data.Rows)

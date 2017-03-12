@@ -1,4 +1,5 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ImportCounties.aspx.cs" Inherits="RambollImportData.sitecore.admin.ImportCounties" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ImportAliases.aspx.cs" Inherits="RambollImportData.sitecore.admin.ImportAliases" %>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -9,7 +10,7 @@
     <link rel="stylesheet" type="text/css" href="/includes/css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="/includes/css/custom.css">
 
-    <title>Import - Countries</title>
+    <title>Import - Aliases</title>
 </head>
 <body>
 
@@ -19,40 +20,74 @@
 
                 <div class="row pageIntro">
                     <div class="span12">
-                        <h2>Import Countries - Update</h2>
+                        <h2>Import Aliases </h2>
                     </div>
                 </div>
 
                 <hr />
 
                 <form class="form-inline" id="form2" runat="server">
-
-                    <fieldset>
-                        <strong>Start Path :</strong> <%=Countries.StartPath %>
+                      <fieldset>
+                        <strong>Aliases Folder :</strong> 
                     </fieldset>
                     <fieldset>
-                        <strong>Output Name :</strong> <%=Countries.OutputName %>
+                        <strong>Start Path :</strong> <%=AliasesFolders.StartPath %>
                     </fieldset>
                     <fieldset>
-                        <strong>Include Language :</strong> <%=Countries.IncludeLanguage.ToString() %>
+                        <strong>Output Name :</strong> <%=AliasesFolders.OutputName %>
                     </fieldset>
                     <fieldset>
-                        <strong>Include Versions :</strong> <%=Countries.IncludeVersions.ToString()%>
+                        <strong>Include Language :</strong> <%=AliasesFolders.IncludeLanguage.ToString() %>
+                    </fieldset>
+                    <fieldset>
+                        <strong>Include Versions :</strong> <%=AliasesFolders.IncludeVersions.ToString()%>
                     </fieldset>
                     <fieldset>
                         <strong>Exported Fields :</strong>
-                        <% foreach (var field in Countries.ExportedFields)
+                        <% foreach (var field in AliasesFolders.ExportedFields)
                            {%>
                         <%=field.ToString()%> |
                          <%}%>
                     </fieldset>
                     <fieldset>
                         <strong>Imported Fields :</strong>
-                        <% foreach (var field in Countries.ImportedFields)
+                        <% foreach (var field in AliasesFolders.ImportedFields)
                            {%>
                         <%=field.ToString()%> |
                          <%}%>
                     </fieldset>
+                    <hr />
+
+                       <fieldset>
+                        <strong>Aliases Items :</strong> 
+                    </fieldset>
+                    <fieldset>
+                        <strong>Start Path :</strong> <%=Aliases.StartPath %>
+                    </fieldset>
+                    <fieldset>
+                        <strong>Output Name :</strong> <%=Aliases.OutputName %>
+                    </fieldset>
+                    <fieldset>
+                        <strong>Include Language :</strong> <%=Aliases.IncludeLanguage.ToString() %>
+                    </fieldset>
+                    <fieldset>
+                        <strong>Include Versions :</strong> <%=Aliases.IncludeVersions.ToString()%>
+                    </fieldset>
+                    <fieldset>
+                        <strong>Exported Fields :</strong>
+                        <% foreach (var field in Aliases.ExportedFields)
+                           {%>
+                        <%=field.ToString()%> |
+                         <%}%>
+                    </fieldset>
+                    <fieldset>
+                        <strong>Imported Fields :</strong>
+                        <% foreach (var field in Aliases.ImportedFields)
+                           {%>
+                        <%=field.ToString()%> |
+                         <%}%>
+                    </fieldset>
+                    <hr />
                     <fieldset>
                         <asp:Button ID="btnImport" runat="server" Text="Import from CSV" OnClick="ImportData" />
                     </fieldset>
@@ -63,10 +98,14 @@
                     <asp:Panel ID="pnSuccess" Visible="false" CssClass="alert alert-success" runat="server">
                         <button type="button" class="close" data-dismiss="alert">&times;</button>
                         <strong>Success</strong> the import completed successfully.
+                         <br />
+                        <strong>Inserted Folders:</strong><%=AliasesFolders.InsertedNewRecords  %>
                           <br />
-                        <strong>Updated Countries:</strong>
+                        <strong>Updated Folders:</strong><%=AliasesFolders.UpdatedRecords %>
+                          <br />
+                       <strong>Updated Aliases:</strong>
                         <br />
-                        <% foreach (var total in this.UpdateTotals)
+                        <% foreach (var total in Aliases.UpdateTotals)
                             {%>
                         <strong>language (<%=total.Key%>)   </strong>:<%=total.Value%> records.<br />
                         <%}%>
@@ -74,7 +113,7 @@
                         <br />
                         <strong>Inserted Versions Countries:</strong>
                         <br />
-                        <% foreach (var total in this.InsertedVersionsTotals)
+                        <% foreach (var total in Aliases.InsertedVersionsTotals)
                             {%>
                         <strong>language (<%=total.Key%>)   </strong>:<%=total.Value%> records.<br />
                         <%}%>
@@ -82,18 +121,12 @@
                         <br />
                         <strong>Inserted New Countries:</strong>
                         <br />
-                        <% foreach (var total in this.InsertedNewTotals)
+                        <% foreach (var total in Aliases.InsertedNewTotals)
                             {%>
                         <strong>language (<%=total.Key%>)   </strong>:<%=total.Value%> records.<br />
                         <%}%>
-                        <% if (!string.IsNullOrEmpty(NotMatchCountries))
-                            {%>
+             
                         <br />
-                        <strong>Countries not match:</strong>
-                        <br />
-                        <%=NotMatchCountries %>
-
-                        <%}%>
                     </asp:Panel>
                     <!-- success message end -->
 

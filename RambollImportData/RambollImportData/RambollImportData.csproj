@@ -103,6 +103,7 @@
     <Compile Include="Base\BasePage.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Base\Result.cs" />
     <Compile Include="Helpers\Helper.cs" />
     <Compile Include="Helpers\Log.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -114,6 +115,13 @@
     <Compile Include="sitecore\admin\ExportMediaGallery.aspx.designer.cs">
       <DependentUpon>ExportMediaGallery.aspx</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="sitecore\admin\ImportAliases.aspx.cs">
+      <DependentUpon>ImportAliases.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="sitecore\admin\ImportAliases.aspx.designer.cs">
+      <DependentUpon>ImportAliases.aspx</DependentUpon>
     </Compile>
     <Compile Include="sitecore\admin\ImportCounties.aspx.cs">
       <DependentUpon>ImportCounties.aspx</DependentUpon>
@@ -140,6 +148,8 @@
     <Content Include="MappingFiles\MediaGallery.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="MappingFiles\Aliases.csv" />
+    <Content Include="MappingFiles\AliasesFolders.csv" />
     <None Include="Properties\PublishProfiles\Local.pubxml" />
   </ItemGroup>
   <ItemGroup>
@@ -164,6 +174,7 @@
     <Content Include="sitecore\admin\ExportMediaGallery.aspx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="sitecore\admin\ImportAliases.aspx" />
     <Content Include="sitecore\admin\ImportCounties.aspx" />
     <Content Include="sitecore\admin\ImportData.aspx" />
   </ItemGroup>
