@@ -206,6 +206,9 @@ namespace RambollExportData.Helpers
                     case "path":
                         fieldsValues = fieldsValues + item.Paths.FullPath;
                         break;
+                    case"insert options":
+                        fieldsValues = fieldsValues + ReplaceComma(item.Fields["__Masters"].Value);
+                        break;
 
                     default:
                         fieldsValues = fieldsValues + ReplaceComma(item.Fields[fields[i].ToString()].Value);

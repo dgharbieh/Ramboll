@@ -103,3 +103,8 @@ C:\Ramboll\Projects\Ramboll.git\RambollExportData\RambollExportData\bin\sitecore
 C:\Ramboll\Projects\Ramboll.git\RambollExportData\RambollExportData\bin\sitecore\admin\ExportAliases.aspx.cs
 C:\Ramboll\Projects\Ramboll.git\RambollExportData\RambollExportData\bin\sitecore\admin\ExportAliases.aspx.designer.cs
 C:\Ramboll\Projects\Ramboll.git\RambollExportData\RambollExportData\bin\MappingFiles\Aliases.csv
+C:\Ramboll\Projects\Ramboll.git\RambollExportData\RambollExportData\bin\sitecore\admin\ExportProjects.aspx
+C:\Ramboll\Projects\Ramboll.git\RambollExportData\RambollExportData\bin\MappingFiles\ProjectsFolders.csv
+C:\Ramboll\Projects\Ramboll.git\RambollExportData\RambollExportData\bin\MappingFiles\Projects.csv
+C:\Ramboll\Projects\Ramboll.git\RambollExportData\RambollExportData\bin\sitecore\admin\ExportProjects.aspx.cs
+C:\Ramboll\Projects\Ramboll.git\RambollExportData\RambollExportData\bin\sitecore\admin\ExportProjects.aspx.designer.cs

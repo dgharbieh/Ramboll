@@ -61,10 +61,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/15/2015 02:06:24</publishTime>
     </File>
     <File Include="bin/RambollImportData.dll">
-      <publishTime>03/12/2017 02:11:20</publishTime>
+      <publishTime>03/13/2017 01:06:07</publishTime>
     </File>
     <File Include="bin/RambollImportData.pdb">
-      <publishTime>03/12/2017 02:11:20</publishTime>
+      <publishTime>03/13/2017 01:06:07</publishTime>
     </File>
     <File Include="bin/roslyn/csc.exe">
       <publishTime>06/18/2015 20:19:46</publishTime>
@@ -142,13 +142,19 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/12/2017 01:36:02</publishTime>
     </File>
     <File Include="MappingFiles/AliasesFolders.csv">
-      <publishTime>03/11/2017 21:46:59</publishTime>
+      <publishTime>03/13/2017 00:50:31</publishTime>
     </File>
     <File Include="MappingFiles/Countries.csv">
       <publishTime>03/10/2017 23:30:37</publishTime>
     </File>
     <File Include="MappingFiles/MediaGallery.csv">
       <publishTime>03/10/2017 02:25:59</publishTime>
+    </File>
+    <File Include="MappingFiles/Projects.csv">
+      <publishTime>03/13/2017 00:47:22</publishTime>
+    </File>
+    <File Include="MappingFiles/ProjectsFolders.csv">
+      <publishTime>03/13/2017 00:47:14</publishTime>
     </File>
     <File Include="sitecore/admin/ExportCounties.aspx">
       <publishTime>03/07/2017 00:08:34</publishTime>
@@ -159,6 +165,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="sitecore/admin/ExportMediaGallery.aspx">
       <publishTime>03/11/2017 16:22:26</publishTime>
     </File>
+    <File Include="sitecore/admin/ImportAliases - Copy.aspx">
+      <publishTime>03/13/2017 00:18:58</publishTime>
+    </File>
     <File Include="sitecore/admin/ImportAliases.aspx">
       <publishTime>03/12/2017 02:00:10</publishTime>
     </File>
@@ -167,6 +176,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="sitecore/admin/ImportData.aspx">
       <publishTime>03/07/2017 00:11:30</publishTime>
+    </File>
+    <File Include="sitecore/admin/ImportProjects.aspx">
+      <publishTime>03/13/2017 00:21:02</publishTime>
     </File>
   </ItemGroup>
 </Project>

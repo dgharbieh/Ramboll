@@ -80,4 +80,3 @@ C:\Ramboll\Projects\Ramboll.git\RambollImportData\RambollImportData\bin\sitecore
 C:\Ramboll\Projects\Ramboll.git\RambollImportData\RambollImportData\bin\sitecore\admin\ExportMediaGallery.aspx.cs
 C:\Ramboll\Projects\Ramboll.git\RambollImportData\RambollImportData\bin\sitecore\admin\ExportMediaGallery.aspx.designer.cs
 C:\Ramboll\Projects\Ramboll.git\RambollImportData\RambollImportData\bin\includes\images\delete.png
-C:\Ramboll\Projects\Ramboll.git\RambollImportData\RambollImportData\obj\Debug\RambollImportData.csprojResolveAssemblyReference.cache

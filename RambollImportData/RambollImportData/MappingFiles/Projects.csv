@@ -1,0 +1,9 @@
+Start Path,/sitecore/system/Aliases,,,,
+Export Path,/sitecore/content/Home/Aliases,,,,
+Include Language,TRUE,,,,
+Include Versions,TRUE,,,,
+Template Name,/sitecore/templates/System/Alias ,,,,
+Output Name,ExportedProjects,,,,
+Exported Fields,ID,Version,Path,Name,LinkTo
+Imported Fields,ID,Name,LinkTo
+

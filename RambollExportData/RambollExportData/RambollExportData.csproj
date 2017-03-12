@@ -104,6 +104,15 @@
     <Compile Include="Helpers\Helper.cs" />
     <Compile Include="Helpers\Log.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="sitecore\admin\ExportProjects.aspx.cs">
+      <DependentUpon>ExportProjects.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="sitecore\admin\ExportProjects.aspx.designer.cs">
+      <DependentUpon>ExportProjects.aspx</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
     <Compile Include="sitecore\admin\ExportAliases.aspx.cs">
       <DependentUpon>ExportAliases.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -151,6 +160,9 @@
     <Content Include="MappingFiles\Countries.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="sitecore\admin\ExportProjects.aspx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="sitecore\admin\ExportAliases.aspx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -164,6 +176,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="MappingFiles\Aliases.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MappingFiles\ProjectsFolders.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MappingFiles\Projects.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="Properties\PublishProfiles\Local.pubxml" />
