@@ -23,10 +23,10 @@ namespace RambollExportData.Helpers
 {
     public class Helper
     {
-        public static void ParseMappingFile(ref Result page, string fileName)
+        public static void ParseMappingFile(ref Result page, string fileName,bool vertical = false)
         {
             page = new Result();
- 
+
             fileName = HttpContext.Current.Server.MapPath("/MappingFiles/") + fileName + ".csv";
             if (File.Exists(fileName))
             {
@@ -51,11 +51,18 @@ namespace RambollExportData.Helpers
                             page.TemplateName = Fields[1];
                             break;
                         case "exported fields":
-                            for (var i = 1; i < Fields.Count(); i++)
+                            if (!vertical)
                             {
-                                page.Fields.Add(Fields[i]);
+                                for (var i = 1; i < Fields.Count(); i++)
+                                {
+                                    page.Fields.Add(Fields[i]);
+                                }
                             }
                             break;
+                        default:
+                            if (vertical) { page.Fields.Add(Fields[0]); }
+                            break;
+
                     }
                 }
             }
@@ -92,7 +99,7 @@ namespace RambollExportData.Helpers
 
         public static string ReplaceComma(string data)
         {
-            return data.Replace(",", "#;#");
+            return data.Replace(",", "#;#").Replace("\n", "$;$").Replace("\r", "*;*");
         }
         public static Database GetDatabase()
         {
@@ -103,10 +110,10 @@ namespace RambollExportData.Helpers
         {
             string fieldsNames = string.Empty;
 
-            for (var i=0; i<fields.Count;i++)
+            for (var i = 0; i < fields.Count; i++)
             {
                 fieldsNames = fieldsNames + fields[i];
-                if (i< fields.Count-1)
+                if (i < fields.Count - 1)
                 {
                     fieldsNames = fieldsNames + ",";
                 }
@@ -115,7 +122,7 @@ namespace RambollExportData.Helpers
             return fieldsNames;
         }
 
-        public static  void GenerateLanguagesFiles(Item parent, ArrayList fields, string outputName, Dictionary<string, int> totals)
+        public static void GenerateLanguagesFiles(Item parent, ArrayList fields, string outputName, Dictionary<string, int> totals)
         {
 
             foreach (var lang in parent.Languages)
@@ -124,16 +131,16 @@ namespace RambollExportData.Helpers
                 StringBuilder CSV = new StringBuilder();
                 CSV.AppendLine(Helper.GetHeader(fields));
                 foreach (var item in parent.Children.AsEnumerable())
-                { 
+                {
                     Item sub = GetDatabase().GetItem(item.ID, lang);
                     string line = Helper.GetFieldsLineWithVersion(sub, fields);
-                    if (!string .IsNullOrEmpty(line))
+                    if (!string.IsNullOrEmpty(line))
                     {
                         CSV.AppendLine(line);
                         total = total + item.Versions.Count;
                     }
                 }
-                Helper.CreateFile(CSV.ToString(), outputName +"_" + lang.Name);
+                Helper.CreateFile(CSV.ToString(), outputName + "_" + lang.Name);
 
                 totals.Add(lang.Name.ToString(), total);
             }
@@ -143,7 +150,7 @@ namespace RambollExportData.Helpers
         public static string GetFieldsLineWithVersion(Item item, ArrayList fields)
         {
             string fieldsValues = string.Empty;
-
+          
             Item[] versions = item.Versions.GetVersions();
 
             if (item.Versions.Count > 0)
@@ -153,7 +160,8 @@ namespace RambollExportData.Helpers
 
                     for (var i = 0; i < fields.Count; i++)
                     {
-
+  try { 
+          
                         switch (fields[i].ToString().Trim().ToLower())
                         {
                             case "id":
@@ -177,12 +185,22 @@ namespace RambollExportData.Helpers
                         {
                             fieldsValues = fieldsValues + "," ;
                         }
-                    }   
+
+
+  }
+  catch (Exception ex)
+  {
+      throw ex;
+  }
+                    } 
+  
+                                
                     if (version.Version.Number < item.Versions.Count)
                     { fieldsValues = fieldsValues + "\n"; }
+
                 }
             }
-
+ 
             return fieldsValues;
         }
 
@@ -206,7 +224,7 @@ namespace RambollExportData.Helpers
                     case "path":
                         fieldsValues = fieldsValues + item.Paths.FullPath;
                         break;
-                    case"insert options":
+                    case "insert options":
                         fieldsValues = fieldsValues + ReplaceComma(item.Fields["__Masters"].Value);
                         break;
 
@@ -219,23 +237,23 @@ namespace RambollExportData.Helpers
                 {
                     fieldsValues = fieldsValues + ",";
                 }
-                }
+            }
 
-                return fieldsValues;
+            return fieldsValues;
         }
 
 
         public static void GetDataRowFields(DataTable data, Item item, ArrayList fields)
-        {       
+        {
             DataRow row = data.NewRow();
-                      
+
             for (var i = 0; i < fields.Count; i++)
             {
 
                 switch (fields[i].ToString().Trim().ToLower())
                 {
                     case "id":
-                        row[fields[i].ToString()] =  item.ID.ToString();
+                        row[fields[i].ToString()] = item.ID.ToString();
                         break;
                     case "name":
                         row[fields[i].ToString()] = item.Name;
@@ -251,17 +269,17 @@ namespace RambollExportData.Helpers
             data.Rows.Add(row);
         }
 
-         public static void SetDataTableColums(DataTable data,ArrayList fields)
+        public static void SetDataTableColums(DataTable data, ArrayList fields)
         {
             foreach (var field in fields)
             {
                 data.Columns.Add(field.ToString());
             }
-         }
+        }
 
 
-         
+
 
     }
-        
+
 }

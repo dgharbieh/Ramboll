@@ -21,7 +21,7 @@ namespace RambollExportData.sitecore.admin
         protected void Page_Load(object sender, EventArgs e)
         {
             Helper.ParseMappingFile(ref Folders, "ProjectsFolders");
-            Helper.ParseMappingFile(ref Projects, "Projects");
+            Helper.ParseMappingFile(ref Projects, "Projects",true);
 
         }
 
@@ -30,7 +30,7 @@ namespace RambollExportData.sitecore.admin
         {
             try
             {
-                Folders.CSV.AppendLine(Helper.GetHeader(Folders.Fields));
+               Folders.CSV.AppendLine(Helper.GetHeader(Folders.Fields));
               
                 using (new SecurityDisabler())
                 {
@@ -40,18 +40,19 @@ namespace RambollExportData.sitecore.admin
                   
                     if (parent != null)
                     {
+                     
                         GeFolderstData(parent);
 
-                        Helper.CreateFile(Folders.CSV.ToString(), Folders.OutputName);
+                       Helper.CreateFile(Folders.CSV.ToString(), Folders.OutputName);
 
-                        //foreach (var lang in parent.Languages)
-                        //{
-                        //    Projects.CSV.AppendLine(Helper.GetHeader(Projects.Fields));
-                        //    Projects.Totals.Add(lang.ToString(), 0);
-                        //    GetMultiLanguageVersionData(Projects,parent,lang );
-                        //    Helper.CreateFile(Projects.CSV.ToString(), Projects.OutputName +"_" +lang );
-                        //    Projects.CSV.Clear();
-                        //}
+                        foreach (var lang in parent.Languages)
+                        {
+                            Projects.CSV.AppendLine(Helper.GetHeader(Projects.Fields));
+                            Projects.Totals.Add(lang.ToString(), 0);
+                            GetMultiLanguageVersionData(Projects, parent, lang);
+                            Helper.CreateFile(Projects.CSV.ToString(), Projects.OutputName + "_" + lang);
+                            Projects.CSV.Clear();
+                        }
                     }           
                 
                  
