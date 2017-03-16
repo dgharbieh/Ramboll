@@ -24,7 +24,7 @@ namespace RambollImportData.sitecore.admin
         protected void Page_Load(object sender, EventArgs e)
         {
             Helper.ParseMappingFile(ref ProjectsFolders, "ProjectsFolders");
-            Helper.ParseMappingFile(ref Projects, "Projects");
+            Helper.ParseMappingFile(ref Projects, "Projects",true);
         }
 
         protected void ImportData(object sender, EventArgs e)
@@ -32,7 +32,7 @@ namespace RambollImportData.sitecore.admin
             try
             {
                 ImportDataTable(Helper.GetDataTable(ProjectsFolders), ProjectsFolders);
-             //   ImportMultiLanguageDataTable(Helper.GetLanguagesDataTable(Projects), Projects);
+                ImportMultiLanguageDataTable(Helper.GetLanguagesDataTable(Projects), Projects);
 
                 pnSuccess.Visible = true;
                 pnFailure.Visible = false;
@@ -115,7 +115,7 @@ namespace RambollImportData.sitecore.admin
                 UpdatedRecords = InsertedVersionsRecords = 0;
 
                 Item parent;
-                Item alias;
+                Item project;
                 foreach (DataRow row in data.Rows)
                 {
                     int versionNumber = 0;
@@ -131,47 +131,37 @@ namespace RambollImportData.sitecore.admin
                         parent = masterDb.GetItem(url.Substring(0, url.LastIndexOf('/')), lang);
                     }
 
-                    alias = parent.Children.AsEnumerable().ToList().Where(x => x.Name.ToLower() == row["Name"].ToString().ToLower()).FirstOrDefault();
-                    if (alias == null)
+                    project = parent.Children.AsEnumerable().ToList().Where(x => x.Name.ToLower() == row["Name"].ToString().ToLower()).FirstOrDefault();
+                    if (project == null)
                     {
                         Item newProjects = parent.Add(row["Name"].ToString(), template);
-                        newProjects.Editing.BeginEdit();
-                        newProjects["Old Id"] = row["ID"].ToString();
-                        newProjects["Linked item"] = row["LinkTo"].ToString();
-                        newProjects.Editing.EndEdit();
-                        Projects.InsertedNewRecords = Projects.InsertedNewRecords + 1;
+
+                        this.UpdateItem(ref newProjects, row);
+                        InsertedNewRecords = Projects.InsertedNewRecords + 1;
                     }
                     else
                     {
-                        if (alias.Versions.Count > 0)
+                        if (project.Versions.Count > 0)
                         {
-                            if (versionNumber <= alias.Versions.Count)
+                            if (versionNumber <= project.Versions.Count)
                             {
-                                Item[] versions = alias.Versions.GetVersions();
-                                versions[versionNumber - 1].Editing.BeginEdit();
-                                versions[versionNumber - 1]["Old Id"] = row["ID"].ToString();
-                                versions[versionNumber - 1]["Linked item"] = row["LinkTo"].ToString();
-                                versions[versionNumber - 1].Editing.EndEdit();
+                                Item[] versions = project.Versions.GetVersions();
+
+                                this.UpdateItem(ref  versions[versionNumber - 1],row);
                                 UpdatedRecords = UpdatedRecords + 1;
                             }
                             else
                             {
-                                Item newVersion = alias.Versions.AddVersion();
-                                newVersion.Editing.BeginEdit();
-                                newVersion["Old Id"] = row["ID"].ToString();
-                                newVersion["Linked item"] = row["LinkTo"].ToString();
-                                newVersion.Editing.EndEdit();
+                                Item newVersion = project.Versions.AddVersion();
+                                this.UpdateItem(ref newVersion,row);
                                 InsertedVersionsRecords = InsertedVersionsRecords + 1;
                             }
 
                         }
                         else
                         {
-                            Item newVersion = alias.Versions.AddVersion();
-                            newVersion.Editing.BeginEdit();
-                            newVersion["Old Id"] = row["ID"].ToString();
-                            newVersion["Linked item"] = row["LinkTo"].ToString();
-                            newVersion.Editing.EndEdit();
+                            Item newVersion = project.Versions.AddVersion();
+                            this.UpdateItem(ref newVersion,row);
                             InsertedVersionsRecords = InsertedVersionsRecords + 1;
                         }
                     }
@@ -187,5 +177,40 @@ namespace RambollImportData.sitecore.admin
             }
 
         }
+
+        private void UpdateItem(ref Item item, DataRow row)
+        {
+
+            item.Editing.BeginEdit();
+            item["Old Id"] = row["ID"].ToString();
+
+            for (var i = 0; i < Projects.ImportedFields.Count - 1; i++)
+            {
+                try
+                {
+                    string importField = Projects.ImportedFields[i].ToString();
+                    if (!string.IsNullOrEmpty(importField))
+                    {
+                        string exportField = Projects.ExportedFields[i].ToString();
+                        if (exportField == "PersonsOnProject")
+                        {
+
+                            item[importField.Trim()] = (string.IsNullOrEmpty(item[importField.Trim()]) ? row[exportField].ToString() : item[importField.Trim()] + "|" + row[exportField].ToString());
+                        }
+                        else
+                        {
+                            item[importField.Trim()] = row[exportField].ToString();
+                        }
+
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw (ex);
+                }
+            }
+            item.Editing.EndEdit();
+        }
+        
     }
 }

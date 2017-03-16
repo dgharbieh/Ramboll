@@ -116,12 +116,12 @@
       <DependentUpon>ExportMediaGallery.aspx</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="sitecore\admin\ImportAliases - Copy.aspx.cs">
-      <DependentUpon>ImportAliases - Copy.aspx</DependentUpon>
+    <Compile Include="sitecore\admin\ImportAliases.aspx.cs">
+      <DependentUpon>ImportAliases.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="sitecore\admin\ImportAliases - Copy.aspx.designer.cs">
-      <DependentUpon>ImportAliases - Copy.aspx</DependentUpon>
+    <Compile Include="sitecore\admin\ImportAliases.aspx.designer.cs">
+      <DependentUpon>ImportAliases.aspx</DependentUpon>
     </Compile>
     <Compile Include="sitecore\admin\ImportProjects.aspx.cs">
       <DependentUpon>ImportProjects.aspx</DependentUpon>
@@ -183,7 +183,7 @@
     <Content Include="sitecore\admin\ExportMediaGallery.aspx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="sitecore\admin\ImportAliases - Copy.aspx" />
+    <Content Include="sitecore\admin\ImportAliases.aspx" />
     <Content Include="sitecore\admin\ImportProjects.aspx" />
     <Content Include="sitecore\admin\ImportCounties.aspx" />
     <Content Include="sitecore\admin\ImportData.aspx" />

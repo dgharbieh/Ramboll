@@ -21,7 +21,7 @@ namespace RambollImportData.Helpers
 {
     public class Helper
     {
-        public static void ParseMappingFile(ref Result page, string fileName)
+        public static void ParseMappingFile(ref Result page, string fileName, bool vertical = false)
         {
             page = new Result();
             fileName = HttpContext.Current.Server.MapPath("/MappingFiles/") + fileName + ".csv";
@@ -53,17 +53,26 @@ namespace RambollImportData.Helpers
                             page.TemplateName = Fields[1];
                             break;
                         case "exported fields":
-                            for (var i = 1; i < Fields.Count(); i++)
+                            if (!vertical)
                             {
-                                page.ExportedFields.Add(Fields[i]);
+                                for (var i = 1; i < Fields.Count(); i++)
+                                {
+                                    page.ExportedFields.Add(Fields[i]);
+                                }
                             }
                             break;
-
+                       
                         case "imported fields":
-                            for (var i = 1; i < Fields.Count(); i++)
+                            if (!vertical)
                             {
-                                page.ImportedFields.Add(Fields[i]);
+                                for (var i = 1; i < Fields.Count(); i++)
+                                {
+                                    page.ImportedFields.Add(Fields[i]);
+                                }
                             }
+                            break;
+                        default:
+                            if (vertical) { page.ExportedFields.Add(Fields[0]); page.ImportedFields.Add(Fields[1]); }
                             break;
                     }
                 }
@@ -73,7 +82,7 @@ namespace RambollImportData.Helpers
 
         public static string ReplaceComma(string data)
         {
-            return data.Replace("#;#", ", ");
+            return data.Replace("#;#", ", ").Replace( "$;$","\n").Replace( "*;*","\r");
         }
         public static Database GetDatabase()
         {
@@ -102,7 +111,11 @@ namespace RambollImportData.Helpers
                 bool isheader = true;
                 foreach (var line in File.ReadAllLines(fileName))
                 {
+
+                 
                     string[] Fields = line.Split(new char[] { ',' });
+                    try
+                    {
                     if(isheader)
                     {
                         isheader = false;
@@ -119,6 +132,12 @@ namespace RambollImportData.Helpers
                             row[i] = ReplaceComma(Fields[i]);             
                         }
                         dt.Rows.Add(row);
+                    }
+
+                  }
+                    catch (Exception ex)
+                    {
+                        throw (ex);
                     }
                 }
             }

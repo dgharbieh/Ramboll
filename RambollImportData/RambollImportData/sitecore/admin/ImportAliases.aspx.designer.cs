@@ -10,7 +10,7 @@
 namespace RambollImportData.sitecore.admin {
     
     
-    public partial class ImportCounties {
+    public partial class ImportAliases {
         
         /// <summary>
         /// form2 control.
