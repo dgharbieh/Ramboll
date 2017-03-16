@@ -41,9 +41,9 @@ namespace RambollExportData.sitecore.admin
                     if (parent != null)
                     {
                      
-                        GeFolderstData(parent);
+                       // GeFolderstData(parent);
 
-                       Helper.CreateFile(Folders.CSV.ToString(), Folders.OutputName);
+                     //  Helper.CreateFile(Folders.CSV.ToString(), Folders.OutputName);
 
                         foreach (var lang in parent.Languages)
                         {
@@ -83,7 +83,9 @@ namespace RambollExportData.sitecore.admin
 
                 if (sub.TemplateName.ToLower() == resultItem.TemplateName.Trim().ToLower())
                 {
+    
                     string line = Helper.GetFieldsLineWithVersion(sub, resultItem.Fields);
+                  
                     if (!string.IsNullOrEmpty(line))
                     {
                         resultItem.CSV.AppendLine(line);
@@ -95,6 +97,7 @@ namespace RambollExportData.sitecore.admin
                         resultItem.Totals[lang.ToString()] = resultItem.Totals[lang.ToString()] + item.Versions.Count;
                         }
                     }
+                    
                 }
 
                 GetMultiLanguageVersionData(resultItem,item, lang);

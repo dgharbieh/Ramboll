@@ -150,58 +150,61 @@ namespace RambollExportData.Helpers
         public static string GetFieldsLineWithVersion(Item item, ArrayList fields)
         {
             string fieldsValues = string.Empty;
-          
-            Item[] versions = item.Versions.GetVersions();
 
-            if (item.Versions.Count > 0)
-            {
-                foreach (Item version in versions)
+     
+
+                var count = 0;
+                Item[] versions = item.Versions.GetVersions();
+
+                if (item.Versions.Count > 0)
                 {
-
-                    for (var i = 0; i < fields.Count; i++)
+                    foreach (Item version in versions)
                     {
-  try { 
-          
-                        switch (fields[i].ToString().Trim().ToLower())
+                        count = count + 1;
+                        for (var i = 0; i < fields.Count; i++)
                         {
-                            case "id":
-                                fieldsValues = fieldsValues + version.ID.ToString();
-                                break;
-                            case "name":
-                                fieldsValues = fieldsValues + version.Name;
-                                break;
-                            case "path":
-                                fieldsValues = fieldsValues + version.Paths.FullPath;
-                                break;
-                            case "version":
-                                fieldsValues = fieldsValues + version.Version.Number.ToString();
-                                break;
-                            default:
-                                fieldsValues = fieldsValues + ReplaceComma(version.Fields[fields[i].ToString()].Value);
-                                break;
+                            try
+                            {
+
+                                switch (fields[i].ToString().Trim().ToLower())
+                                {
+                                    case "id":
+                                        fieldsValues = fieldsValues + version.ID.ToString();
+                                        break;
+                                    case "name":
+                                        fieldsValues = fieldsValues + version.Name;
+                                        break;
+                                    case "path":
+                                        fieldsValues = fieldsValues + version.Paths.FullPath;
+                                        break;
+                                    case "version":
+                                        fieldsValues = fieldsValues + count.ToString();
+                                        break;
+                                    default:
+                                        fieldsValues = fieldsValues + ReplaceComma(version.Fields[fields[i].ToString()].Value);
+                                        break;
+                                }
+
+                                if (i < fields.Count - 1)
+                                {
+                                    fieldsValues = fieldsValues + ",";
+                                }
+
+                            }
+                            catch (Exception ex)
+                            {
+                                throw ex;
+                            }
                         }
+                     
 
-                        if (i < fields.Count - 1)
-                        {
-                            fieldsValues = fieldsValues + "," ;
-                        }
+                        if (count < item.Versions.Count)
+                        { fieldsValues = fieldsValues + "\n"; }
 
-
-  }
-  catch (Exception ex)
-  {
-      throw ex;
-  }
-                    } 
-  
-                                
-                    if (version.Version.Number < item.Versions.Count)
-                    { fieldsValues = fieldsValues + "\n"; }
-
+                 
                 }
             }
- 
-            return fieldsValues;
+            return fieldsValues; 
         }
 
 
