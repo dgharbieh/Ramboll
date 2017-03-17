@@ -103,6 +103,8 @@
                           <br />
                         <strong>Updated Folders:</strong><%=ProjectsFolders.UpdatedRecords %>
                           <br />
+                        <hr />
+                        <br />
                        <strong>Updated Projects:</strong>
                         <br />
                         <% foreach (var total in Projects.UpdateTotals)
@@ -111,15 +113,8 @@
                         <%}%>
 
                         <br />
-                        <strong>Inserted Versions Countries:</strong>
-                        <br />
-                        <% foreach (var total in Projects.InsertedVersionsTotals)
-                            {%>
-                        <strong>language (<%=total.Key%>)   </strong>:<%=total.Value%> records.<br />
-                        <%}%>
-
-                        <br />
-                        <strong>Inserted New Countries:</strong>
+                     
+                        <strong>Inserted Projects:</strong>
                         <br />
                         <% foreach (var total in Projects.InsertedNewTotals)
                             {%>

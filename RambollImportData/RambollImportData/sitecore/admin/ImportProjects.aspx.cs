@@ -105,19 +105,21 @@ namespace RambollImportData.sitecore.admin
 
         protected void ImportMultiLanguageDataTable(Dictionary<string, DataTable> dataTables, Result Projects)
         {
-            UpdatedRecords = InsertedVersionsRecords = 0;
+            UpdatedRecords = InsertedVersionsRecords = InsertedNewRecords = 0;
             Database masterDb = Helper.GetDatabase();
             TemplateItem template = masterDb.GetItem(Projects.TemplateName);
             foreach (var lang in Helper.GetDatabase().Languages)
             {
                 DataTable data = dataTables[lang.ToString()];
 
-                UpdatedRecords = InsertedVersionsRecords = 0;
+                UpdatedRecords = InsertedVersionsRecords = InsertedNewRecords=0;
 
                 Item parent;
                 Item project;
                 foreach (DataRow row in data.Rows)
                 {
+                  try
+                  {
                     int versionNumber = 0;
                     int.TryParse(row["Version"].ToString(), out versionNumber);
 
@@ -137,7 +139,7 @@ namespace RambollImportData.sitecore.admin
                         Item newProjects = parent.Add(row["Name"].ToString(), template);
 
                         this.UpdateItem(ref newProjects, row);
-                        InsertedNewRecords = Projects.InsertedNewRecords + 1;
+                        InsertedNewRecords = InsertedNewRecords + 1;
                     }
                     else
                     {
@@ -154,7 +156,8 @@ namespace RambollImportData.sitecore.admin
                             {
                                 Item newVersion = project.Versions.AddVersion();
                                 this.UpdateItem(ref newVersion,row);
-                                InsertedVersionsRecords = InsertedVersionsRecords + 1;
+                                InsertedNewRecords = InsertedNewRecords + 1;
+
                             }
 
                         }
@@ -162,17 +165,21 @@ namespace RambollImportData.sitecore.admin
                         {
                             Item newVersion = project.Versions.AddVersion();
                             this.UpdateItem(ref newVersion,row);
-                            InsertedVersionsRecords = InsertedVersionsRecords + 1;
+                            InsertedNewRecords = InsertedNewRecords + 1;
+
                         }
                     }
 
 
-                 
+                      }
+                      catch (Exception ex)
+                      {
+                          throw (ex);
+                      }
 
                 }
 
                 Projects.InsertedNewTotals.Add(lang.Name, InsertedNewRecords.ToString());
-                Projects.InsertedVersionsTotals.Add(lang.Name, InsertedVersionsRecords.ToString());
                 Projects.UpdateTotals.Add(lang.Name, UpdatedRecords.ToString());
             }
 
