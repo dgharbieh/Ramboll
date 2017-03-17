@@ -31,7 +31,7 @@ namespace RambollExportData.sitecore.admin
                 {
                     Database masterDb = Helper.GetDatabase();
                     Item parent = masterDb.GetItem(Countries.StartPath);
-                    Helper.GenerateLanguagesFiles(parent, Countries.Fields, Countries.OutputName, Countries.Totals);
+                    Helper.GenerateLanguagesFiles(parent, Countries, Countries.OutputName, Countries.Totals);
                     Countries.RecourdNumber = parent.Children.Count();
                 }
 

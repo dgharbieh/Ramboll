@@ -122,18 +122,19 @@ namespace RambollExportData.Helpers
             return fieldsNames;
         }
 
-        public static void GenerateLanguagesFiles(Item parent, ArrayList fields, string outputName, Dictionary<string, int> totals)
+        public static void GenerateLanguagesFiles(Item parent,Result resultItem , string outputName, Dictionary<string, int> totals)
         {
 
             foreach (var lang in parent.Languages)
             {
                 int total = 0;
+                ArrayList fields = resultItem.Fields;
                 StringBuilder CSV = new StringBuilder();
                 CSV.AppendLine(Helper.GetHeader(fields));
                 foreach (var item in parent.Children.AsEnumerable())
                 {
                     Item sub = GetDatabase().GetItem(item.ID, lang);
-                    string line = Helper.GetFieldsLineWithVersion(sub, fields);
+                    string line = Helper.GetFieldsLineWithVersion(sub,ref resultItem,string.Empty);
                     if (!string.IsNullOrEmpty(line))
                     {
                         CSV.AppendLine(line);
@@ -147,7 +148,7 @@ namespace RambollExportData.Helpers
         }
 
 
-        public static string GetFieldsLineWithVersion(Item item, ArrayList fields)
+        public static string GetFieldsLineWithVersion(Item item,ref Result resultItem, string lang)
         {
             string fieldsValues = string.Empty;
 
@@ -155,6 +156,7 @@ namespace RambollExportData.Helpers
 
                 var count = 0;
                 Item[] versions = item.Versions.GetVersions();
+                ArrayList fields = resultItem.Fields;
 
                 if (item.Versions.Count > 0)
                 {
@@ -195,8 +197,14 @@ namespace RambollExportData.Helpers
                             {
                                 throw ex;
                             }
+
+
                         }
-                     
+
+                        if (!string.IsNullOrEmpty(lang))
+                        {
+                            resultItem.Totals[lang.ToString()] = resultItem.Totals[lang.ToString()] + 1;
+                        }
 
                         if (count < item.Versions.Count)
                         { fieldsValues = fieldsValues + "\n"; }

@@ -41,18 +41,18 @@ namespace RambollExportData.sitecore.admin
                     if (parent != null)
                     {
                      
-                       // GeFolderstData(parent);
+                         GeFolderstData(parent);
 
-                     //  Helper.CreateFile(Folders.CSV.ToString(), Folders.OutputName);
+                       Helper.CreateFile(Folders.CSV.ToString(), Folders.OutputName);
 
-                        foreach (var lang in parent.Languages)
-                        {
-                            Projects.CSV.AppendLine(Helper.GetHeader(Projects.Fields));
-                            Projects.Totals.Add(lang.ToString(), 0);
-                            GetMultiLanguageVersionData(Projects, parent, lang);
-                            Helper.CreateFile(Projects.CSV.ToString(), Projects.OutputName + "_" + lang);
-                            Projects.CSV.Clear();
-                        }
+                       foreach (var lang in parent.Languages)
+                       {
+                           Projects.CSV.AppendLine(Helper.GetHeader(Projects.Fields));
+                           Projects.Totals.Add(lang.ToString(), 0);
+                           GetMultiLanguageVersionData(Projects, parent, lang);
+                           Helper.CreateFile(Projects.CSV.ToString(), Projects.OutputName + "_" + lang);
+                           Projects.CSV.Clear();
+                       }
                     }           
                 
                  
@@ -83,19 +83,12 @@ namespace RambollExportData.sitecore.admin
 
                 if (sub.TemplateName.ToLower() == resultItem.TemplateName.Trim().ToLower())
                 {
-    
-                    string line = Helper.GetFieldsLineWithVersion(sub, resultItem.Fields);
+
+                    string line = Helper.GetFieldsLineWithVersion(sub,ref resultItem, lang.ToString());
                   
                     if (!string.IsNullOrEmpty(line))
                     {
                         resultItem.CSV.AppendLine(line);
-                        if (item.Versions.Count ==0)
-                        {
-                            resultItem.Totals[lang.ToString()] = resultItem.Totals[lang.ToString()] + 1;
-                        }else
-                        { 
-                        resultItem.Totals[lang.ToString()] = resultItem.Totals[lang.ToString()] + item.Versions.Count;
-                        }
                     }
                     
                 }
@@ -107,16 +100,18 @@ namespace RambollExportData.sitecore.admin
         private void GeFolderstData(Item parent)
         {
 
+              string[] templatesName= Folders.TemplateName.Trim().Split('|');
+
             if (parent.Children.Count == 0)
                 return;
 
             foreach (var item in parent.Children.AsEnumerable())
             {
 
-                if (item.TemplateName.ToLower() == Folders.TemplateName.Trim().ToLower())
+                if (templatesName.Where(x => x.ToLower() == item.TemplateName.ToLower()).ToList().Count >0)
                 {
                   Folders.CSV.AppendLine(Helper.GetFieldsLine(item, Folders.Fields));
-                 Folders.RecourdNumber = Folders.RecourdNumber + 1;
+                  Folders.RecourdNumber = Folders.RecourdNumber + 1;
                 }
                 GeFolderstData(item);
             }

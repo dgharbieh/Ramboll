@@ -1,6 +1,6 @@
-Start Path ,/sitecore/content/Home/Global/Projects/RDK/Byggeri/ABC,,
+Start Path ,/sitecore/content/Home/Global/Projects/RDK,,
 Include Language,FALSE,,
 Include Versions,FALSE,,
-Template Name,Folder,,
+Template Name,Folder|Media folder,,
 Output Name,ExportedProjectsFolders,,
 Exported Fields,ID,Path,Name,Insert options

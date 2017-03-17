@@ -83,17 +83,10 @@ namespace RambollExportData.sitecore.admin
 
                 if (sub.TemplateName.ToLower() == resultItem.TemplateName.Trim().ToLower())
                 {
-                    string line = Helper.GetFieldsLineWithVersion(sub, resultItem.Fields);
+                    string line = Helper.GetFieldsLineWithVersion(sub,ref resultItem,lang.ToString());
                     if (!string.IsNullOrEmpty(line))
                     {
                         resultItem.CSV.AppendLine(line);
-                        if (item.Versions.Count ==0)
-                        {
-                            resultItem.Totals[lang.ToString()] = resultItem.Totals[lang.ToString()] + 1;
-                        }else
-                        { 
-                        resultItem.Totals[lang.ToString()] = resultItem.Totals[lang.ToString()] + item.Versions.Count;
-                        }
                     }
                 }
 
