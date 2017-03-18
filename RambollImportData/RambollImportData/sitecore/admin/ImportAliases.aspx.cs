@@ -71,6 +71,10 @@ namespace RambollImportData.sitecore.admin
                         Item newAliases = parent.Add(row["Name"].ToString(), template);
                         newAliases.Editing.BeginEdit();
                         newAliases["Old Id"] = row["ID"].ToString();
+                        if (!string.IsNullOrEmpty(row["Insert options"].ToString()))
+                        {
+                            newAliases["__Masters"] = row["Insert options"].ToString().Replace("{0D74D36D-37F1-4A4C-97E7-257ADB72AEA6}", "{54BCFFB7-8F46-4948-AE74-DA5B6B5AFA86}");
+                        }
                         newAliases.Editing.EndEdit();
                         AliasesFolders.InsertedNewRecords = AliasesFolders.InsertedNewRecords + 1;
                     }
@@ -78,6 +82,10 @@ namespace RambollImportData.sitecore.admin
                     {
                         folder.Editing.BeginEdit();
                         folder["Old Id"] = row["ID"].ToString();
+                        if (!string.IsNullOrEmpty(row["Insert options"].ToString()))
+                        {
+                            folder["__Masters"] = row["Insert options"].ToString().Replace("{0D74D36D-37F1-4A4C-97E7-257ADB72AEA6}", "{54BCFFB7-8F46-4948-AE74-DA5B6B5AFA86}");
+                        }
                         folder.Editing.EndEdit();
                         AliasesFolders.UpdatedRecords = AliasesFolders.UpdatedRecords + 1;
                     }
