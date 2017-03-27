@@ -20,7 +20,7 @@ namespace RambollExportData.sitecore.admin
         public Result Projects;
         protected void Page_Load(object sender, EventArgs e)
         {
-            Helper.ParseMappingFile(ref Folders, "ProjectsFolders");
+           Helper.ParseMappingFile(ref Folders, "ProjectsFolders");
             Helper.ParseMappingFile(ref Projects, "Projects",true);
 
         }
@@ -36,14 +36,14 @@ namespace RambollExportData.sitecore.admin
                 {
 
                     Database masterDb = Helper.GetDatabase();
-                    Item parent = masterDb.GetItem(Folders.StartPath.Trim());
+                    Item parent = masterDb.GetItem(Projects.StartPath.Trim());
                   
                     if (parent != null)
                     {
                      
-                         GeFolderstData(parent);
+                     //    GeFolderstData(parent);
 
-                       Helper.CreateFile(Folders.CSV.ToString(), Folders.OutputName);
+                    //   Helper.CreateFile(Folders.CSV.ToString(), Folders.OutputName);
 
                        foreach (var lang in parent.Languages)
                        {
