@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -206,7 +207,7 @@ namespace RambollImportData.sitecore.admin
             item.Editing.BeginEdit();
             item["Old Id"] = row["ID"].ToString();
 
-            for (var i = 0; i < Projects.ImportedFields.Count - 1; i++)
+            for (var i = 0; i < Projects.ImportedFields.Count; i++)
             {
 
                 try
@@ -369,10 +370,10 @@ namespace RambollImportData.sitecore.admin
 
                         PublicationItemOne.Editing.BeginEdit();
                         PublicationItemOne["HeaderForSubject"] = HeaderForSubjectOne;
-                        PublicationItemOne["TeaserForSubject"] = TeaserForSubjectOne;
-                        PublicationItemOne["LinkToForSubject"] = LinkToForSubjectOne;
-                        PublicationItemOne["Picture105x98PixForSubject"] = Picture105x98PixForSubjectOne;
                         PublicationItemOne["LinkToFromPicture105x98PixForSubject"] = LinkToFromPicture105x98PixForSubjectOne;
+                        ParseTeaserForSubject(ref PublicationItemOne, TeaserForSubjectOne, LinkToFromPicture105x98PixForSubjectOne);
+                        PublicationItemOne["LinkToForSubject"] = LinkToForSubjectOne;
+                        PublicationItemOne["Picture105x98PixForSubject"] = Picture105x98PixForSubjectOne;           
                         PublicationItemOne["Old Id"] = i.ToString();
                         PublicationItemOne.Editing.EndEdit();
 
@@ -390,14 +391,56 @@ namespace RambollImportData.sitecore.admin
                         }
                         PublicationItemTwo.Editing.BeginEdit();
                         PublicationItemTwo["HeaderForSubject"] = HeaderForSubjectTwo;
-                        PublicationItemTwo["TeaserForSubject"] = TeaserForSubjectTwo;
+                        PublicationItemTwo["LinkToFromPicture105x98PixForSubject"] = LinkToFromPicture105x98PixForSubjectTwo;
+                        ParseTeaserForSubject(ref PublicationItemTwo, TeaserForSubjectTwo, LinkToFromPicture105x98PixForSubjectTwo);
                         PublicationItemTwo["LinkToForSubject"] = LinkToForSubjectTwo;
                         PublicationItemTwo["Picture105x98PixForSubject"] = Picture105x98PixForSubjectTwo;
-                        PublicationItemTwo["LinkToFromPicture105x98PixForSubject"] = LinkToFromPicture105x98PixForSubjectTwo;
                         PublicationItemTwo["Old Id"] = next.ToString();
                         PublicationItemTwo.Editing.EndEdit();
                     }
 
+
+                }
+            }
+        }
+
+        private void ParseTeaserForSubject(ref Item PublicationItemOne, string TeaserForSubject, string LinkToFromPicture105x98PixForSubject)
+        {
+            if (!string.IsNullOrEmpty(TeaserForSubject.Trim()))
+            {
+                PublicationItemOne["TeaserForSubject"] = TeaserForSubject;
+            }
+            else
+            {
+                if (!string.IsNullOrEmpty(LinkToFromPicture105x98PixForSubject.Trim()))
+                {
+                    string Internallink = "<p><a href='~/link.aspx?_id=@id&amp;_z=z'>@text</a></p>";
+
+                    string Externallink = "<p><a href='@href'>@text</a></p>";
+
+                    string MediaLink = "<p><a href='-/media/@id.ashx'>cover</a></p>";
+
+
+                    Sitecore.Data.Fields.LinkField lnkField = PublicationItemOne.Fields["LinkToFromPicture105x98PixForSubject"];
+                    if (lnkField != null)
+                    {
+                        if (lnkField.LinkType.ToLower() == "external")
+                        {
+                            Externallink = Externallink.Replace("@href", lnkField.Url).Replace("@text", lnkField.Text);
+                            PublicationItemOne["TeaserForSubject"] = Externallink;
+                        }
+                        else if (lnkField.LinkType == "internal")
+                        {
+
+                            Internallink = Internallink.Replace("@id", lnkField.TargetID.ToString().Replace("{","").Replace("}","").Replace("-","")).Replace("@text", lnkField.Text);
+                            PublicationItemOne["TeaserForSubject"] = Internallink;
+                        }
+                        else if (lnkField.LinkType == "media")
+                        {
+                            MediaLink = MediaLink.Replace("@id", lnkField.TargetID.ToString().Replace("{", "").Replace("}", "").Replace("-", "")).Replace("@text", lnkField.Text);
+                            PublicationItemOne["TeaserForSubject"] = MediaLink;
+                        }
+                    }
 
                 }
             }

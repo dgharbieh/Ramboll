@@ -11,6 +11,7 @@ Path,,
 Name,,
 ProjectName,ProjectName
 ProjectLocation,ProjectLocation
+PhotographerCreditsText,PhotographerCreditsText
 ShortProjectDescription,ShortProjectDescription
 1PageProjectDescription,1PageProjectDescription
 PictureSize_16_9ratio_min640x360pix_prefered1280x720pix,PictureSize_16_9ratio_min640x360pix_prefered1280x720pix
@@ -40,3 +41,9 @@ Summary,Summary
 Materials,Materials
 HeaderForShowingUpTo22PublLinksOrNews,HeaderForPublLinksOrNews
 TeaserForShowingUpTo22PublLinksOrNews,TeaserForPublLinksOrNews
+ImageFolder,ImageFolder
+MetaDescription,MetaDescription
+DefaultDescriptionField,DefaultDescriptionField
+AlternativeBrowserTitle,AlternativeBrowserTitle
+RemarketingTag,RemarketingTag
+CustomMetaTags,CustomMetaTags
