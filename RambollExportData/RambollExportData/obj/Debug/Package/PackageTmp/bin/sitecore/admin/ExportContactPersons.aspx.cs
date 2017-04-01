@@ -14,14 +14,14 @@ using System.Web.UI.WebControls;
 
 namespace RambollExportData.sitecore.admin
 {
-    public partial class ExportProjects : System.Web.UI.Page
+    public partial class ExportContactPersons : System.Web.UI.Page
     {
         public Result Folders;
-        public Result Projects;
+        public Result ContactPersons;
         protected void Page_Load(object sender, EventArgs e)
         {
-            Helper.ParseMappingFile(ref Folders, "ProjectsFolders");
-            Helper.ParseMappingFile(ref Projects, "Projects",true);
+            Helper.ParseMappingFile(ref Folders, "ContactPersonsFolders");
+            Helper.ParseMappingFile(ref ContactPersons, "ContactPersons",true);
 
         }
 
@@ -45,14 +45,14 @@ namespace RambollExportData.sitecore.admin
 
                        Helper.CreateFile(Folders.CSV.ToString(), Folders.OutputName);
 
-                       foreach (var lang in parent.Languages)
-                       {
-                           Projects.CSV.AppendLine(Helper.GetHeader(Projects.Fields));
-                           Projects.Totals.Add(lang.ToString(), 0);
-                           GetMultiLanguageVersionData(Projects, parent, lang);
-                           Helper.CreateFile(Projects.CSV.ToString(), Projects.OutputName + "_" + lang);
-                           Projects.CSV.Clear();
-                       }
+                        foreach (var lang in parent.Languages)
+                        {
+                            ContactPersons.CSV.AppendLine(Helper.GetHeader(ContactPersons.Fields));
+                            ContactPersons.Totals.Add(lang.ToString(), 0);
+                            GetMultiLanguageVersionData(ContactPersons, parent, lang);
+                            Helper.CreateFile(ContactPersons.CSV.ToString(), ContactPersons.OutputName + "_" + lang);
+                            ContactPersons.CSV.Clear();
+                        }
                     }           
                 
                  

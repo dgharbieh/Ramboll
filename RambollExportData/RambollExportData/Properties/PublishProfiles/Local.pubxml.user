@@ -39,14 +39,32 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="bin/MappingFiles/AliasesFolders.csv">
       <publishTime>03/13/2017 00:24:25</publishTime>
     </File>
+    <File Include="bin/MappingFiles/ContactPersons.csv">
+      <publishTime>04/01/2017 22:05:44</publishTime>
+    </File>
+    <File Include="bin/MappingFiles/ContactPersonsFolders.csv">
+      <publishTime>04/01/2017 21:53:05</publishTime>
+    </File>
+    <File Include="bin/MappingFiles/ContactsPersons.csv">
+      <publishTime>04/01/2017 21:50:54</publishTime>
+    </File>
+    <File Include="bin/MappingFiles/ContactsPersonsFolders.csv">
+      <publishTime>04/01/2017 21:47:19</publishTime>
+    </File>
     <File Include="bin/MappingFiles/Countries.csv">
       <publishTime>03/10/2017 23:07:12</publishTime>
     </File>
     <File Include="bin/MappingFiles/MediaGallery.csv">
       <publishTime>03/10/2017 02:46:35</publishTime>
     </File>
+    <File Include="bin/MappingFiles/News.csv">
+      <publishTime>04/01/2017 22:11:19</publishTime>
+    </File>
+    <File Include="bin/MappingFiles/NewsFolders.csv">
+      <publishTime>04/01/2017 20:24:43</publishTime>
+    </File>
     <File Include="bin/MappingFiles/Projects.csv">
-      <publishTime>03/27/2017 22:49:52</publishTime>
+      <publishTime>04/01/2017 20:33:13</publishTime>
     </File>
     <File Include="bin/MappingFiles/ProjectsFolders.csv">
       <publishTime>03/18/2017 22:38:51</publishTime>
@@ -79,10 +97,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/02/2013 12:10:10</publishTime>
     </File>
     <File Include="bin/RambollExportData.dll">
-      <publishTime>03/27/2017 22:53:02</publishTime>
+      <publishTime>04/01/2017 22:14:42</publishTime>
     </File>
     <File Include="bin/RambollExportData.pdb">
-      <publishTime>03/27/2017 22:53:02</publishTime>
+      <publishTime>04/01/2017 22:14:42</publishTime>
     </File>
     <File Include="bin/roslyn/csc.exe">
       <publishTime>06/18/2015 20:19:46</publishTime>
@@ -144,6 +162,24 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="bin/sitecore/admin/ExportAliases.aspx.designer.cs">
       <publishTime>03/11/2017 14:01:23</publishTime>
     </File>
+    <File Include="bin/sitecore/admin/ExportContactPersons.aspx">
+      <publishTime>04/01/2017 21:54:55</publishTime>
+    </File>
+    <File Include="bin/sitecore/admin/ExportContactPersons.aspx.cs">
+      <publishTime>04/01/2017 21:56:42</publishTime>
+    </File>
+    <File Include="bin/sitecore/admin/ExportContactPersons.aspx.designer.cs">
+      <publishTime>04/01/2017 21:54:48</publishTime>
+    </File>
+    <File Include="bin/sitecore/admin/ExportContactsPersons.aspx">
+      <publishTime>04/01/2017 21:47:21</publishTime>
+    </File>
+    <File Include="bin/sitecore/admin/ExportContactsPersons.aspx.cs">
+      <publishTime>04/01/2017 21:47:21</publishTime>
+    </File>
+    <File Include="bin/sitecore/admin/ExportContactsPersons.aspx.designer.cs">
+      <publishTime>04/01/2017 21:46:43</publishTime>
+    </File>
     <File Include="bin/sitecore/admin/ExportCounties.aspx">
       <publishTime>03/07/2017 00:23:16</publishTime>
     </File>
@@ -180,11 +216,20 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="bin/sitecore/admin/ExportMediaGallery.aspx.designer.cs">
       <publishTime>03/10/2017 20:36:47</publishTime>
     </File>
+    <File Include="bin/sitecore/admin/ExportNews.aspx">
+      <publishTime>04/01/2017 20:26:52</publishTime>
+    </File>
+    <File Include="bin/sitecore/admin/ExportNews.aspx.cs">
+      <publishTime>04/01/2017 22:14:32</publishTime>
+    </File>
+    <File Include="bin/sitecore/admin/ExportNews.aspx.designer.cs">
+      <publishTime>04/01/2017 20:26:32</publishTime>
+    </File>
     <File Include="bin/sitecore/admin/ExportProjects.aspx">
       <publishTime>03/12/2017 23:29:11</publishTime>
     </File>
     <File Include="bin/sitecore/admin/ExportProjects.aspx.cs">
-      <publishTime>03/27/2017 22:52:53</publishTime>
+      <publishTime>03/28/2017 01:15:57</publishTime>
     </File>
     <File Include="bin/sitecore/admin/ExportProjects.aspx.designer.cs">
       <publishTime>03/12/2017 23:29:11</publishTime>
@@ -216,14 +261,32 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="MappingFiles/AliasesFolders.csv">
       <publishTime>03/13/2017 00:24:25</publishTime>
     </File>
+    <File Include="MappingFiles/ContactPersons.csv">
+      <publishTime>04/01/2017 22:05:44</publishTime>
+    </File>
+    <File Include="MappingFiles/ContactPersonsFolders.csv">
+      <publishTime>04/01/2017 21:53:05</publishTime>
+    </File>
+    <File Include="MappingFiles/ContactsPersons.csv">
+      <publishTime>04/01/2017 21:50:54</publishTime>
+    </File>
+    <File Include="MappingFiles/ContactsPersonsFolders.csv">
+      <publishTime>04/01/2017 21:47:19</publishTime>
+    </File>
     <File Include="MappingFiles/Countries.csv">
       <publishTime>03/10/2017 23:07:12</publishTime>
     </File>
     <File Include="MappingFiles/MediaGallery.csv">
       <publishTime>03/10/2017 02:46:35</publishTime>
     </File>
+    <File Include="MappingFiles/News.csv">
+      <publishTime>04/01/2017 22:11:19</publishTime>
+    </File>
+    <File Include="MappingFiles/NewsFolders.csv">
+      <publishTime>04/01/2017 20:24:43</publishTime>
+    </File>
     <File Include="MappingFiles/Projects.csv">
-      <publishTime>03/28/2017 01:08:38</publishTime>
+      <publishTime>04/01/2017 20:33:13</publishTime>
     </File>
     <File Include="MappingFiles/ProjectsFolders.csv">
       <publishTime>03/18/2017 22:38:51</publishTime>
@@ -233,6 +296,12 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="sitecore/admin/ExportAliases.aspx">
       <publishTime>03/11/2017 15:18:20</publishTime>
+    </File>
+    <File Include="sitecore/admin/ExportContactPersons.aspx">
+      <publishTime>04/01/2017 21:54:55</publishTime>
+    </File>
+    <File Include="sitecore/admin/ExportContactsPersons.aspx">
+      <publishTime>04/01/2017 21:47:21</publishTime>
     </File>
     <File Include="sitecore/admin/ExportCounties.aspx">
       <publishTime>03/07/2017 00:23:16</publishTime>
@@ -248,6 +317,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="sitecore/admin/ExportMediaGalleryaspx.aspx">
       <publishTime>03/08/2017 21:28:15</publishTime>
+    </File>
+    <File Include="sitecore/admin/ExportNews.aspx">
+      <publishTime>04/01/2017 20:26:52</publishTime>
     </File>
     <File Include="sitecore/admin/ExportProjects.aspx">
       <publishTime>03/12/2017 23:29:11</publishTime>

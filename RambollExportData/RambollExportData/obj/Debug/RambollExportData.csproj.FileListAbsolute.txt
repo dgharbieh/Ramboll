@@ -108,3 +108,13 @@ C:\Ramboll\Projects\Ramboll.git\RambollExportData\RambollExportData\bin\MappingF
 C:\Ramboll\Projects\Ramboll.git\RambollExportData\RambollExportData\bin\MappingFiles\Projects.csv
 C:\Ramboll\Projects\Ramboll.git\RambollExportData\RambollExportData\bin\sitecore\admin\ExportProjects.aspx.cs
 C:\Ramboll\Projects\Ramboll.git\RambollExportData\RambollExportData\bin\sitecore\admin\ExportProjects.aspx.designer.cs
+C:\Ramboll\Projects\Ramboll.git\RambollExportData\RambollExportData\bin\sitecore\admin\ExportNews.aspx
+C:\Ramboll\Projects\Ramboll.git\RambollExportData\RambollExportData\bin\MappingFiles\NewsFolders.csv
+C:\Ramboll\Projects\Ramboll.git\RambollExportData\RambollExportData\bin\MappingFiles\News.csv
+C:\Ramboll\Projects\Ramboll.git\RambollExportData\RambollExportData\bin\sitecore\admin\ExportNews.aspx.cs
+C:\Ramboll\Projects\Ramboll.git\RambollExportData\RambollExportData\bin\sitecore\admin\ExportNews.aspx.designer.cs
+C:\Ramboll\Projects\Ramboll.git\RambollExportData\RambollExportData\bin\sitecore\admin\ExportContactPersons.aspx
+C:\Ramboll\Projects\Ramboll.git\RambollExportData\RambollExportData\bin\MappingFiles\ContactPersons.csv
+C:\Ramboll\Projects\Ramboll.git\RambollExportData\RambollExportData\bin\MappingFiles\ContactPersonsFolders.csv
+C:\Ramboll\Projects\Ramboll.git\RambollExportData\RambollExportData\bin\sitecore\admin\ExportContactPersons.aspx.cs
+C:\Ramboll\Projects\Ramboll.git\RambollExportData\RambollExportData\bin\sitecore\admin\ExportContactPersons.aspx.designer.cs

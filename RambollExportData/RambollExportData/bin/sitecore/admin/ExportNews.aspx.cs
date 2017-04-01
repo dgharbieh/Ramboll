@@ -14,14 +14,14 @@ using System.Web.UI.WebControls;
 
 namespace RambollExportData.sitecore.admin
 {
-    public partial class ExportProjects : System.Web.UI.Page
+    public partial class ExportNews : System.Web.UI.Page
     {
         public Result Folders;
-        public Result Projects;
+        public Result News;
         protected void Page_Load(object sender, EventArgs e)
         {
-            Helper.ParseMappingFile(ref Folders, "ProjectsFolders");
-            Helper.ParseMappingFile(ref Projects, "Projects",true);
+            Helper.ParseMappingFile(ref Folders, "NewsFolders");
+            Helper.ParseMappingFile(ref News, "News",true);
 
         }
 
@@ -41,18 +41,18 @@ namespace RambollExportData.sitecore.admin
                     if (parent != null)
                     {
                      
-                         GeFolderstData(parent);
+                       GeFolderstData(parent);
 
                        Helper.CreateFile(Folders.CSV.ToString(), Folders.OutputName);
 
-                       foreach (var lang in parent.Languages)
-                       {
-                           Projects.CSV.AppendLine(Helper.GetHeader(Projects.Fields));
-                           Projects.Totals.Add(lang.ToString(), 0);
-                           GetMultiLanguageVersionData(Projects, parent, lang);
-                           Helper.CreateFile(Projects.CSV.ToString(), Projects.OutputName + "_" + lang);
-                           Projects.CSV.Clear();
-                       }
+                        foreach (var lang in parent.Languages)
+                        {
+                            News.CSV.AppendLine(Helper.GetHeader(News.Fields));
+                            News.Totals.Add(lang.ToString(), 0);
+                            GetMultiLanguageVersionData(News, parent, lang);
+                            Helper.CreateFile(News.CSV.ToString(), News.OutputName + "_" + lang);
+                            News.CSV.Clear();
+                        }
                     }           
                 
                  

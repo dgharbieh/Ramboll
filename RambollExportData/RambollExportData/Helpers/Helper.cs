@@ -176,7 +176,10 @@ namespace RambollExportData.Helpers
                                     case "name":
                                         fieldsValues = fieldsValues + version.Name;
                                         break;
-                                    case "path":
+                                 case "name*":// Field Name
+                                       fieldsValues = fieldsValues + ReplaceComma(version.Fields[fields[i].ToString().Replace("*","")].Value);
+                                       break;
+                                case "path":
                                         fieldsValues = fieldsValues + version.Paths.FullPath;
                                         break;
                                     case "version":

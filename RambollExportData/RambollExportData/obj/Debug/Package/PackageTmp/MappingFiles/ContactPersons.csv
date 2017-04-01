@@ -1,0 +1,43 @@
+Start Path ,sitecore/content/Home/Global/Contacts/ContactPersons,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Include Language,TRUE,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Include Versions,TRUE,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Template Name,ComContactPerson,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Output Name,ExportedContactPersons,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Exported Fields,,
+ID,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Version,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Path,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Name,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+PositionOrTitle
+Education
+PositionsInOtherCompanies
+BornInTextAndYear
+LinkToPresentationPageForPerson
+HomeOfficeForAddress
+Quote
+CVText
+RecentProject1
+RecentProject2
+RecentProject3
+RecentProject4
+RecentProject5
+RecentProject6
+RecentProject7
+RecentProject8
+TextAllThisPersonsProjects
+ColourForBoxUnderPicture
+Picture270PixWide
+Picture_16_9ratio_min640x360pix_prefered1280x720pix
+Name*
+PhoneNumber
+MobileNumber
+FaxNumber
+eMail
+Website,
+IsEmailDisplayed,
+MetaDescription
+DefaultDescriptionField
+AlternativeBrowserTitle
+RemarketingTag
+CustomMetaTags
+SearchCategory
