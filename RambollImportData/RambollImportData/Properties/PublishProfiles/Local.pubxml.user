@@ -61,10 +61,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/15/2015 02:06:24</publishTime>
     </File>
     <File Include="bin/RambollImportData.dll">
-      <publishTime>03/28/2017 00:57:25</publishTime>
+      <publishTime>04/01/2017 23:15:37</publishTime>
     </File>
     <File Include="bin/RambollImportData.pdb">
-      <publishTime>03/28/2017 00:57:25</publishTime>
+      <publishTime>04/01/2017 23:15:37</publishTime>
     </File>
     <File Include="bin/roslyn/csc.exe">
       <publishTime>06/18/2015 20:19:46</publishTime>
@@ -144,17 +144,29 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="MappingFiles/AliasesFolders.csv">
       <publishTime>03/13/2017 00:50:31</publishTime>
     </File>
+    <File Include="MappingFiles/ContactPersons.csv">
+      <publishTime>04/01/2017 22:53:22</publishTime>
+    </File>
+    <File Include="MappingFiles/ContactPersonsFolders.csv">
+      <publishTime>04/01/2017 23:01:53</publishTime>
+    </File>
     <File Include="MappingFiles/Countries.csv">
       <publishTime>03/10/2017 23:30:37</publishTime>
     </File>
     <File Include="MappingFiles/MediaGallery.csv">
       <publishTime>03/10/2017 02:25:59</publishTime>
     </File>
+    <File Include="MappingFiles/News.csv">
+      <publishTime>04/01/2017 22:53:22</publishTime>
+    </File>
+    <File Include="MappingFiles/NewsFolders.csv">
+      <publishTime>04/01/2017 23:01:28</publishTime>
+    </File>
     <File Include="MappingFiles/Projects.csv">
-      <publishTime>03/27/2017 23:42:00</publishTime>
+      <publishTime>04/01/2017 22:57:27</publishTime>
     </File>
     <File Include="MappingFiles/ProjectsFolders.csv">
-      <publishTime>03/15/2017 23:46:28</publishTime>
+      <publishTime>04/01/2017 22:57:27</publishTime>
     </File>
     <File Include="sitecore/admin/ExportCounties.aspx">
       <publishTime>03/07/2017 00:08:34</publishTime>
@@ -171,14 +183,20 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="sitecore/admin/ImportAliases.aspx">
       <publishTime>03/16/2017 00:57:12</publishTime>
     </File>
+    <File Include="sitecore/admin/ImportContactPersons.aspx">
+      <publishTime>04/01/2017 22:54:45</publishTime>
+    </File>
     <File Include="sitecore/admin/ImportCounties.aspx">
       <publishTime>03/11/2017 16:22:05</publishTime>
     </File>
     <File Include="sitecore/admin/ImportData.aspx">
       <publishTime>03/07/2017 00:11:30</publishTime>
     </File>
+    <File Include="sitecore/admin/ImportNews.aspx">
+      <publishTime>04/01/2017 23:15:31</publishTime>
+    </File>
     <File Include="sitecore/admin/ImportProjects.aspx">
-      <publishTime>03/18/2017 00:44:57</publishTime>
+      <publishTime>04/01/2017 22:53:36</publishTime>
     </File>
   </ItemGroup>
 </Project>

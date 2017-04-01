@@ -123,6 +123,20 @@
     <Compile Include="sitecore\admin\ImportAliases.aspx.designer.cs">
       <DependentUpon>ImportAliases.aspx</DependentUpon>
     </Compile>
+    <Compile Include="sitecore\admin\ImportNews.aspx.cs">
+      <DependentUpon>ImportNews.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="sitecore\admin\ImportNews.aspx.designer.cs">
+      <DependentUpon>ImportNews.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="sitecore\admin\ImportContactPersons.aspx.cs">
+      <DependentUpon>ImportContactPersons.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="sitecore\admin\ImportContactPersons.aspx.designer.cs">
+      <DependentUpon>ImportContactPersons.aspx</DependentUpon>
+    </Compile>
     <Compile Include="sitecore\admin\ImportProjects.aspx.cs">
       <DependentUpon>ImportProjects.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -159,6 +173,10 @@
     <Content Include="MappingFiles\AliasesFolders.csv" />
     <Content Include="MappingFiles\ProjectsFolders.csv" />
     <Content Include="MappingFiles\Projects.csv" />
+    <Content Include="MappingFiles\ContactPersons.csv" />
+    <Content Include="MappingFiles\ContactPersonsFolders.csv" />
+    <Content Include="MappingFiles\News.csv" />
+    <Content Include="MappingFiles\NewsFolders.csv" />
     <None Include="Properties\PublishProfiles\Local.pubxml" />
   </ItemGroup>
   <ItemGroup>
@@ -184,6 +202,8 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="sitecore\admin\ImportAliases.aspx" />
+    <Content Include="sitecore\admin\ImportNews.aspx" />
+    <Content Include="sitecore\admin\ImportContactPersons.aspx" />
     <Content Include="sitecore\admin\ImportProjects.aspx" />
     <Content Include="sitecore\admin\ImportCounties.aspx" />
     <Content Include="sitecore\admin\ImportData.aspx" />

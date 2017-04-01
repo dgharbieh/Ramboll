@@ -1,0 +1,8 @@
+Start Path,/sitecore/content/Ramboll/Global/News,,
+Export Path,/sitecore/content/Home/Global/News,,
+Include Language,FALSE,,
+Include Versions,FALSE,,
+Template Name,/sitecore/templates/Common/Folder,,
+Output Name,ExportedNewsFolders,,
+Exported Fields,ID,Name,Path
+Imported Fields,ID,Name
