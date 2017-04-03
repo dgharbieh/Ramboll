@@ -22,6 +22,13 @@ namespace RambollImportData.sitecore.admin
         public int UpdatedRecords = 0;
         public int InsertedVersionsRecords = 0;
         public int InsertedNewRecords = 0;
+
+        public Database masterDb;
+        public TemplateItem Folderstemplate;
+        public TemplateItem PictureAndTextTemplate;
+        public TemplateItem PublicationLinksOrNewsTemplate;
+        public TemplateItem PublicationHeaderTemplate;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             Helper.ParseMappingFile(ref NewsFolders, "NewsFolders");
@@ -29,8 +36,16 @@ namespace RambollImportData.sitecore.admin
         }
         protected void ImportData(object sender, EventArgs e)
         {
+
+
             try
             {
+                  masterDb = Helper.GetDatabase();
+                  Folderstemplate = Helper.GetDatabase().GetItem("/sitecore/templates/Common/Folder");
+                  PictureAndTextTemplate = masterDb.GetItem("{24CF86AE-37CE-4A72-A18B-DD30FF9515BD}");
+                  PublicationLinksOrNewsTemplate = masterDb.GetItem("{BDC80C68-8123-4079-B007-C211B2FFA43D}");
+                  PublicationHeaderTemplate = masterDb.GetItem("{CFCD9E3B-7E77-4994-9517-FDE19965286F}");
+
                 ImportDataTable(Helper.GetDataTable(NewsFolders), NewsFolders);
                 ImportMultiLanguageDataTable(Helper.GetLanguagesDataTable(News), News);
 
@@ -48,8 +63,6 @@ namespace RambollImportData.sitecore.admin
         {
             using (new SecurityDisabler())
             {
-
-                Database masterDb = Helper.GetDatabase();
                 TemplateItem template = masterDb.GetItem(NewsFolders.TemplateName);
                 Item parent;
                 Item folder;
@@ -106,7 +119,6 @@ namespace RambollImportData.sitecore.admin
         protected void ImportMultiLanguageDataTable(Dictionary<string, DataTable> dataTables, Result News)
         {
             UpdatedRecords = InsertedVersionsRecords = InsertedNewRecords = 0;
-            Database masterDb = Helper.GetDatabase();
             TemplateItem template = masterDb.GetItem(News.TemplateName);
             foreach (var lang in Helper.GetDatabase().Languages)
             {
@@ -203,7 +215,7 @@ namespace RambollImportData.sitecore.admin
         private void UpdateItem(ref Item item, DataRow row)
         {
 
-            List<Item> Countries = Helper.GetDatabase().GetItem("/sitecore/system/Settings/Analytics/Lookups/Countries").Children.AsEnumerable().ToList();
+          //  List<Item> Countries = Helper.GetDatabase().GetItem("/sitecore/system/Settings/Analytics/Lookups/Countries").Children.AsEnumerable().ToList();
             item.Editing.BeginEdit();
             item["Old Id"] = row["ID"].ToString();
 
@@ -216,10 +228,29 @@ namespace RambollImportData.sitecore.admin
                     if (!string.IsNullOrEmpty(importField))
                     {
                         string exportField = News.ExportedFields[i].ToString();
-
-                        if(importField.ToLower()=="Projects")
+                        //clear the data 
+                        if (exportField.ToLower() == "project1")
                         {
-                            item[importField.Trim()] = (string.IsNullOrEmpty(item[importField.Trim()]) ? row[exportField].ToString() : item[importField.Trim()] + "|" + row[exportField].ToString());
+                            item[importField.Trim()] = "";
+                        }
+
+                        if (importField.ToLower()=="projects")
+                        {
+
+                            if (!string.IsNullOrEmpty(row[exportField].ToString()))
+                            {
+
+                                if (string.IsNullOrEmpty(item[importField.Trim()]))
+                                {
+                                    item[importField.Trim()] = row[exportField].ToString();
+                                }
+                                else
+                                {
+                                    item[importField.Trim()] = item[importField.Trim()] + "|" + row[exportField].ToString();
+                                }
+
+                            }
+
                         }
                         else
                         {
@@ -245,13 +276,8 @@ namespace RambollImportData.sitecore.admin
         private void UpdatePictureAndText(ref Item item, DataRow row)
         {
 
-            Database masterDb = Helper.GetDatabase();
-            TemplateItem Folderstemplate = Helper.GetDatabase().GetItem("/sitecore/templates/Common/Folder");
-
-
             ///PictureAndText
 
-            TemplateItem PictureAndTextTemplate = masterDb.GetItem("{24CF86AE-37CE-4A72-A18B-DD30FF9515BD}");
             Item PictureAndTextFolder = item.Children.AsEnumerable().ToList().Where(x => x.Name.ToLower() == "Pictures-and-Texts".ToLower()).FirstOrDefault();
             for (var i = 1; i <= 5; i++)
             {
@@ -294,14 +320,7 @@ namespace RambollImportData.sitecore.admin
         }
         private void UpdatePuplications(ref Item item, DataRow row)
         {
-            Database masterDb = Helper.GetDatabase();
-            TemplateItem Folderstemplate = Helper.GetDatabase().GetItem("/sitecore/templates/Common/Folder");
 
-
-
-            // Puplications
-            TemplateItem PublicationLinksOrNewsTemplate = masterDb.GetItem("{BDC80C68-8123-4079-B007-C211B2FFA43D}");
-            TemplateItem PublicationHeaderTemplate = masterDb.GetItem("{CFCD9E3B-7E77-4994-9517-FDE19965286F}");
             Item PublicationsFolder = item.Children.AsEnumerable().ToList().Where(x => x.Name.ToLower() == "Publications".ToLower()).FirstOrDefault();
 
 

@@ -1,49 +1,44 @@
-Start Path,/sitecore/content/Ramboll/Global/Contacts/ContactPersons,
-Export Path,/sitecore/content/Home/Global/Contacts/ContactPersons,
-Include Language,TRUE,
-Include Versions,TRUE,
-Template Name,/sitecore/templates/Project/Ramboll/Global Templates/Project,
-Output Name,ExportedNews,
+Start Path,/sitecore/content/Ramboll/Global/Contacts/ContactPersons
+Export Path,/sitecore/content/Home/Global/Contacts/ContactPersons
+Include Language,TRUE
+Include Versions,TRUE
+Template Name,/sitecore/templates/Project/Ramboll/RambollCommon/ContactPerson
+Output Name,ExportedContactPersons
 Exported Fields,Imported Fields
-ID,,
-Version,,
-Path,,
-Name,,
-ProjectName,ProjectName
-ProjectLocation,ProjectLocation
-PhotographerCreditsText,PhotographerCreditsText
-ShortProjectDescription,ShortProjectDescription
-1PageProjectDescription,1PageProjectDescription
-PictureSize_16_9ratio_min640x360pix_prefered1280x720pix,PictureSize_16_9ratio_min640x360pix_prefered1280x720pix
-Client,Client
-Architects,Architects
-CompletionYear,CompletionYear
-Value,Value
-ConstructionText,ConstructionText
-ServicesOnProject,ServicesOnProject
-Countries,Countries
-ContactPerson1,ContactPersons
-CommentsNotToBeShownOnHomepages,CommentsNotToBeShownOnHomepages
-Awards,Awards
-PersonsOnProject,ContactPersons
-LocationAddress,LocationAddress
-Text2Name,Text2Name
-Text2Content,Text2Content
-Text3Name,Text3Name
-Text3Content,Text3Content
-Text4Name,Text4Name
-Text4Content,Text4Content
-Squaremeter,Squaremeter
-LongProjectDescription,LongProjectDescription
-Picture1Size_16_9ratio_min640x360pix_prefered1280x720pix,PictureSize_16_9ratio_min640x360pix_prefered1280x720pix
-ProjectData,ProjectData
-Summary,Summary
-Materials,Materials
-HeaderForShowingUpTo22PublLinksOrNews,HeaderForPublLinksOrNews
-TeaserForShowingUpTo22PublLinksOrNews,TeaserForPublLinksOrNews
-ImageFolder,ImageFolder
+ID,
+Version,
+Path,
+Name,
+PositionOrTitle,PositionOrTitle
+Education,Education
+PositionsInOtherCompanies,PositionsInOtherCompanies
+BornInTextAndYear,BornInTextAndYear
+LinkToPresentationPageForPerson,LinkToPresentationPageForPerson
+HomeOfficeForAddress,HomeOfficeForAddress
+Quote,Quote
+CVText,CVText
+RecentProject1,RecentProjects
+RecentProject2,RecentProjects
+RecentProject3,RecentProjects
+RecentProject4,RecentProjects
+RecentProject5,RecentProjects
+RecentProject6,RecentProjects
+RecentProject7,RecentProjects
+RecentProject8,RecentProjects
+TextAllThisPersonsProjects,TextAllThisPersonsProjects
+ColourForBoxUnderPicture,ColourForBoxUnderPicture
+Picture270PixWide, Picture640x640PixWide
+Picture_16_9ratio_min640x360pix_prefered1280x720pix,Picture_16_9ratio_min640x360pix_prefered1280x720pix
+Name,Name
+PhoneNumber,PhoneNumber
+MobileNumber,MobileNumber
+FaxNumber,FaxNumber
+eMail,eMail
+Website,Website
+IsEmailDisplayed,IsEmailDisplayed
 MetaDescription,MetaDescription
 DefaultDescriptionField,DefaultDescriptionField
 AlternativeBrowserTitle,AlternativeBrowserTitle
 RemarketingTag,RemarketingTag
 CustomMetaTags,CustomMetaTags
+SearchCategory,SearchCategory
