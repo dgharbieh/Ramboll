@@ -259,7 +259,7 @@ namespace RambollImportData.sitecore.admin
 
             ///PictureAndText
 
-            TemplateItem PictureAndTextTemplate = masterDb.GetItem("/sitecore/templates/Project/Ramboll/Global Templates/PicturesAndText");
+            TemplateItem PictureAndTextTemplate = masterDb.GetItem("{24CF86AE-37CE-4A72-A18B-DD30FF9515BD}");
             Item PictureAndTextFolder = item.Children.AsEnumerable().ToList().Where(x => x.Name.ToLower() == "Pictures-and-Texts".ToLower()).FirstOrDefault();
             for (var i = 1; i <= 5; i++)
             {
@@ -308,8 +308,8 @@ namespace RambollImportData.sitecore.admin
 
 
             // Puplications
-            TemplateItem PublicationLinksOrNewsTemplate = masterDb.GetItem("/sitecore/templates/Project/Ramboll/Global Templates/PublicationLinksOrNews");
-            TemplateItem PublicationHeaderTemplate = masterDb.GetItem("/sitecore/templates/Project/Ramboll/Global Templates/PublicationHeader");
+            TemplateItem PublicationLinksOrNewsTemplate = masterDb.GetItem("{BDC80C68-8123-4079-B007-C211B2FFA43D}");
+            TemplateItem PublicationHeaderTemplate = masterDb.GetItem("{CFCD9E3B-7E77-4994-9517-FDE19965286F}");
             Item PublicationsFolder = item.Children.AsEnumerable().ToList().Where(x => x.Name.ToLower() == "Publications".ToLower()).FirstOrDefault();
 
 

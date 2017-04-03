@@ -1,46 +1,46 @@
-Start Path,/sitecore/content/Ramboll/Global/News,
-Export Path,/sitecore/content/Home/Global/News,
-Include Language,TRUE,
-Include Versions,TRUE,
-Template Name,/sitecore/templates/Project/Ramboll/Global Templates/Project,
-Output Name,ExportedNews,
+Start Path,/sitecore/content/Ramboll/Global/News
+Export Path,/sitecore/content/Home/Global/News
+Include Language,TRUE
+Include Versions,TRUE
+Template Name,/sitecore/templates/Project/Ramboll/RambollCommon/NewsItem
+Output Name,ExportedNews
 Exported Fields,Imported Fields
-ID,,
-Version,,
-Path,,
-Name,,
-ProjectName,ProjectName
-ProjectLocation,ProjectLocation
-PhotographerCreditsText,PhotographerCreditsText
-ShortProjectDescription,ShortProjectDescription
-1PageProjectDescription,1PageProjectDescription
-PictureSize_16_9ratio_min640x360pix_prefered1280x720pix,PictureSize_16_9ratio_min640x360pix_prefered1280x720pix
-Client,Client
-Architects,Architects
-CompletionYear,CompletionYear
-Value,Value
-ConstructionText,ConstructionText
-ServicesOnProject,ServicesOnProject
-Countries,Countries
-ContactPerson1,ContactPersons
-CommentsNotToBeShownOnHomepages,CommentsNotToBeShownOnHomepages
-Awards,Awards
-PersonsOnProject,ContactPersons
-LocationAddress,LocationAddress
-Text2Name,Text2Name
-Text2Content,Text2Content
-Text3Name,Text3Name
-Text3Content,Text3Content
-Text4Name,Text4Name
-Text4Content,Text4Content
-Squaremeter,Squaremeter
-LongProjectDescription,LongProjectDescription
-Picture1Size_16_9ratio_min640x360pix_prefered1280x720pix,PictureSize_16_9ratio_min640x360pix_prefered1280x720pix
-ProjectData,ProjectData
-Summary,Summary
-Materials,Materials
+ID,
+Version,
+Path,
+Name,
+Date,Date
+Header,Header
+TeaserText,TeaserText
+LargePicture_16_9ratio_min640x360pix_prefered1280_720pix,LargePicture_16_9ratio_min640x360pix_prefered1280_720pix
 HeaderForShowingUpTo22PublLinksOrNews,HeaderForPublLinksOrNews
 TeaserForShowingUpTo22PublLinksOrNews,TeaserForPublLinksOrNews
+HeaderForShowingUpTo2Projects,HeaderForShowingUpTo2Projects
+TeaserForShowingUpTo2Projects,TeaserForShowingUpTo2Projects
+Project1,Projects
+Project2,Projects
+Project3,Projects
+Project4,Projects
+ShowLinkToAllProjects,ShowLinkToAllProjects
+Project5,Projects
+Project6,Projects
+Project7,Projects
+Project8,Projects
+Project9,Projects
+Project10,Projects
+Project11,Projects
+Project12,Projects
+Project13,Projects
+Project14,Projects
+Project15,Projects
+Project16,Projects
+Project17,Projects
+Project18,Projects
+Project19,Projects
+Project20,Projects
+HeaderForContactsSection,HeaderForContactsSection
+TeaserForContactsSection,TeaserForContactsSection
+ContactPersons,ContactPersons
 ImageFolder,ImageFolder
 MetaDescription,MetaDescription
 DefaultDescriptionField,DefaultDescriptionField

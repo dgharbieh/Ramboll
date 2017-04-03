@@ -32,7 +32,7 @@ namespace RambollImportData.sitecore.admin
             try
             {
                 ImportDataTable(Helper.GetDataTable(NewsFolders), NewsFolders);
-             //   ImportMultiLanguageDataTable(Helper.GetLanguagesDataTable(News), News);
+                ImportMultiLanguageDataTable(Helper.GetLanguagesDataTable(News), News);
 
                 pnSuccess.Visible = true;
                 pnFailure.Visible = false;
@@ -75,8 +75,7 @@ namespace RambollImportData.sitecore.admin
                             newNews["Old Id"] = row["ID"].ToString();
                             if (!string.IsNullOrEmpty(row["Insert options"].ToString()))
                             {
-                                //ToDo :here
-                                //newNews["__Masters"] = row["Insert options"].ToString().Replace("{08527C66-B6AE-4B31-B9C0-A63439566686}", "{ED2FBBC9-26E0-44B1-B60C-17E753E2E819}");
+                                newNews["__Masters"] = row["Insert options"].ToString().Replace("{C1033422-59DC-40C4-90A8-555CCDD619BB}", "{2419C8C4-3C47-4106-A8B1-6363DC94CC21}");
                             }
                             newNews.Editing.EndEdit();
                             NewsFolders.InsertedNewRecords = NewsFolders.InsertedNewRecords + 1;
@@ -87,7 +86,7 @@ namespace RambollImportData.sitecore.admin
                             folder["Old Id"] = row["ID"].ToString();
                             if (!string.IsNullOrEmpty(row["Insert options"].ToString()))
                             {
-                                folder["__Masters"] = row["Insert options"].ToString().Replace("{08527C66-B6AE-4B31-B9C0-A63439566686}", "{ED2FBBC9-26E0-44B1-B60C-17E753E2E819}");
+                                folder["__Masters"] = row["Insert options"].ToString().Replace("{C1033422-59DC-40C4-90A8-555CCDD619BB}", "{2419C8C4-3C47-4106-A8B1-6363DC94CC21}");
                             }
                             folder.Editing.EndEdit();
                             NewsFolders.UpdatedRecords = NewsFolders.UpdatedRecords + 1;
@@ -186,21 +185,21 @@ namespace RambollImportData.sitecore.admin
 
         }
 
-        private string  MapCountriesItems(List<Item> Countries, string idsString)
-        {
-            string result = "";
-            string[] ids = idsString.Split('|');
+        //private string  MapCountriesItems(List<Item> Countries, string idsString)
+        //{
+        //    string result = "";
+        //    string[] ids = idsString.Split('|');
 
-            for (var i=0;i<ids.Count() ;i++ )
-            {
-                result = result + Countries.Where(x => x.Fields["Old Id"].Value == ids[i]).FirstOrDefault().ID.ToString();
-                if (i < ids.Count()-1)
-                { result = result + "|"; }
-            }
+        //    for (var i=0;i<ids.Count() ;i++ )
+        //    {
+        //        result = result + Countries.Where(x => x.Fields["Old Id"].Value == ids[i]).FirstOrDefault().ID.ToString();
+        //        if (i < ids.Count()-1)
+        //        { result = result + "|"; }
+        //    }
 
-            return result;
+        //    return result;
 
-        }
+        //}
         private void UpdateItem(ref Item item, DataRow row)
         {
 
@@ -218,21 +217,14 @@ namespace RambollImportData.sitecore.admin
                     {
                         string exportField = News.ExportedFields[i].ToString();
 
-
-
-                        switch (exportField)
+                        if(importField.ToLower()=="Projects")
                         {
-                            case "PersonsOnProject":
-                                item[importField.Trim()] = (string.IsNullOrEmpty(item[importField.Trim()]) ? row[exportField].ToString() : item[importField.Trim()] + "|" + row[exportField].ToString());
-                                break;
-                            case "Countries":
-                                item[importField.Trim()] = MapCountriesItems(Countries, row[exportField].ToString());
-                                break;
-
-                    
-                            default:
-                                item[importField.Trim()] = row[exportField].ToString();
-                                break;
+                            item[importField.Trim()] = (string.IsNullOrEmpty(item[importField.Trim()]) ? row[exportField].ToString() : item[importField.Trim()] + "|" + row[exportField].ToString());
+                        }
+                        else
+                        {
+                            //Map Contact
+                            item[importField.Trim()] = row[exportField].ToString();
                         }
                     }
                 }
@@ -259,7 +251,7 @@ namespace RambollImportData.sitecore.admin
 
             ///PictureAndText
 
-            TemplateItem PictureAndTextTemplate = masterDb.GetItem("/sitecore/templates/Project/Ramboll/Global Templates/PicturesAndText");
+            TemplateItem PictureAndTextTemplate = masterDb.GetItem("{24CF86AE-37CE-4A72-A18B-DD30FF9515BD}");
             Item PictureAndTextFolder = item.Children.AsEnumerable().ToList().Where(x => x.Name.ToLower() == "Pictures-and-Texts".ToLower()).FirstOrDefault();
             for (var i = 1; i <= 5; i++)
             {
@@ -308,8 +300,8 @@ namespace RambollImportData.sitecore.admin
 
 
             // Puplications
-            TemplateItem PublicationLinksOrNewsTemplate = masterDb.GetItem("/sitecore/templates/Project/Ramboll/Global Templates/PublicationLinksOrNews");
-            TemplateItem PublicationHeaderTemplate = masterDb.GetItem("/sitecore/templates/Project/Ramboll/Global Templates/PublicationHeader");
+            TemplateItem PublicationLinksOrNewsTemplate = masterDb.GetItem("{BDC80C68-8123-4079-B007-C211B2FFA43D}");
+            TemplateItem PublicationHeaderTemplate = masterDb.GetItem("{CFCD9E3B-7E77-4994-9517-FDE19965286F}");
             Item PublicationsFolder = item.Children.AsEnumerable().ToList().Where(x => x.Name.ToLower() == "Publications".ToLower()).FirstOrDefault();
 
 
