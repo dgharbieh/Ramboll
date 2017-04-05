@@ -144,6 +144,86 @@ namespace RambollImportData.Helpers
             return dt;
             }
 
+        public static DataTable GetIdsMatchDataTable(string name)
+        {
+            DataTable dt = new DataTable();
+            string fileName = Settings.GetSetting("FolderPath") + "\\" + name + "IdsMatch" + ".csv";
+            if (File.Exists(fileName))
+            {
+                bool isheader = true;
+                foreach (var line in File.ReadAllLines(fileName))
+                {
+                    string[] Fields = line.Split(new char[] { ',' });
+                    try
+                    {
+                        if (isheader)
+                        {
+                            isheader = false;
+                            foreach (var field in Fields)
+                            {
+                                dt.Columns.Add(field);
+                            }
+
+                        }
+                        else
+                        {
+                            DataRow row = dt.NewRow();
+                            for (var i = 0; i < Fields.Count(); i++)
+                            {
+                                row[i] = ReplaceComma(Fields[i]);
+                            }
+                            dt.Rows.Add(row);
+                        }
+
+                    }
+                    catch (Exception ex)
+                    {
+                        throw (ex);
+                    }
+                }
+            }else
+            {
+                dt.Columns.Add("OldID");
+                dt.Columns.Add("NewID");
+
+            }
+
+            return dt;
+        }
+        public static void FromDataTableToExcel(DataTable dt,string name)
+        {
+            StringBuilder csv = new StringBuilder();
+            string colums = "";
+            for(int i=0; i <= dt.Columns.Count -1;i++)
+            {
+                colums = colums + dt.Columns[i].ColumnName;
+                if(i < dt.Columns.Count - 1)
+                {
+                    colums = colums + ",";
+                }
+            }
+            csv.AppendLine(colums);
+
+
+         
+            for (int i = 0; i <= dt.Rows.Count - 1; i++)
+            {
+                string row = "";
+                for (int j = 0; j <= dt.Columns.Count - 1; j++)
+                {
+                    row = row + dt.Rows[i][j];
+                    if (j < dt.Columns.Count - 1)
+                    {
+                        row = row + ",";
+                    }
+                }
+                csv.AppendLine(row);
+            }
+
+            CreateFile(csv.ToString(), name + "IdsMatch");
+
+        }
+
         public static string GetHeader(ArrayList fields)
         {
             string fieldsNames = string.Empty;
