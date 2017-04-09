@@ -16,7 +16,7 @@ using RambollImportData.Base;
 
 namespace RambollImportData.sitecore.admin
 {
-    public partial class ImportCounties : System.Web.UI.Page
+    public partial class ImportCountries : System.Web.UI.Page
     {
         public  string NotMatchCountries = "";
         public int UpdatedRecords =0;
@@ -43,6 +43,7 @@ namespace RambollImportData.sitecore.admin
                 {
                     Database masterDb = Helper.GetDatabase();     
                     TemplateItem template = masterDb.GetItem("/sitecore/templates/System/Analytics/Country");
+                    DataTable Ids = Helper.GetIdsMatchDataTable("Countries");
                     foreach (var lang in Helper.GetDatabase().Languages)
                     {
                         UpdatedRecords = InsertedVersionsRecords = 0;
@@ -58,7 +59,7 @@ namespace RambollImportData.sitecore.admin
 
                             if (Country != null)
                             {
-                                UpdateItem(Country, row["ID"].ToString(), row["Version"].ToString(), lang);
+                                UpdateItem(Country, row["ID"].ToString(), row["Version"].ToString(), lang,ref Ids);
                                
                             }
                             else
@@ -88,7 +89,7 @@ namespace RambollImportData.sitecore.admin
                                 }
                                 else
                                 {
-                                    UpdateItem(Country, row["ID"].ToString(), row["Version"].ToString(), lang);
+                                    UpdateItem(Country, row["ID"].ToString(), row["Version"].ToString(), lang,ref Ids);
 
                                 }
 
@@ -98,6 +99,8 @@ namespace RambollImportData.sitecore.admin
                         InsertedVersionsTotals.Add(lang.Name, InsertedVersionsRecords.ToString());
                         UpdateTotals.Add(lang.Name, UpdatedRecords.ToString());
                     }
+
+                    Helper.FromDataTableToExcel(Ids, "Countries");
 
                 }
 
@@ -113,7 +116,10 @@ namespace RambollImportData.sitecore.admin
 
         }
 
-        private void UpdateItem(Item Country, string OldId, string Version, Language lang)
+
+
+
+        private void UpdateItem(Item Country, string OldId, string Version, Language lang, ref DataTable Ids)
         {
 
             try
@@ -148,7 +154,9 @@ namespace RambollImportData.sitecore.admin
                     newVersion.Editing.EndEdit();
                     InsertedVersionsRecords = InsertedVersionsRecords + 1;
                 }
-               
+
+                Helper.UpdateIds(ref Ids, item);
+
             }
             catch (Exception ex)
             {
@@ -156,5 +164,8 @@ namespace RambollImportData.sitecore.admin
                 throw ex;
             }
         }
+
+
+      
     }
 }

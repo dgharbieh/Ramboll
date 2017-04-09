@@ -18,11 +18,14 @@ namespace RambollImportData.sitecore.admin
     {
         public Result ContactPersonsFolders;
         public Result ContactPersons;
+        DataTable ProjectsIds;
 
         public int UpdatedRecords = 0;
         public int InsertedVersionsRecords = 0;
         public int InsertedNewRecords = 0;
         public Database masterDb;
+
+
         protected void Page_Load(object sender, EventArgs e)
         {
             Helper.ParseMappingFile(ref ContactPersonsFolders, "ContactPersonsFolders");
@@ -30,6 +33,7 @@ namespace RambollImportData.sitecore.admin
         }
         protected void ImportData(object sender, EventArgs e)
         {
+            ProjectsIds = Helper.GetIdsMatchDataTable("Project");
             try
             {
                 masterDb = Helper.GetDatabase();
@@ -109,6 +113,7 @@ namespace RambollImportData.sitecore.admin
         {
             UpdatedRecords = InsertedVersionsRecords = InsertedNewRecords = 0;
             TemplateItem template = masterDb.GetItem(ContactPersons.TemplateName);
+            DataTable Ids = Helper.GetIdsMatchDataTable("ContactPersons");
             foreach (var lang in Helper.GetDatabase().Languages)
             {
                 DataTable data = dataTables[lang.ToString()];
@@ -139,7 +144,7 @@ namespace RambollImportData.sitecore.admin
                         {
                             Item newContactPersons = parent.Add(row["Name"].ToString(), template);
 
-                            this.UpdateItem(ref newContactPersons, row);
+                            this.UpdateItem(ref newContactPersons, row, ref Ids);
                             InsertedNewRecords = InsertedNewRecords + 1;
                         }
                         else
@@ -150,13 +155,13 @@ namespace RambollImportData.sitecore.admin
                                 {
                                     Item[] versions = ContactPerson.Versions.GetVersions();
 
-                                    this.UpdateItem(ref  versions[versionNumber - 1], row);
+                                    this.UpdateItem(ref  versions[versionNumber - 1], row, ref Ids);
                                     UpdatedRecords = UpdatedRecords + 1;
                                 }
                                 else
                                 {
                                     Item newVersion = ContactPerson.Versions.AddVersion();
-                                    this.UpdateItem(ref newVersion, row);
+                                    this.UpdateItem(ref newVersion, row, ref Ids);
                                     InsertedNewRecords = InsertedNewRecords + 1;
 
                                 }
@@ -165,7 +170,7 @@ namespace RambollImportData.sitecore.admin
                             else
                             {
                                 Item newVersion = ContactPerson.Versions.AddVersion();
-                                this.UpdateItem(ref newVersion, row);
+                                this.UpdateItem(ref newVersion, row, ref Ids);
                                 InsertedNewRecords = InsertedNewRecords + 1;
 
                             }
@@ -184,8 +189,10 @@ namespace RambollImportData.sitecore.admin
                 ContactPersons.UpdateTotals.Add(lang.Name, UpdatedRecords.ToString());
             }
 
+            Helper.FromDataTableToExcel(Ids, "ContactPersons");
+
         }     
-        private void UpdateItem(ref Item item, DataRow row)
+        private void UpdateItem(ref Item item, DataRow row, ref DataTable Ids)
         {
 
             item.Editing.BeginEdit();
@@ -210,17 +217,17 @@ namespace RambollImportData.sitecore.admin
                         {
                             if (!string.IsNullOrEmpty(row[exportField].ToString()))
                             {
-
                                 if (string.IsNullOrEmpty(item[importField.Trim()]))
                                 {
-                                    item[importField.Trim()] = row[exportField].ToString();
-                                        }
+                                    item[importField.Trim()] = Helper.MapItemId(ProjectsIds,row[exportField].ToString());
+                                }
                                 else
                                 {
-                                    item[importField.Trim()]= item[importField.Trim()]+"|" +row[exportField].ToString();
+                                    item[importField.Trim()] = item[importField.Trim()] + "|" + Helper.MapItemId(ProjectsIds, row[exportField].ToString());
                                 }
 
                             }
+                          
                         }
                         else
                         {
@@ -234,7 +241,7 @@ namespace RambollImportData.sitecore.admin
                 }
             }
             item.Editing.EndEdit();
-
+            Helper.UpdateIds(ref Ids, item);
         }
 
     }

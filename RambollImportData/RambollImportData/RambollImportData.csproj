@@ -145,19 +145,12 @@
     <Compile Include="sitecore\admin\ImportProjects.aspx.designer.cs">
       <DependentUpon>ImportProjects.aspx</DependentUpon>
     </Compile>
-    <Compile Include="sitecore\admin\ImportCounties.aspx.cs">
-      <DependentUpon>ImportCounties.aspx</DependentUpon>
+    <Compile Include="sitecore\admin\ImportCountries.aspx.cs">
+      <DependentUpon>ImportCountries.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="sitecore\admin\ImportCounties.aspx.designer.cs">
-      <DependentUpon>ImportCounties.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="sitecore\admin\ImportData.aspx.cs">
-      <DependentUpon>ImportData.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="sitecore\admin\ImportData.aspx.designer.cs">
-      <DependentUpon>ImportData.aspx</DependentUpon>
+    <Compile Include="sitecore\admin\ImportCountries.aspx.designer.cs">
+      <DependentUpon>ImportCountries.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup />
@@ -206,8 +199,7 @@
     <Content Include="sitecore\admin\ImportNews.aspx" />
     <Content Include="sitecore\admin\ImportContactPersons.aspx" />
     <Content Include="sitecore\admin\ImportProjects.aspx" />
-    <Content Include="sitecore\admin\ImportCounties.aspx" />
-    <Content Include="sitecore\admin\ImportData.aspx" />
+    <Content Include="sitecore\admin\ImportCountries.aspx" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

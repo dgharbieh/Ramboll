@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ImportCounties.aspx.cs" Inherits="RambollImportData.sitecore.admin.ImportCounties" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ImportCountries.aspx.cs" Inherits="RambollImportData.sitecore.admin.ImportCountries" %>
 
 <!DOCTYPE html>
 <html lang="en">

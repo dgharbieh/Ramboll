@@ -210,8 +210,6 @@ namespace RambollImportData.sitecore.admin
         private void UpdateItem(ref Item item, DataRow row, ref DataTable Ids)
         {
 
-      
-
             List<Item> Countries = Helper.GetDatabase().GetItem("/sitecore/system/Settings/Analytics/Lookups/Countries").Children.AsEnumerable().ToList();
             item.Editing.BeginEdit();
             item["Old Id"] = row["ID"].ToString();
@@ -253,18 +251,8 @@ namespace RambollImportData.sitecore.admin
             }
             item.Editing.EndEdit();
 
-            string oldID = item["Old Id"];
-            var filtered = Ids.AsEnumerable()
-            .Where(r => r.Field<String>("OldID").Contains(oldID));
+            Helper.UpdateIds(ref Ids, item);
 
-             if(filtered == null ||  filtered.Count()==0)
-            {
-                DataRow row2 = Ids.NewRow();
-                row2["NewID"] = item.ID.ToString();
-                row2["OldID"] = item["Old Id"];
-                Ids.Rows.Add(row2);
-            }
-       
 
             //Children Data
             UpdatePictureAndText(ref  item, row);

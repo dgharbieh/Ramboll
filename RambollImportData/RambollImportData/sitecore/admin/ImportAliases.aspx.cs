@@ -101,6 +101,7 @@ namespace RambollImportData.sitecore.admin
             UpdatedRecords = InsertedVersionsRecords = 0;
             Database masterDb = Helper.GetDatabase();
             TemplateItem template = masterDb.GetItem(Aliases.TemplateName);
+            DataTable Ids = Helper.GetIdsMatchDataTable("Aliases");
             foreach (var lang in Helper.GetDatabase().Languages)
             {
                 DataTable data = dataTables[lang.ToString()];
@@ -133,6 +134,7 @@ namespace RambollImportData.sitecore.admin
                         newAliases["Linked item"] = row["LinkTo"].ToString();
                         newAliases.Editing.EndEdit();
                         InsertedNewRecords = Aliases.InsertedNewRecords + 1;
+                        Helper.UpdateIds(ref Ids, newAliases);
                     }
                     else
                     {
@@ -146,6 +148,7 @@ namespace RambollImportData.sitecore.admin
                                 versions[versionNumber - 1]["Linked item"] = row["LinkTo"].ToString();
                                 versions[versionNumber - 1].Editing.EndEdit();
                                 UpdatedRecords = UpdatedRecords + 1;
+                                Helper.UpdateIds(ref Ids, versions[versionNumber - 1]);
                             }
                             else
                             {
@@ -155,6 +158,7 @@ namespace RambollImportData.sitecore.admin
                                 newVersion["Linked item"] = row["LinkTo"].ToString();
                                 newVersion.Editing.EndEdit();
                                 InsertedVersionsRecords = InsertedVersionsRecords + 1;
+                                Helper.UpdateIds(ref Ids, newVersion);
                             }
 
                         }
@@ -166,6 +170,7 @@ namespace RambollImportData.sitecore.admin
                             newVersion["Linked item"] = row["LinkTo"].ToString();
                             newVersion.Editing.EndEdit();
                             InsertedVersionsRecords = InsertedVersionsRecords + 1;
+                            Helper.UpdateIds(ref Ids, newVersion);
                         }
                     }
 
@@ -178,6 +183,8 @@ namespace RambollImportData.sitecore.admin
                 Aliases.InsertedVersionsTotals.Add(lang.Name, InsertedVersionsRecords.ToString());
                 Aliases.UpdateTotals.Add(lang.Name, UpdatedRecords.ToString());
             }
+
+            Helper.FromDataTableToExcel(Ids, "Aliases");
 
         }
     }

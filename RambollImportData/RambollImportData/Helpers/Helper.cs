@@ -337,6 +337,47 @@ namespace RambollImportData.Helpers
             }
         }
 
+
+        public static void UpdateIds(ref DataTable Ids, Item item)
+        {
+
+            string oldID = item["Old Id"];
+            var filtered = Ids.AsEnumerable()
+            .Where(r => r.Field<String>("OldID").Contains(oldID));
+
+            if (filtered == null || filtered.Count() == 0)
+            {
+                DataRow row2 = Ids.NewRow();
+                row2["NewID"] = item.ID.ToString();
+                row2["OldID"] = item["Old Id"];
+                Ids.Rows.Add(row2);
+            }
+        }
+
+        public static string MapItemId(DataTable Ids, string OldId)
+        {
+            try
+            {
+                var filtered = Ids.AsEnumerable()
+                 .Where(r => r.Field<String>("OldID").Contains(OldId));
+
+                if (filtered != null && filtered.Count()>0)
+                {
+                    return filtered.FirstOrDefault()["NewID"].ToString();
+                }else
+                {
+                    return OldId;
+                }
+
+            } catch(Exception ex)
+            {
+                throw ex;
+
+            }
+       
+
+        }
+
     }
 
 }
