@@ -122,6 +122,15 @@
       <DependentUpon>ExportNews.aspx</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="sitecore\admin\ExportRedirectItems.aspx.cs">
+      <DependentUpon>ExportRedirectItems.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="sitecore\admin\ExportRedirectItems.aspx.designer.cs">
+      <DependentUpon>ExportRedirectItems.aspx</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
     <Compile Include="sitecore\admin\ExportProjects.aspx.cs">
       <DependentUpon>ExportProjects.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -182,6 +191,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="sitecore\admin\ExportNews.aspx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="sitecore\admin\ExportRedirectItems.aspx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="sitecore\admin\ExportProjects.aspx">
