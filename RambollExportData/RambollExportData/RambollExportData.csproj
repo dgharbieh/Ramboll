@@ -122,6 +122,15 @@
       <DependentUpon>ExportNews.aspx</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="sitecore\admin\ExportWebsites.aspx.cs">
+      <DependentUpon>ExportWebsites.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="sitecore\admin\ExportWebsites.aspx.designer.cs">
+      <DependentUpon>ExportWebsites.aspx</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
     <Compile Include="sitecore\admin\ExportRedirectItems.aspx.cs">
       <DependentUpon>ExportRedirectItems.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -193,6 +202,9 @@
     <Content Include="sitecore\admin\ExportNews.aspx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="sitecore\admin\ExportWebsites.aspx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="sitecore\admin\ExportRedirectItems.aspx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -230,6 +242,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="MappingFiles\ContactPersonsFolders.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MappingFiles\Websites.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="Properties\PublishProfiles\Local.pubxml" />

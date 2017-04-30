@@ -118,3 +118,10 @@ C:\Ramboll\Projects\Ramboll.git\RambollExportData\RambollExportData\bin\MappingF
 C:\Ramboll\Projects\Ramboll.git\RambollExportData\RambollExportData\bin\MappingFiles\ContactPersonsFolders.csv
 C:\Ramboll\Projects\Ramboll.git\RambollExportData\RambollExportData\bin\sitecore\admin\ExportContactPersons.aspx.cs
 C:\Ramboll\Projects\Ramboll.git\RambollExportData\RambollExportData\bin\sitecore\admin\ExportContactPersons.aspx.designer.cs
+C:\Ramboll\Projects\Ramboll.git\RambollExportData\RambollExportData\bin\sitecore\admin\ExportRedirectItems.aspx
+C:\Ramboll\Projects\Ramboll.git\RambollExportData\RambollExportData\bin\MappingFiles\Websites.csv
+C:\Ramboll\Projects\Ramboll.git\RambollExportData\RambollExportData\bin\sitecore\admin\ExportRedirectItems.aspx.cs
+C:\Ramboll\Projects\Ramboll.git\RambollExportData\RambollExportData\bin\sitecore\admin\ExportRedirectItems.aspx.designer.cs
+C:\Ramboll\Projects\Ramboll.git\RambollExportData\RambollExportData\bin\sitecore\admin\ExportWebsites.aspx
+C:\Ramboll\Projects\Ramboll.git\RambollExportData\RambollExportData\bin\sitecore\admin\ExportWebsites.aspx.cs
+C:\Ramboll\Projects\Ramboll.git\RambollExportData\RambollExportData\bin\sitecore\admin\ExportWebsites.aspx.designer.cs
