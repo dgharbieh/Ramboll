@@ -1,7 +1,7 @@
 Start Path ,/sitecore/content/Home/Websites,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 Include Language,TRUE,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 Include Versions,TRUE,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-Template Name,StandardWebsite,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Template Name,NewsConfiguration,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 Output Name,ExportedWebsites,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 Exported Fields,,
 ID,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
@@ -10,27 +10,4 @@ TemplateName,
 Version,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 Path,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 Name,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-Title
-Country
-PrimaryLanguage
-SupportedLanguages
-ContactOffice
-Logo
-NameToTheRightOfLogo
-WebsiteType
-Theme
-LegalCompanyName
-DKCompanyCVRNr
-CommentsNotToBeShownOnHomepages
-WebsiteGroupForCountrySelection
-ShowSiteInListOfSitesBlankOrNo
-GoogleRanking
-CompanyName
-GoogleMapApiKey
-HideWebsiteGroupCountrySelector
-WebTrendsCode
-WebTrendsCodeExternal
-AllowSearchRobots
-HeaderContentInput
-JobSeachIndexExcluded
-SearchCategory
+NewsSelection

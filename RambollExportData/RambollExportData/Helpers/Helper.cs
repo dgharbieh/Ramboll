@@ -1,6 +1,7 @@
 ﻿using RambollExportData;
 using RambollExportData.Base;
 using Sitecore.ApplicationCenter.Applications;
+using Sitecore.Collections;
 using Sitecore.Configuration;
 using Sitecore.Data;
 using Sitecore.Data.Items;
@@ -23,7 +24,7 @@ namespace RambollExportData.Helpers
 {
     public class Helper
     {
-        public static void ParseMappingFile(ref Result page, string fileName,bool vertical = false)
+        public static void ParseMappingFile(ref Result page, string fileName, bool vertical = false)
         {
             page = new Result();
 
@@ -101,11 +102,16 @@ namespace RambollExportData.Helpers
         {
             return data.Replace(",", "#;#").Replace("\n", "$;$").Replace("\r", "*;*");
         }
+
         public static Database GetDatabase()
         {
             return Sitecore.Configuration.Factory.GetDatabase("master");
         }
 
+        public static LanguageCollection GetLanguages()
+        {
+            return LanguageManager.GetLanguages(GetDatabase());
+        }
         public static string GetHeader(ArrayList fields)
         {
             string fieldsNames = string.Empty;
@@ -122,10 +128,10 @@ namespace RambollExportData.Helpers
             return fieldsNames;
         }
 
-        public static void GenerateLanguagesFiles(Item parent,Result resultItem , string outputName, Dictionary<string, int> totals)
+        public static void GenerateLanguagesFiles(Item parent, Result resultItem, string outputName, Dictionary<string, int> totals)
         {
 
-            foreach (var lang in parent.Languages)
+            foreach (var lang in GetLanguages())
             {
                 int total = 0;
                 ArrayList fields = resultItem.Fields;
@@ -134,7 +140,7 @@ namespace RambollExportData.Helpers
                 foreach (var item in parent.Children.AsEnumerable())
                 {
                     Item sub = GetDatabase().GetItem(item.ID, lang);
-                    string line = Helper.GetFieldsLineWithVersion(sub,ref resultItem,string.Empty);
+                    string line = Helper.GetFieldsLineWithVersion(sub, ref resultItem, string.Empty);
                     if (!string.IsNullOrEmpty(line))
                     {
                         CSV.AppendLine(line);
@@ -148,74 +154,78 @@ namespace RambollExportData.Helpers
         }
 
 
-        public static string GetFieldsLineWithVersion(Item item,ref Result resultItem, string lang)
+        public static string GetFieldsLineWithVersion(Item item, ref Result resultItem, string lang)
         {
             string fieldsValues = string.Empty;
 
-     
+            var count = 0;
+            Item[] versions = item.Versions.GetVersions();
+            ArrayList fields = resultItem.Fields;
 
-                var count = 0;
-                Item[] versions = item.Versions.GetVersions();
-                ArrayList fields = resultItem.Fields;
-
-                if (item.Versions.Count > 0)
+            if (item.Versions.Count > 0)
+            {
+                foreach (Item version in versions)
                 {
-                    foreach (Item version in versions)
+                    count = count + 1;
+                    for (var i = 0; i < fields.Count; i++)
                     {
-                        count = count + 1;
-                        for (var i = 0; i < fields.Count; i++)
+                        try
                         {
-                            try
-                            {
 
-                                switch (fields[i].ToString().Trim().ToLower())
-                                {
-                                    case "id":
-                                        fieldsValues = fieldsValues + version.ID.ToString();
-                                        break;
-                                    case "name":
-                                        fieldsValues = fieldsValues + version.Name;
-                                        break;
-                                 case "name*":// Field Name
-                                       fieldsValues = fieldsValues + ReplaceComma(version.Fields[fields[i].ToString().Trim().Replace("*","")].Value);
-                                       break;
+                            switch (fields[i].ToString().Trim().ToLower())
+                            {
+                                case "id":
+                                    fieldsValues = fieldsValues + version.ID.ToString();
+                                    break;
+                                case "name":
+                                    fieldsValues = fieldsValues + version.Name;
+                                    break;
+                                case "name*":// Field Name
+                                    fieldsValues = fieldsValues + ReplaceComma(version.Fields[fields[i].ToString().Trim().Replace("*", "")].Value);
+                                    break;
                                 case "path":
-                                        fieldsValues = fieldsValues + version.Paths.FullPath;
-                                        break;
-                                    case "version":
-                                        fieldsValues = fieldsValues + count.ToString();
-                                        break;
-                                    default:
-                                        fieldsValues = fieldsValues + ReplaceComma(version.Fields[fields[i].ToString().Trim()].Value);
-                                        break;
-                                }
-
-                                if (i < fields.Count - 1)
-                                {
-                                    fieldsValues = fieldsValues + ",";
-                                }
-
+                                    fieldsValues = fieldsValues + version.Paths.FullPath;
+                                    break;
+                                case "version":
+                                    fieldsValues = fieldsValues + count.ToString();
+                                    break;
+                                case "parentid":
+                                    fieldsValues = fieldsValues + version.ParentID.ToString();
+                                    break;
+                                case "templatename":
+                                    fieldsValues = fieldsValues + version.TemplateName.ToString();
+                                    break;
+                                default:
+                                    fieldsValues = fieldsValues + ReplaceComma(version.Fields[fields[i].ToString().Trim()].Value);
+                                    break;
                             }
-                            catch (Exception ex)
+
+                            if (i < fields.Count - 1)
                             {
-                                throw ex;
+                                fieldsValues = fieldsValues + ",";
                             }
 
-
                         }
-
-                        if (!string.IsNullOrEmpty(lang))
+                        catch (Exception ex)
                         {
-                            resultItem.Totals[lang.ToString()] = resultItem.Totals[lang.ToString()] + 1;
+                            throw ex;
                         }
 
-                        if (count < item.Versions.Count)
-                        { fieldsValues = fieldsValues + "\n"; }
 
-                 
+                    }
+
+                    if (!string.IsNullOrEmpty(lang))
+                    {
+                        resultItem.Totals[lang.ToString()] = resultItem.Totals[lang.ToString()] + 1;
+                    }
+
+                    if (count < item.Versions.Count)
+                    { fieldsValues = fieldsValues + "\n"; }
+
+
                 }
             }
-            return fieldsValues; 
+            return fieldsValues;
         }
 
 

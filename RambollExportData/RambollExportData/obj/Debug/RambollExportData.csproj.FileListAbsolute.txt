@@ -125,3 +125,5 @@ C:\Ramboll\Projects\Ramboll.git\RambollExportData\RambollExportData\bin\sitecore
 C:\Ramboll\Projects\Ramboll.git\RambollExportData\RambollExportData\bin\sitecore\admin\ExportWebsites.aspx
 C:\Ramboll\Projects\Ramboll.git\RambollExportData\RambollExportData\bin\sitecore\admin\ExportWebsites.aspx.cs
 C:\Ramboll\Projects\Ramboll.git\RambollExportData\RambollExportData\bin\sitecore\admin\ExportWebsites.aspx.designer.cs
+C:\Ramboll\Projects\Ramboll.git\RambollExportData\RambollExportData\bin\MappingFiles\ServiceFocusPage.csv
+C:\Ramboll\Projects\Ramboll.git\RambollExportData\RambollExportData\bin\MappingFiles\NewsConfiguration.csv

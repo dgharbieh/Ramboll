@@ -5,6 +5,8 @@ Template Name,StandardWebsite,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 Output Name,ExportedWebsites,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 Exported Fields,,
 ID,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+ParentId,
+TemplateName,
 Version,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 Path,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 Name,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
@@ -18,7 +20,7 @@ NameToTheRightOfLogo
 WebsiteType
 Theme
 LegalCompanyName
-DKCompanyCVRNr 
+DKCompanyCVRNr
 CommentsNotToBeShownOnHomepages
 WebsiteGroupForCountrySelection
 ShowSiteInListOfSitesBlankOrNo
@@ -31,3 +33,4 @@ WebTrendsCodeExternal
 AllowSearchRobots
 HeaderContentInput
 JobSeachIndexExcluded
+SearchCategory
