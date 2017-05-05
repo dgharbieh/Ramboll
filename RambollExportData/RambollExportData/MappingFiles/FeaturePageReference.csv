@@ -1,8 +1,8 @@
 Start Path ,/sitecore/content/Home/Websites,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 Include Language,TRUE,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 Include Versions,TRUE,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-Template Name,ServiceFocusPage,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-Output Name,ExportedServiceFocusPage,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Template Name,FeaturePageReference,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Output Name,ExportedFeaturePageReference,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 Exported Fields,,
 ID,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ParentId,
@@ -10,16 +10,15 @@ TemplateName,
 Version,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 Path,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 Name,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-Title,
-BackgroundImage,
-RelatedService,
-PageSpecificContactOffice,
-DefaultDescriptionField,
-AlternativeBrowserTitle,
-RemarketingTag,
-CustomMetaTags,
-301Redirect,
-301RedirectedTo,
-301RedirectedToFromItemId,
-SearchCategory,
-NewsSelection,
+Title
+TitleReplacementImage
+Description
+Image
+ExplicitLinkTitle
+Link
+UseAlternativeBackground
+Sector
+Subsectors
+OtherStuff
+AllOfTheseAreConsideredYellowForNow
+LinkToSomethingRelated

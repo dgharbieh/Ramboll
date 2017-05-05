@@ -17,16 +17,22 @@ namespace RambollExportData.sitecore.admin
     public partial class ExportWebsites : System.Web.UI.Page
     {
 
-        public Result Websites;
-        public Result ServiceFocusPage;
-        public Result NewsConfiguration;
+        public List<Result> FullWebsites = new List<Result>();
+        public string[]  Templates = { "Websites", "ServiceFocusPage", "RichPageReferenceCollection", "RichPageReference","FeaturePageReference", "NewsReference" , "EventsReference" };
+
+
         protected void Page_Load(object sender, EventArgs e)
         {
-            Helper.ParseMappingFile(ref Websites, "Websites",true);
-            Helper.ParseMappingFile(ref ServiceFocusPage, "ServiceFocusPage", true);
-            Helper.ParseMappingFile(ref NewsConfiguration, "NewsConfiguration", true);
-        }
 
+            foreach(string temp in Templates)
+            {
+                Result result= new Result();
+              
+                Helper.ParseMappingFile(ref result, temp, true);
+
+                FullWebsites.Add(result);
+            }     
+        }
 
         protected void ExportData(object sender, EventArgs e)
         {
@@ -35,9 +41,10 @@ namespace RambollExportData.sitecore.admin
            
                 using (new SecurityDisabler())
                 {
+                    var Websites = FullWebsites[0];
 
                     Database masterDb = Helper.GetDatabase();
-                    Item parent = masterDb.GetItem("{8F592CB9-A2C3-4F1F-A8CA-A8E48B2582F3}");
+                    Item parent = masterDb.GetItem(Websites.StartPath);
 
 
                     if (parent != null)
@@ -47,24 +54,33 @@ namespace RambollExportData.sitecore.admin
                         {
                             try
                             {
-                                Websites.CSV.AppendLine(Helper.GetHeader(Websites.Fields));
-                                Websites.Totals.Add(lang.ToString(), 0);
-                                //here 
-                                ServiceFocusPage.Totals.Add(lang.ToString(), 0);
-                                NewsConfiguration.Totals.Add(lang.ToString(), 0);
-
-
-                                string line = Helper.GetFieldsLineWithVersion(parent, ref Websites, lang.ToString());
-
-                                if (!string.IsNullOrEmpty(line))
+                                foreach (var result  in FullWebsites)
                                 {
-                                    Websites.CSV.AppendLine(line);
+
+                                    result.CSV.AppendLine(Helper.GetHeader(result.Fields));
+                                    result.Totals.Add(lang.ToString(), 0);
                                 }
 
-                                //
+                             
+                                //string line = Helper.GetFieldsLineWithVersion(parent, ref Websites, lang.ToString());
+
+                                //if (!string.IsNullOrEmpty(line))
+                                //{
+                                //    Websites.CSV.AppendLine(line);
+                                //}
+
+            
                                 GetMultiLanguageVersionData(parent, lang);
-                                Helper.CreateFile(Websites.CSV.ToString(), Websites.OutputName + "_" + lang);
-                                Websites.CSV.Clear();
+
+
+                                foreach (var result in FullWebsites)
+                                {
+
+                                    Helper.CreateFile(result.CSV.ToString(), result.OutputName + "_" + lang);
+                                    result.CSV.Clear();
+                                }
+
+                               
                             }
                             catch (Exception ex)
                             {
@@ -101,36 +117,23 @@ namespace RambollExportData.sitecore.admin
                 {
                     Item sub = Helper.GetDatabase().GetItem(item.ID, lang);
 
-                if (sub.TemplateName.ToLower() == Websites.TemplateName.Trim().ToLower())
-                {
-                    string line = Helper.GetFieldsLineWithVersion(sub,ref Websites, lang.ToString()); 
-                    if (!string.IsNullOrEmpty(line))
-                    {
-                        Websites.CSV.AppendLine(line);
-                    }            
-                }
 
-
-                if (sub.TemplateName.ToLower() == ServiceFocusPage.TemplateName.Trim().ToLower())
-                {
-                    string line = Helper.GetFieldsLineWithVersion(sub, ref ServiceFocusPage, lang.ToString());
-                    if (!string.IsNullOrEmpty(line))
+                    for (var i =0; i< FullWebsites.Count(); i++)
                     {
-                        Websites.CSV.AppendLine(line);
+                        var result= FullWebsites[i];
+
+                        if (sub.TemplateName.ToLower() == result.TemplateName.Trim().ToLower())
+                        {
+                            string line = Helper.GetFieldsLineWithVersion(sub, ref result, lang.ToString());
+                            if (!string.IsNullOrEmpty(line))
+                            {
+                                result.CSV.AppendLine(line);
+                            }
+                        }
+
                     }
-                }
 
-
-
-                if (sub.TemplateName.ToLower() == NewsConfiguration.TemplateName.Trim().ToLower())
-                {
-                    string line = Helper.GetFieldsLineWithVersion(sub, ref NewsConfiguration, lang.ToString());
-                    if (!string.IsNullOrEmpty(line))
-                    {
-                        Websites.CSV.AppendLine(line);
-                    }
-                }
-                GetMultiLanguageVersionData(item, lang);
+                    GetMultiLanguageVersionData(item, lang);
                 }
                 catch (Exception ex)
                 {

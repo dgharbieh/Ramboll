@@ -1,8 +1,8 @@
 Start Path ,/sitecore/content/Home/Websites,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 Include Language,TRUE,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 Include Versions,TRUE,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-Template Name,NewsConfiguration,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-Output Name,ExportedWebsites,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Template Name,NewsReference,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Output Name,ExportedNewsReference,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 Exported Fields,,
 ID,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ParentId,
@@ -10,4 +10,4 @@ TemplateName,
 Version,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 Path,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 Name,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-NewsSelection
+MaxItemCount

@@ -27,31 +27,25 @@
                 <hr />
 
                 <form class="form-inline" id="form2" runat="server">
-                   <fieldset>
+                  <fieldset>
                        <strong> Websites Items</strong>
                     </fieldset>
                    <fieldset>
-                       <strong> Start Path :</strong> <%=Websites.StartPath %>
+                       <strong> Start Path :</strong> <%=FullWebsites[0].StartPath %>
                     </fieldset>
                      <fieldset>
-                        <strong>Template Name :</strong> <%=Websites.TemplateName  %>
+                        <strong>Template Name :</strong> <%=FullWebsites[0].TemplateName  %>
                     </fieldset>
                     <fieldset>
-                        <strong>Output Name :</strong> <%=Websites.OutputName %>
+                        <strong>Output Name :</strong> <%=FullWebsites[0].OutputName %>
                     </fieldset>
                     <fieldset>
-                       <strong> Include Language :</strong> <%=Websites.IncludeLanguage.ToString() %>
+                       <strong> Include Language :</strong> <%=FullWebsites[0].IncludeLanguage.ToString() %>
                     </fieldset>
                     <fieldset>
-                        <strong>Include Versions :</strong> <%=Websites.IncludeVersions.ToString()%>
+                        <strong>Include Versions :</strong> <%=FullWebsites[0].IncludeVersions.ToString()%>
                     </fieldset>
-                    <fieldset>
-                     <strong>Exported Fields :</strong>
-                          <% foreach (var field in Websites.Fields)
-                             {%>              
-                             <%=field.ToString()%> |
-                         <%}%>    
-                    </fieldset>
+               
 
                     <hr />
 
@@ -66,14 +60,18 @@
                     <asp:Panel ID="pnSuccess" Visible="false" CssClass="alert alert-success" runat="server">
                         <button type="button" class="close" data-dismiss="alert">&times;</button>
                         <strong>Success</strong> the export completed successfully 
+
+                         <% foreach (var Websites in FullWebsites)
+                             {%>     
                         <br />
-                        <strong>Websites :</strong> 
+                        <strong><%=Websites.TemplateName%> :</strong> 
                           <br />
                            <% foreach (var total in Websites.Totals)
                               {%>              
                             <strong>language (<%=total.Key%>)   </strong>:<%=total.Value%> records.<br />
                          <%}%> 
-                    
+                             <%}%> 
+
                     </asp:Panel>
                     <!-- success message end -->
 
