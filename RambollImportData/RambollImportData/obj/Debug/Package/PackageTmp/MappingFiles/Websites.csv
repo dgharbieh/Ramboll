@@ -1,0 +1,39 @@
+Start Path,/sitecore/content/Ramboll/Ramboll Countries,
+Export Path,/sitecore/content/Home/Websites,
+Include Language,TRUE,
+Include Versions,TRUE,
+Template Name,/sitecore/templates/Foundation/Experience Accelerator/Multisite/Site,
+Output Name,ExportedWebsites,
+Exported Fields,Imported Fields
+ID,,
+ParentId,,
+Version,,
+Path,,
+Name,,
+Title,Title
+Country,Country
+PrimaryLanguage,PrimaryLanguage
+SupportedLanguages,SupportedLanguages
+ContactOffice,ContactOffice
+Logo,Logo
+NameToTheRightOfLogo,NameToTheRightOfLogo
+WebsiteType,WebsiteType
+Theme,Theme
+LegalCompanyName,LegalCompanyName
+DKCompanyCVRNr,DKCompanyCVRNr
+CommentsNotToBeShownOnHomepages,CommentsNotToBeShownOnHomepages
+WebsiteGroupForCountrySelection,WebsiteGroupForCountrySelection
+ShowSiteInListOfSitesBlankOrNo,ShowSiteInListOfSitesBlankOrNo
+GoogleRanking,GoogleRanking
+CompanyName,CompanyName
+GoogleMapApiKey,GoogleMapApiKey
+HideWebsiteGroupCountrySelector,HideWebsiteGroupCountrySelector
+WebTrendsCode,WebTrendsCode
+WebTrendsCodeExternal,WebTrendsCodeExternal
+AllowSearchRobots,AllowSearchRobots
+HeaderContentInput,HeaderContentInput
+JobSeachIndexExcluded,JobSeachIndexExcluded
+SearchCategory,SearchCategory
+HeaderCompanyDescription,HeaderCompanyDescription
+SiteConfiguration,SiteConfiguration
+webtrendsondemandid,webtrendsondemandid

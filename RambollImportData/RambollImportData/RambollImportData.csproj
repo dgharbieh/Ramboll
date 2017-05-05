@@ -152,6 +152,13 @@
     <Compile Include="sitecore\admin\ImportCountries.aspx.designer.cs">
       <DependentUpon>ImportCountries.aspx</DependentUpon>
     </Compile>
+    <Compile Include="sitecore\admin\ImportWebsites.aspx.cs">
+      <DependentUpon>ImportWebsites.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="sitecore\admin\ImportWebsites.aspx.designer.cs">
+      <DependentUpon>ImportWebsites.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
@@ -171,6 +178,8 @@
     <Content Include="MappingFiles\ContactPersonsFolders.csv" />
     <Content Include="MappingFiles\News.csv" />
     <Content Include="MappingFiles\NewsFolders.csv" />
+    <Content Include="MappingFiles\Websites.csv" />
+    <Content Include="sitecore\admin\ImportWebsites.aspx" />
     <None Include="Properties\PublishProfiles\Local.pubxml" />
   </ItemGroup>
   <ItemGroup>
