@@ -1,0 +1,15 @@
+Start Path,/sitecore/content/Ramboll/Ramboll Countries,
+Export Path,/sitecore/content/Home/Websites,
+Include Language,TRUE,
+Include Versions,TRUE,
+Template Name,/sitecore/templates/Project/Ramboll/EventPage,
+Output Name,ExportedEventsReference,
+Exported Fields,Imported Fields
+ID,,
+ParentId,,
+Version,,
+Path,,
+Name,,
+ManualEvents,ManualEvents
+AutoEventsSources,AutoEventsSources
+AutoEventsCount,AutoEventsCount

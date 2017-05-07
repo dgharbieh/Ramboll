@@ -1,0 +1,24 @@
+Start Path,/sitecore/content/Ramboll/Ramboll Countries,
+Export Path,/sitecore/content/Home/Websites,
+Include Language,TRUE,
+Include Versions,TRUE,
+Template Name,/sitecore/templates/Project/Ramboll/Page,
+Output Name,ExportedFeaturePageReference,
+Exported Fields,Imported Fields
+ID,,
+ParentId,,
+Version,,
+Path,,
+Name,,
+Title,Title
+TitleReplacementImage,TitleReplacementImage
+Description,Description
+Image,Image
+ExplicitLinkTitle,ExplicitLinkTitle
+Link,Link
+UseAlternativeBackground,UseAlternativeBackground
+Sector,Sector
+Subsectors,Subsectors
+OtherStuff,OtherStuff
+AllOfTheseAreConsideredYellowForNow,AllOfTheseAreConsideredYellowForNow
+LinkToSomethingRelated,LinkToSomethingRelated

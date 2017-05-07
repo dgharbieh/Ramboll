@@ -180,6 +180,12 @@
     <Content Include="MappingFiles\NewsFolders.csv" />
     <Content Include="MappingFiles\Websites.csv" />
     <Content Include="sitecore\admin\ImportWebsites.aspx" />
+    <Content Include="MappingFiles\ServiceFocusPage.csv" />
+    <Content Include="MappingFiles\RichPageReferenceCollection.csv" />
+    <Content Include="MappingFiles\RichPageReference.csv" />
+    <Content Include="MappingFiles\FeaturePageReference.csv" />
+    <Content Include="MappingFiles\NewsReference.csv" />
+    <Content Include="MappingFiles\EventsReference.csv" />
     <None Include="Properties\PublishProfiles\Local.pubxml" />
   </ItemGroup>
   <ItemGroup>

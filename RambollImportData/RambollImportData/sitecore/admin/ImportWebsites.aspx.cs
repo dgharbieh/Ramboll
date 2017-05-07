@@ -19,25 +19,40 @@ namespace RambollImportData.sitecore.admin
     public partial class ImportWebsites : System.Web.UI.Page
     {
 
-        public Result Websites;
+
         DataTable CountriesIds;
+        public List<Result> FullWebsites = new List<Result>();
+        public string[] Templates = { "Websites", "ServiceFocusPage" ,"RichPageReferenceCollection", "RichPageReference" ,"FeaturePageReference", "NewsReference", "EventsReference" };
 
         public int UpdatedRecords = 0;
         public int InsertedVersionsRecords = 0;
         public int InsertedNewRecords = 0;
+        public string ParentNotFound = "";
         protected void Page_Load(object sender, EventArgs e)
         {
+            foreach (string temp in Templates)
+            {
+                Result result = new Result();
 
-            Helper.ParseMappingFile(ref Websites, "Websites", true);
+                Helper.ParseMappingFile(ref result, temp, true);
+
+                FullWebsites.Add(result);
+            }
         }
         protected void ImportData(object sender, EventArgs e)
         {
             try
             {
                 CountriesIds = Helper.GetIdsMatchDataTable("Countries");
-
-                ImportMultiLanguageDataTable(Helper.GetLanguagesDataTable(Websites), Websites);
-
+               // foreach (var result in FullWebsites)
+                 for(var i =0; i< FullWebsites.Count; i++)
+                {
+                    ImportMultiLanguageDataTable(Helper.GetLanguagesDataTable(FullWebsites[i]), FullWebsites[i], Templates[i]);
+                }
+                if (!string.IsNullOrEmpty(ParentNotFound))
+                {
+                    pnParentNotFound.Visible = true;
+                }
                 pnSuccess.Visible = true;
                 pnFailure.Visible = false;
 
@@ -49,12 +64,13 @@ namespace RambollImportData.sitecore.admin
             }
         }
 
-        protected void ImportMultiLanguageDataTable(Dictionary<string, DataTable> dataTables, Result Websites)
+        protected void ImportMultiLanguageDataTable(Dictionary<string, DataTable> dataTables, Result result, string name)
         {
             UpdatedRecords = InsertedVersionsRecords = InsertedNewRecords = 0;
             Database masterDb = Helper.GetDatabase();
-            TemplateItem template = masterDb.GetItem(Websites.TemplateName);
-            DataTable Ids = Helper.GetIdsMatchDataTable("Websites");
+            TemplateItem template = masterDb.GetItem(result.TemplateName);
+
+            DataTable Ids = Helper.GetIdsMatchDataTable(name);
 
             foreach (var lang in Helper.GetDatabase().Languages)
             {
@@ -71,55 +87,60 @@ namespace RambollImportData.sitecore.admin
                         int versionNumber = 0;
                         int.TryParse(row["Version"].ToString(), out versionNumber);
 
-                        if (row["Path"].ToString().ToLower() == (Websites.ExportPath + "/" + row["Name"].ToString()).ToLower())
+                        if (row["Path"].ToString().ToLower() == (result.ExportPath + "/" + row["Name"].ToString()).ToLower())
                         {
-                            parent = masterDb.GetItem(Websites.StartPath.Trim(), lang);
+                            parent = masterDb.GetItem(result.StartPath.Trim(), lang);
                         }
                         else
                         {
-                            string url = row["Path"].ToString().ToLower().Replace(Websites.ExportPath.ToLower(), Websites.StartPath.ToLower());
+                            string url = row["Path"].ToString().ToLower().Replace(result.ExportPath.ToLower(), result.StartPath.ToLower());
                             parent = masterDb.GetItem(url.Substring(0, url.LastIndexOf('/')), lang);
                         }
-
-                        project = parent.Children.AsEnumerable().ToList().Where(x => x.Name.ToLower() == row["Name"].ToString().ToLower()).FirstOrDefault();
-
-
-                        if (project == null)
+                        if (parent != null)
                         {
-                            Item newWebsites = parent.Add(row["Name"].ToString(), template);
+                            project = parent.Children.AsEnumerable().ToList().Where(x => x.Name.ToLower() == row["Name"].ToString().ToLower()).FirstOrDefault();
 
-                            this.UpdateItem(ref newWebsites, row ,ref Ids);
-                            InsertedNewRecords = InsertedNewRecords + 1;
-                        }
-                        else
-                        {
-                            if (project.Versions.Count > 0)
+
+                            if (project == null)
                             {
-                                if (versionNumber <= project.Versions.Count)
-                                {
-                                    Item[] versions = project.Versions.GetVersions();
+                                Item newWebsites = parent.Add(row["Name"].ToString(), template);
 
-                                    this.UpdateItem(ref versions[versionNumber - 1], row, ref Ids);
-                                    UpdatedRecords = UpdatedRecords + 1;
+                                this.UpdateItem(ref newWebsites, row, ref Ids, ref result);
+                                InsertedNewRecords = InsertedNewRecords + 1;
+                            }
+                            else
+                            {
+                                if (project.Versions.Count > 0)
+                                {
+                                    if (versionNumber <= project.Versions.Count)
+                                    {
+                                        Item[] versions = project.Versions.GetVersions();
+
+                                        this.UpdateItem(ref versions[versionNumber - 1], row, ref Ids, ref result);
+                                        UpdatedRecords = UpdatedRecords + 1;
+                                    }
+                                    else
+                                    {
+                                        Item newVersion = project.Versions.AddVersion();
+                                        this.UpdateItem(ref newVersion, row, ref Ids, ref result);
+                                        InsertedNewRecords = InsertedNewRecords + 1;
+
+                                    }
+
                                 }
                                 else
                                 {
                                     Item newVersion = project.Versions.AddVersion();
-                                    this.UpdateItem(ref newVersion, row, ref Ids);
+                                    this.UpdateItem(ref newVersion, row, ref Ids, ref result);
                                     InsertedNewRecords = InsertedNewRecords + 1;
 
                                 }
-
-                            }
-                            else
-                            {
-                                Item newVersion = project.Versions.AddVersion();
-                                this.UpdateItem(ref newVersion, row, ref Ids);
-                                InsertedNewRecords = InsertedNewRecords + 1;
-
                             }
                         }
-
+                        else
+                        {
+                            ParentNotFound = ParentNotFound+  row["Path"].ToString()+ "</br>";
+                        }
 
                     }
                     catch (Exception ex)
@@ -129,28 +150,28 @@ namespace RambollImportData.sitecore.admin
 
                 }
 
-                Websites.InsertedNewTotals.Add(lang.Name, InsertedNewRecords.ToString());
-                Websites.UpdateTotals.Add(lang.Name, UpdatedRecords.ToString());
+                result.InsertedNewTotals.Add(lang.Name, InsertedNewRecords.ToString());
+                result.UpdateTotals.Add(lang.Name, UpdatedRecords.ToString());
             }
 
-            Helper.FromDataTableToExcel(Ids, "Websites");
+            Helper.FromDataTableToExcel(Ids, name);
         }
 
-        private void UpdateItem(ref Item item, DataRow row, ref DataTable Ids)
+        private void UpdateItem(ref Item item, DataRow row, ref DataTable Ids, ref Result result)
         {
 
             item.Editing.BeginEdit();
             item["Old Id"] = row["ID"].ToString();
 
-            for (var i = 0; i < Websites.ImportedFields.Count; i++)
+            for (var i = 0; i < result.ImportedFields.Count; i++)
             {
 
                 try
                 {
-                    string importField = Websites.ImportedFields[i].ToString();
+                    string importField = result.ImportedFields[i].ToString();
                     if (!string.IsNullOrEmpty(importField))
                     {
-                        string exportField = Websites.ExportedFields[i].ToString();
+                        string exportField = result.ExportedFields[i].ToString();
 
 
                         if (importField.ToLower() == "country")

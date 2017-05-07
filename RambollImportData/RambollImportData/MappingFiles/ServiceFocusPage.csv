@@ -1,0 +1,25 @@
+Start Path,/sitecore/content/Ramboll/Ramboll Countries,
+Export Path,/sitecore/content/Home/Websites,
+Include Language,TRUE,
+Include Versions,TRUE,
+Template Name,/sitecore/templates/Project/Ramboll/Home,
+Output Name,ExportedServiceFocusPage,
+Exported Fields,Imported Fields
+ID,,
+ParentId,,
+Version,,
+Path,,
+Name,,
+Title,Title
+BackgroundImage,BackgroundImage
+RelatedService,RelatedService
+PageSpecificContactOffice,PageSpecificContactOffice
+DefaultDescriptionField,DefaultDescriptionField
+AlternativeBrowserTitle,AlternativeBrowserTitle
+RemarketingTag,RemarketingTag
+CustomMetaTags,CustomMetaTags
+301Redirect,301Redirect
+301RedirectedTo,301RedirectedTo
+301RedirectedToFromItemId,301RedirectedToFromItemId
+SearchCategory,SearchCategory
+NewsSelection,NewsSelection

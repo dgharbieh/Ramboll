@@ -26,62 +26,34 @@
                 <hr />
 
                 <form class="form-inline" id="form2" runat="server">
-             <%--         <fieldset>
-                        <strong>Websites Folder :</strong> 
-                    </fieldset>
-                    <fieldset>
-                        <strong>Start Path :</strong> <%=WebsitesFolders.StartPath %>
-                    </fieldset>
-                    <fieldset>
-                        <strong>Output Name :</strong> <%=WebsitesFolders.OutputName %>
-                    </fieldset>
-                    <fieldset>
-                        <strong>Include Language :</strong> <%=WebsitesFolders.IncludeLanguage.ToString() %>
-                    </fieldset>
-                    <fieldset>
-                        <strong>Include Versions :</strong> <%=WebsitesFolders.IncludeVersions.ToString()%>
-                    </fieldset>
-                    <fieldset>
-                        <strong>Exported Fields :</strong>
-                        <% foreach (var field in WebsitesFolders.ExportedFields)
-                           {%>
-                        <%=field.ToString()%> |
-                         <%}%>
-                    </fieldset>
-                    <fieldset>
-                        <strong>Imported Fields :</strong>
-                        <% foreach (var field in WebsitesFolders.ImportedFields)
-                           {%>
-                        <%=field.ToString()%> |
-                         <%}%>
-                    </fieldset>--%>
+           
                     <hr />
 
                        <fieldset>
                         <strong>Websites Items :</strong> 
                     </fieldset>
                     <fieldset>
-                        <strong>Start Path :</strong> <%=Websites.StartPath %>
+                        <strong>Start Path :</strong> <%=FullWebsites[0].StartPath %>
                     </fieldset>
                     <fieldset>
-                        <strong>Output Name :</strong> <%=Websites.OutputName %>
+                        <strong>Output Name :</strong> <%=FullWebsites[0].OutputName %>
                     </fieldset>
                     <fieldset>
-                        <strong>Include Language :</strong> <%=Websites.IncludeLanguage.ToString() %>
+                        <strong>Include Language :</strong> <%=FullWebsites[0].IncludeLanguage.ToString() %>
                     </fieldset>
                     <fieldset>
-                        <strong>Include Versions :</strong> <%=Websites.IncludeVersions.ToString()%>
+                        <strong>Include Versions :</strong> <%=FullWebsites[0].IncludeVersions.ToString()%>
                     </fieldset>
                     <fieldset>
                         <strong>Exported Fields :</strong>
-                        <% foreach (var field in Websites.ExportedFields)
+                        <% foreach (var field in FullWebsites[0].ExportedFields)
                            {%>
                         <%=field.ToString()%> |
                          <%}%>
                     </fieldset>
                     <fieldset>
                         <strong>Imported Fields :</strong>
-                        <% foreach (var field in Websites.ImportedFields)
+                        <% foreach (var field in FullWebsites[0].ImportedFields)
                            {%>
                         <%=field.ToString()%> |
                          <%}%>
@@ -95,33 +67,45 @@
 
                     <!-- success message begin -->
                     <asp:Panel ID="pnSuccess" Visible="false" CssClass="alert alert-success" runat="server">
-
-                       <strong>Updated Websites:</strong>
+                 <% foreach (var result in FullWebsites)
+                           {%>
+                       <strong>Updated <%=result.TemplateName  %>:</strong>
                         <br />
-                        <% foreach (var total in Websites.UpdateTotals)
+                        <% foreach (var total in result.UpdateTotals)
                             {%>
                         <strong>language (<%=total.Key%>)   </strong>:<%=total.Value%> records.<br />
                         <%}%>
 
                         <br />
                      
-                        <strong>Inserted Websites:</strong>
+                        <strong>Inserted <%=result.TemplateName  %>:</strong>
                         <br />
-                        <% foreach (var total in Websites.InsertedNewTotals)
+                        <% foreach (var total in result.InsertedNewTotals)
                             {%>
                         <strong>language (<%=total.Key%>)   </strong>:<%=total.Value%> records.<br />
                         <%}%>
-             
+                          <br />
+                   <%}%>
                         <br />
                     </asp:Panel>
                     <!-- success message end -->
-
+            
                     <!-- error message begin -->
                     <asp:Panel ID="pnFailure" Visible="false" CssClass="alert alert-error" runat="server">
                         <button type="button" class="close" data-dismiss="alert">&times;</button>
                         <strong>Error</strong> there has been a problem with import data, please try again.
+                       Parent Not Found for:
+                        <br/>
+                        <%=ParentNotFound %>
                     </asp:Panel>
                     <!-- error message end -->
+
+                     <asp:Panel ID="pnParentNotFound" Visible="false" CssClass="alert alert-error" runat="server">
+                           <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            Parent Not Found for:
+                        <br/>
+                        <%=ParentNotFound %>
+                    </asp:Panel>
                 </form>
             </div>
 
