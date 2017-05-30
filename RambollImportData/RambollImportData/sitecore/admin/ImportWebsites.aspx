@@ -73,7 +73,7 @@
                         <br />
                         <% foreach (var total in result.UpdateTotals)
                             {%>
-                        <strong>language (<%=total.Key%>)   </strong>:<%=total.Value%> records.<br />
+                        <strong>language (<%=total.Key%>)   </strong>:<%=total.Value%>records.<br />
                         <%}%>
 
                         <br />
@@ -82,7 +82,7 @@
                         <br />
                         <% foreach (var total in result.InsertedNewTotals)
                             {%>
-                        <strong>language (<%=total.Key%>)   </strong>:<%=total.Value%> records.<br />
+                        <strong>language (<%=total.Key%>)   </strong>:<%=total.Value%>records.<br />
                         <%}%>
                           <br />
                    <%}%>
@@ -106,6 +106,9 @@
                         <br/>
                         <%=ParentNotFound %>
                     </asp:Panel>
+
+
+                       <asp:Button ID="Button1" runat="server" Text="Move" OnClick="Button1_Click" />
                 </form>
             </div>
 

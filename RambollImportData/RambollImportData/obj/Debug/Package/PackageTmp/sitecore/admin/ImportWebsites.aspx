@@ -67,24 +67,25 @@
 
                     <!-- success message begin -->
                     <asp:Panel ID="pnSuccess" Visible="false" CssClass="alert alert-success" runat="server">
-   <% foreach (var result in FullWebsites)
+                 <% foreach (var result in FullWebsites)
                            {%>
                        <strong>Updated <%=result.TemplateName  %>:</strong>
                         <br />
                         <% foreach (var total in result.UpdateTotals)
                             {%>
-                        <strong>language (<%=total.Key%>)   </strong>:<%=total.Value%> records.<br />
+                        <strong>language (<%=total.Key%>)   </strong>:<%=total.Value%>records.<br />
                         <%}%>
 
                         <br />
                      
-                        <strong>Inserted Websites:</strong>
+                        <strong>Inserted <%=result.TemplateName  %>:</strong>
                         <br />
                         <% foreach (var total in result.InsertedNewTotals)
                             {%>
-                        <strong>language (<%=total.Key%>)   </strong>:<%=total.Value%> records.<br />
+                        <strong>language (<%=total.Key%>)   </strong>:<%=total.Value%>records.<br />
                         <%}%>
-              <%}%>
+                          <br />
+                   <%}%>
                         <br />
                     </asp:Panel>
                     <!-- success message end -->
@@ -107,7 +108,7 @@
                     </asp:Panel>
                 </form>
             </div>
-
+            <asp:Button ID="Button1" runat="server" Text="Move" OnClick="Button1_Click" />
         </div>
         <script src="/includes/scripts/jquery-1.7.2.min.js"></script>
         <script src="/includes/scripts/bootstrap.min.js"></script>
