@@ -106,9 +106,19 @@
                         <br/>
                         <%=ParentNotFound %>
                     </asp:Panel>
+
+                     <asp:Panel ID="pnMove" Visible="false" CssClass="alert alert-error" runat="server">
+                           <button type="button" class="close" data-dismiss="alert">&times;</button>
+                           items:
+                        <br/>
+                        <%=MoveData %>
+                    </asp:Panel>
+
+                       <asp:Button ID="Button1" runat="server" Text="Move" OnClick="Button1_Click" />
+                       <asp:Button ID="Button2" runat="server" Text="Update" OnClick="Button2_Click" />
                 </form>
             </div>
-            <asp:Button ID="Button1" runat="server" Text="Move" OnClick="Button1_Click" />
+
         </div>
         <script src="/includes/scripts/jquery-1.7.2.min.js"></script>
         <script src="/includes/scripts/bootstrap.min.js"></script>

@@ -22,12 +22,15 @@ namespace RambollImportData.sitecore.admin
 
         DataTable CountriesIds;
         public List<Result> FullWebsites = new List<Result>();
-        public string[] Templates = { "Websites", "ServiceFocusPage", "RichPageReferenceCollection", "RichPageReference", "FeaturePageReference", "NewsReference", "EventsReference" };
+        //"NewsReference", "EventsReference" 
+        public string[] Templates = { "Websites", "ServiceFocusPage", "RichPageReferenceCollection", "RichPageReference", "FeaturePageReference"};
 
         public int UpdatedRecords = 0;
         public int InsertedVersionsRecords = 0;
         public int InsertedNewRecords = 0;
         public string ParentNotFound = "";
+        public string MoveData = "";
+        
         protected void Page_Load(object sender, EventArgs e)
         {
             foreach (string temp in Templates)
@@ -203,7 +206,7 @@ namespace RambollImportData.sitecore.admin
         protected void Button1_Click(object sender, EventArgs e)
         {
             string OldWebsite = "/sitecore/content/Home/Websites/www.ramboll.com";
-            string NewWebsite = "/sitecore/content/Home/Websites/www.ramboll.com";
+            string NewWebsite = "/sitecore/content/Ramboll/Ramboll Countries/www.ramboll.com";
 
             Database masterDb = Helper.GetDatabase();
             Item OldItem = masterDb.GetItem(OldWebsite);
@@ -212,48 +215,70 @@ namespace RambollImportData.sitecore.admin
             MoveAndUpdate(OldItem, NewItem);
         }
 
+        protected void Button2_Click(object sender, EventArgs e)
+        {
 
-        public string[] ServicesTemplates = { "ComMenuLevel1Services" };
+            string NewItem = "/sitecore/content/Ramboll/Ramboll Countries/www.ramboll.com/Services-and-sectors";
+
+            UpdatedItemAndChild(masterDb.GetItem(NewItem));
+        }
+
+        public string[] ServicesTemplates = { "ServiceFocusPage" };
 
         protected void MoveAndUpdate(Item OldItem, Item NewItem)
         {
-
-            foreach (Item item in OldItem.Children)
+           foreach (Item item in OldItem.Children)
             {
-                if (ServicesTemplates.Contains(item.TemplateName))
-                item.MoveTo(NewItem);
-                UpdatedItemAndChild(NewItem);            
+                if (!ServicesTemplates.Contains(item.TemplateName))
+                {
+                    item.MoveTo(NewItem);
+                    MoveData += MoveData + "Move Item: " + NewItem.Paths.Path + "<br/>";
+                    UpdatedItemAndChild( NewItem);
+                }           
             }
+
+            pnMove.Visible = true;
 
         }
 
-        protected void UpdatedItemAndChild(Item item)
+        protected void UpdatedItemAndChild( Item item)
         {
-            if (ServicesBaseTemplates.Contains(item.TemplateName))
-            {
-                //update based on template name 
-            }
+            try {
 
-            foreach (var temp in item.Template.BaseTemplates)
-            {
-                if (ServicesBaseTemplates.Contains(temp.Name))
+                var templates = item.Template.BaseTemplates.Where(x => ServicesBaseTemplates.Contains(x.Name)).ToList();
+
+
+                if (templates  != null && templates.Count>0)
                 {
-                    switch (temp.Name)
+
+                    foreach (var temp in templates)
                     {
-                        case "Com5PicturesAndTextBasic": { UpdatePictureAndText(ref item); break; }
-                        case "Com22PublicationsLinksOrNewsBasic": { UpdatePuplications(ref item); break; }
-                        case "Com2ProjectsBasic": { UpdateProjectsBasic(ref item,20,"Project"); break; }
-                        case "Com6ProjectsBasic": { UpdateProjectsBasic(ref item, 6, "Project_"); break; }   
+                        if (ServicesBaseTemplates.Contains(temp.Name))
+                        {
+                            switch (temp.Name)
+                            {
+                                case "Com5PicturesAndTextBasic": { UpdatePictureAndText(ref item); MoveData += MoveData + "Update Item (Com5PicturesAndTextBasic): " + item.Paths.Path + "<br/>"; break; }
+                                case "Com22PublicationsLinksOrNewsBasic": { UpdatePuplications(ref item); MoveData += "Update Item (Com22PublicationsLinksOrNewsBasic): " + item.Paths.Path + "<br/>"; break; }
+                                case "Com2ProjectsBasic": { UpdateProjectsBasic(ref item, 20, "Project"); MoveData += "Update Item (Com2ProjectsBasic): " + item.Paths.Path + "<br/>"; break; }
+                                case "Com6ProjectsBasic": { UpdateProjectsBasic(ref item, 6, "Project_"); MoveData += "Update Item (Com6ProjectsBasic): " + item.Paths.Path + "<br/>"; break; }
+                            }
+                        }
                     }
                 }
-            }
+            
 
             foreach (Item child in item.Children)
             {
                 UpdatedItemAndChild(child);
             }
-
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
         }
+
+
 
 
         public string[] ServicesBaseTemplates = { "Com5PicturesAndTextBasic", "Com22PublicationsLinksOrNewsBasic", "Com2ProjectsBasic", "Com6ProjectsBasic" };
@@ -266,6 +291,7 @@ namespace RambollImportData.sitecore.admin
 
         private static void UpdateProjectsBasic(ref Item item,int number,string field)
         {
+            try { 
             item.Editing.BeginEdit();
             item.Fields["Projects"].Value = "";
 
@@ -273,7 +299,7 @@ namespace RambollImportData.sitecore.admin
             for (var i = 1; i <= number; i++)
             {
 
-               string  project = item.Fields[ + i].Value = "";
+               string  project = item.Fields[field + i].Value = "";
                 if (!string.IsNullOrEmpty(project))
                 {
                     if(string.IsNullOrEmpty(projects))
@@ -289,12 +315,17 @@ namespace RambollImportData.sitecore.admin
             item.Fields["Projects"].Value = projects;
             item.Editing.EndEdit();
         }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+}
 
         private static void UpdatePictureAndText(ref Item item)
         {
 
             ///PictureAndText
-
+            try { 
             Item PictureAndTextFolder = item.Children.AsEnumerable().ToList().Where(x => x.Name.ToLower() == "Pictures-and-Texts".ToLower()).FirstOrDefault();
             for (var i = 1; i <= 5; i++)
             {
@@ -334,11 +365,16 @@ namespace RambollImportData.sitecore.admin
                 }
 
             }
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
         }
 
         private static void UpdatePuplications(ref Item item)
         {
-
+try { 
             Item PublicationsFolder = item.Children.AsEnumerable().ToList().Where(x => x.Name.ToLower() == "Publications".ToLower()).FirstOrDefault();
 
 
@@ -355,9 +391,6 @@ namespace RambollImportData.sitecore.admin
                 string LinkToFromPicture105x98PixForSubjectOne = item["LinkToFromPicture105x98PixForSubject" + i].ToString();
 
                 string Item1 = (HeaderForSubjectOne + TeaserForSubjectOne + LinkToForSubjectOne + Picture105x98PixForSubjectOne + LinkToFromPicture105x98PixForSubjectOne).Trim();
-
-
-
                 string HeaderForSubjectTwo = item["HeaderForSubject" + next].ToString();
                 string TeaserForSubjectTwo = item["TeaserForSubject" + next].ToString();
                 string LinkToForSubjectTwo = item["LinkToForSubject" + next].ToString();
@@ -431,6 +464,11 @@ namespace RambollImportData.sitecore.admin
 
 
                 }
+            }
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
             }
         }
 
