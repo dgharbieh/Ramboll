@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
@@ -22,15 +23,22 @@ namespace RambollImportData.sitecore.admin
 
         DataTable CountriesIds;
         public List<Result> FullWebsites = new List<Result>();
-        //"NewsReference", "EventsReference" 
-        public string[] Templates = { "Websites", "ServiceFocusPage", "RichPageReferenceCollection", "RichPageReference", "FeaturePageReference"};
+
+        public string[] Templates = { "Websites", "ServiceFocusPage", "RichPageReferenceCollection", "RichPageReference", "FeaturePageReference", "NewsReference", "EventsReference" };
 
         public int UpdatedRecords = 0;
         public int InsertedVersionsRecords = 0;
         public int InsertedNewRecords = 0;
         public string ParentNotFound = "";
         public string MoveData = "";
-        
+        Database masterDb;
+
+        public TemplateItem Folderstemplate;
+        public TemplateItem PictureAndTextTemplate;
+        public TemplateItem PublicationLinksOrNewsTemplate;
+        public TemplateItem PublicationHeaderTemplate;
+
+
         protected void Page_Load(object sender, EventArgs e)
         {
             foreach (string temp in Templates)
@@ -208,9 +216,20 @@ namespace RambollImportData.sitecore.admin
             string OldWebsite = "/sitecore/content/Home/Websites/www.ramboll.com";
             string NewWebsite = "/sitecore/content/Ramboll/Ramboll Countries/www.ramboll.com";
 
-            Database masterDb = Helper.GetDatabase();
+            masterDb = Sitecore.Configuration.Factory.GetDatabase("master");
             Item OldItem = masterDb.GetItem(OldWebsite);
             Item NewItem = masterDb.GetItem(NewWebsite);
+
+
+      
+
+            Folderstemplate = masterDb.GetItem("/sitecore/templates/Common/Folder");
+            PictureAndTextTemplate = masterDb.GetItem("{24CF86AE-37CE-4A72-A18B-DD30FF9515BD}");
+            PublicationLinksOrNewsTemplate = masterDb.GetItem("{BDC80C68-8123-4079-B007-C211B2FFA43D}");
+            PublicationHeaderTemplate = masterDb.GetItem("{CFCD9E3B-7E77-4994-9517-FDE19965286F}");
+
+
+
 
             MoveAndUpdate(OldItem, NewItem);
         }
@@ -218,7 +237,12 @@ namespace RambollImportData.sitecore.admin
         protected void Button2_Click(object sender, EventArgs e)
         {
 
-            string NewItem = "/sitecore/content/Ramboll/Ramboll Countries/www.ramboll.com/Services-and-sectors";
+            string NewItem = "/sitecore/content/Ramboll/Ramboll Countries/www.ramboll.com";
+           masterDb = Sitecore.Configuration.Factory.GetDatabase("master");
+            Folderstemplate = masterDb.GetItem("/sitecore/templates/Common/Folder");
+            PictureAndTextTemplate = masterDb.GetItem("{24CF86AE-37CE-4A72-A18B-DD30FF9515BD}");
+            PublicationLinksOrNewsTemplate = masterDb.GetItem("{BDC80C68-8123-4079-B007-C211B2FFA43D}");
+            PublicationHeaderTemplate = masterDb.GetItem("{CFCD9E3B-7E77-4994-9517-FDE19965286F}");
 
             UpdatedItemAndChild(masterDb.GetItem(NewItem));
         }
@@ -227,144 +251,152 @@ namespace RambollImportData.sitecore.admin
 
         protected void MoveAndUpdate(Item OldItem, Item NewItem)
         {
-           foreach (Item item in OldItem.Children)
+            Sitecore.Configuration.Settings.Indexing.Enabled = false;
+            using (new Sitecore.Data.DatabaseCacheDisabler())
             {
-                if (!ServicesTemplates.Contains(item.TemplateName))
+                foreach (Item item in OldItem.Children)
                 {
-                    item.MoveTo(NewItem);
-                    MoveData += MoveData + "Move Item: " + NewItem.Paths.Path + "<br/>";
-                    UpdatedItemAndChild( NewItem);
-                }           
-            }
+                    if (!ServicesTemplates.Contains(item.TemplateName))
+                    {
+                        item.MoveTo(NewItem);
+                        MoveData += MoveData + "Move Item: " + NewItem.Paths.Path + "<br/>";
+                        // UpdatedItemAndChild(NewItem);
+                        // break;
+                    }
+                }
 
-            pnMove.Visible = true;
+                UpdatedItemAndChild(NewItem);
+
+                pnMove.Visible = true;
+            }
 
         }
 
-        protected void UpdatedItemAndChild( Item item)
+        protected void UpdatedItemAndChild(Item item)
         {
-            try {
+            Sitecore.Configuration.Settings.Indexing.Enabled = false;
+            using (new Sitecore.Data.DatabaseCacheDisabler())
+            {
 
-                var templates = item.Template.BaseTemplates.Where(x => ServicesBaseTemplates.Contains(x.Name)).ToList();
+                string path1 = "fast:/sitecore/content/Ramboll/Ramboll Countries/www.ramboll.com/*[@@templatename='ComMenuLevel1Services']/*";
 
+                Item[] itemLevel1 = masterDb.SelectItems(path1);
 
-                if (templates  != null && templates.Count>0)
+                try
                 {
+                    DoUpdate(ref item);
 
-                    foreach (var temp in templates)
+                    //Level 1
+                    foreach (Item child in itemLevel1)
                     {
-                        if (ServicesBaseTemplates.Contains(temp.Name))
+                        Item tempItem = child;
+
+                        DoUpdate(ref tempItem);
+                    }
+
+
+                    string path2 = "fast:/sitecore/content/Ramboll/Ramboll Countries/www.ramboll.com/*[@@templatename='ComMenuLevel1Services']/*/*";
+
+                    Item[] itemLevel2 = masterDb.SelectItems(path2);
+                    //Level 2
+                    foreach (Item child in itemLevel2)
+                    {
+                        Item tempItem = child;
+
+                        DoUpdate(ref tempItem);
+                    }
+
+
+                    string path3 = "fast:/sitecore/content/Ramboll/Ramboll Countries/www.ramboll.com/*[@@templatename='ComMenuLevel1Services']/*/*/*";
+
+                    Item[] itemLevel3 = masterDb.SelectItems(path3);
+                    //Level 2
+                    foreach (Item child in itemLevel2)
+                    {
+                        Item tempItem = child;
+
+                        DoUpdate(ref tempItem);
+                    }
+
+                    string path4 = "fast:/sitecore/content/Ramboll/Ramboll Countries/www.ramboll.com/*[@@templatename='ComMenuLevel1Services']/*/*/*/*";
+
+                    Item[] itemLevel4 = masterDb.SelectItems(path4);
+
+                }
+                catch (Exception ex)
+                {
+                    throw (ex);
+                }
+            }
+        }
+
+        private void DoUpdate(ref Item item)
+        {
+            var templates = item.Template.BaseTemplates.Where(x => ServicesBaseTemplates.Contains(x.Name)).ToList();
+
+
+            if (templates != null && templates.Count > 0)
+            {
+
+                foreach (var temp in templates)
+                {
+                    if (ServicesBaseTemplates.Contains(temp.Name))
+                    {
+                        switch (temp.Name)
                         {
-                            switch (temp.Name)
-                            {
-                                case "Com5PicturesAndTextBasic": { UpdatePictureAndText(ref item); MoveData += MoveData + "Update Item (Com5PicturesAndTextBasic): " + item.Paths.Path + "<br/>"; break; }
-                                case "Com22PublicationsLinksOrNewsBasic": { UpdatePuplications(ref item); MoveData += "Update Item (Com22PublicationsLinksOrNewsBasic): " + item.Paths.Path + "<br/>"; break; }
-                                case "Com2ProjectsBasic": { UpdateProjectsBasic(ref item, 20, "Project"); MoveData += "Update Item (Com2ProjectsBasic): " + item.Paths.Path + "<br/>"; break; }
-                                case "Com6ProjectsBasic": { UpdateProjectsBasic(ref item, 6, "Project_"); MoveData += "Update Item (Com6ProjectsBasic): " + item.Paths.Path + "<br/>"; break; }
-                            }
+                            case "Com5PicturesAndTextBasic": { UpdatePictureAndText(ref item); MoveData += MoveData + "Update Item (Com5PicturesAndTextBasic): " + item.Paths.Path + "<br/>"; break; }
+                                //  case "Com22PublicationsLinksOrNewsBasic": { UpdatePuplications(ref item); MoveData += "Update Item (Com22PublicationsLinksOrNewsBasic): " + item.Paths.Path + "<br/>"; break; }
+                                //   case "Com2ProjectsBasic": { UpdateProjectsBasic(ref item, 20, "Project"); MoveData += "Update Item (Com2ProjectsBasic): " + item.Paths.Path + "<br/>"; break; }
+                                //   case "Com6ProjectsBasic": { UpdateProjectsBasic(ref item, 6, "Project_"); MoveData += "Update Item (Com6ProjectsBasic): " + item.Paths.Path + "<br/>"; break; }
                         }
                     }
                 }
-            
+            }
 
-            foreach (Item child in item.Children)
+            Marshal.Release(Marshal.GetIUnknownForObject(item));
+            if (PicturesAndTextBasic % 10 == 0)
             {
-                UpdatedItemAndChild(child);
+                Marshal.Release(Marshal.GetIUnknownForObject(masterDb));
+
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+
+                masterDb = Sitecore.Configuration.Factory.GetDatabase("master");
             }
-            }
-            catch (Exception ex)
-            {
-                throw (ex);
-            }
+
         }
-
-
-
+        public int PicturesAndTextBasic = 0;
 
         public string[] ServicesBaseTemplates = { "Com5PicturesAndTextBasic", "Com22PublicationsLinksOrNewsBasic", "Com2ProjectsBasic", "Com6ProjectsBasic" };
 
-        public static Database masterDb = Helper.GetDatabase();
-        public static TemplateItem Folderstemplate = Helper.GetDatabase().GetItem("/sitecore/templates/Common/Folder");
-        public static TemplateItem PictureAndTextTemplate = masterDb.GetItem("{24CF86AE-37CE-4A72-A18B-DD30FF9515BD}");
-        public static TemplateItem PublicationLinksOrNewsTemplate = masterDb.GetItem("{BDC80C68-8123-4079-B007-C211B2FFA43D}");
-        public static TemplateItem PublicationHeaderTemplate = masterDb.GetItem("{CFCD9E3B-7E77-4994-9517-FDE19965286F}");
-
-        private static void UpdateProjectsBasic(ref Item item,int number,string field)
+        private void UpdateProjectsBasic(ref Item item, int number, string field)
         {
-            try { 
-            item.Editing.BeginEdit();
-            item.Fields["Projects"].Value = "";
-
-            var projects = "";
-            for (var i = 1; i <= number; i++)
+            try
             {
+                item.Editing.BeginEdit();
+                item.Fields["Projects"].Value = "";
 
-               string  project = item.Fields[field + i].Value = "";
-                if (!string.IsNullOrEmpty(project))
+                var projects = "";
+                for (var i = 1; i <= number; i++)
                 {
-                    if(string.IsNullOrEmpty(projects))
-                    { projects = projects + project;
-                    }else
-                    {
-                        projects = projects + "|" + project;
-                    }
-                   
-                }
-                   
-            }
-            item.Fields["Projects"].Value = projects;
-            item.Editing.EndEdit();
-        }
-            catch (Exception ex)
-            {
-                throw (ex);
-            }
-}
 
-        private static void UpdatePictureAndText(ref Item item)
-        {
-
-            ///PictureAndText
-            try { 
-            Item PictureAndTextFolder = item.Children.AsEnumerable().ToList().Where(x => x.Name.ToLower() == "Pictures-and-Texts".ToLower()).FirstOrDefault();
-            for (var i = 1; i <= 5; i++)
-            {
-                string texti = item["Text" + i].ToString();
-                string PictureiSize225x133Pix = item["Picture" + i + "Size225x133Pix"].ToString();
-                string PictureiSize722x318Pix = item["Picture" + i + "Size722x318Pix"].ToString();
-                string ClickOnPicturei = item["ClickOnPicture" + i].ToString();
-                string TViFullWidth = item["TV" + i + "FullWidth"].ToString();
-                if (!string.IsNullOrEmpty((texti + PictureiSize225x133Pix + PictureiSize722x318Pix + ClickOnPicturei + TViFullWidth).Trim()))
-                {
-                    if (PictureAndTextFolder == null)
+                    string project = item.Fields[field + i].Value = "";
+                    if (!string.IsNullOrEmpty(project))
                     {
-                        PictureAndTextFolder = item.Add("Pictures-and-Texts", Folderstemplate);
-                        PictureAndTextFolder.Editing.BeginEdit();
-                        PictureAndTextFolder["__Masters"] = PictureAndTextTemplate.ID.ToString();
-                        PictureAndTextFolder.Editing.EndEdit();
+                        if (string.IsNullOrEmpty(projects))
+                        {
+                            projects = projects + project;
+                        }
+                        else
+                        {
+                            projects = projects + "|" + project;
+                        }
 
                     }
-                    Item picturesandtextItem = PictureAndTextFolder.Children.AsEnumerable().ToList().Where(x => x.Name.ToLower() == ("Pictures-and-Text" + i).ToLower()).FirstOrDefault();
-
-
-                    if (picturesandtextItem == null)
-                    {
-
-                        picturesandtextItem = PictureAndTextFolder.Add("Pictures-and-Text" + i, PictureAndTextTemplate);
-
-                    }
-                    picturesandtextItem.Editing.BeginEdit();
-                    picturesandtextItem["Text"] = texti;
-                    picturesandtextItem["PictureSize1280x720Pix-SideImage"] = PictureiSize225x133Pix;
-                    picturesandtextItem["PictureSize1280x720Pix-BigImage"] = PictureiSize722x318Pix;
-                    picturesandtextItem["ClickOnPicture"] = ClickOnPicturei;
-                    picturesandtextItem["VideoFullWidth"] = TViFullWidth;
-                    picturesandtextItem["Old Id"] = i.ToString();
-                    picturesandtextItem.Editing.EndEdit();
 
                 }
-
-            }
+                item.Fields["Projects"].Value = projects;
+                item.Editing.EndEdit();
             }
             catch (Exception ex)
             {
@@ -372,99 +404,211 @@ namespace RambollImportData.sitecore.admin
             }
         }
 
-        private static void UpdatePuplications(ref Item item)
+        private void UpdatePictureAndText(ref Item item)
         {
-try { 
-            Item PublicationsFolder = item.Children.AsEnumerable().ToList().Where(x => x.Name.ToLower() == "Publications".ToLower()).FirstOrDefault();
-
-
-            for (var i = 1; i < 22; i = i + 2)
+            using (new Sitecore.Data.DatabaseCacheDisabler())
             {
-                int next = i + 1;
-
-                string HeaderSubject = item["HeaderSubject" + i + "And" + next].ToString();
-
-                string HeaderForSubjectOne = item["HeaderForSubject" + i].ToString();
-                string TeaserForSubjectOne = item["TeaserForSubject" + i].ToString();
-                string LinkToForSubjectOne = item["LinkToForSubject" + i].ToString();
-                string Picture105x98PixForSubjectOne = item["Picture105x98PixForSubject" + i].ToString();
-                string LinkToFromPicture105x98PixForSubjectOne = item["LinkToFromPicture105x98PixForSubject" + i].ToString();
-
-                string Item1 = (HeaderForSubjectOne + TeaserForSubjectOne + LinkToForSubjectOne + Picture105x98PixForSubjectOne + LinkToFromPicture105x98PixForSubjectOne).Trim();
-                string HeaderForSubjectTwo = item["HeaderForSubject" + next].ToString();
-                string TeaserForSubjectTwo = item["TeaserForSubject" + next].ToString();
-                string LinkToForSubjectTwo = item["LinkToForSubject" + next].ToString();
-                string Picture105x98PixForSubjectTwo = item["Picture105x98PixForSubject" + next].ToString();
-                string LinkToFromPicture105x98PixForSubjectTwo = item["LinkToFromPicture105x98PixForSubject" + next].ToString();
-
-                string Item2 = (HeaderForSubjectTwo + TeaserForSubjectTwo + LinkToForSubjectTwo + Picture105x98PixForSubjectTwo + LinkToFromPicture105x98PixForSubjectTwo).Trim();
-
-
-                if (!string.IsNullOrEmpty(HeaderSubject + Item1 + Item2))
+                ///PictureAndText
+                try
                 {
-
-                    if (PublicationsFolder == null)
+                    Item PictureAndTextFolder = item.Children.AsEnumerable().ToList().Where(x => x.Name.ToLower() == "Pictures-and-Texts".ToLower()).FirstOrDefault();
+                    for (var i = 1; i <= 5; i++)
                     {
-                        PublicationsFolder = item.Add("Publications", Folderstemplate);
-                        PublicationsFolder.Editing.BeginEdit();
-                        PublicationsFolder["__Masters"] = PublicationLinksOrNewsTemplate.ID.ToString();
-                        PublicationsFolder.Editing.EndEdit();
-                    }
-
-                    Item HeaderSubjectItem = PublicationsFolder.Children.AsEnumerable().ToList().Where(x => x.Name.ToLower() == ("HeaderSubject" + i + "And" + next).ToLower()).FirstOrDefault();
-                    if (HeaderSubjectItem == null)
-                    {
-                        HeaderSubjectItem = PublicationsFolder.Add("HeaderSubject" + i + "And" + next, PublicationHeaderTemplate);
-
-                        HeaderSubjectItem.Editing.BeginEdit();
-                        HeaderSubjectItem["HeaderSubject"] = HeaderSubject;
-                        HeaderSubjectItem["Old Id"] = +i + "And" + next;
-                        HeaderSubjectItem.Editing.EndEdit();
-                    }
-
-
-                    if (!string.IsNullOrEmpty(Item1))
-                    {
-                        Item PublicationItemOne = HeaderSubjectItem.Children.AsEnumerable().ToList().Where(x => x.Name.ToLower() == ("Publication-Links-Or-News" + i).ToLower()).FirstOrDefault();
-                        if (PublicationItemOne == null)
+                        string texti = item["Text" + i].ToString();
+                        string PictureiSize225x133Pix = item["Picture" + i + "Size225x133Pix"].ToString();
+                        string PictureiSize722x318Pix = item["Picture" + i + "Size722x318Pix"].ToString();
+                        string ClickOnPicturei = item["ClickOnPicture" + i].ToString();
+                        string TViFullWidth = item["TV" + i + "FullWidth"].ToString();
+                        if (!string.IsNullOrEmpty((texti + PictureiSize225x133Pix + PictureiSize722x318Pix + ClickOnPicturei + TViFullWidth).Trim()))
                         {
-                            PublicationItemOne = HeaderSubjectItem.Add("Publication-Links-Or-News" + i, PublicationLinksOrNewsTemplate);
+                            if (PictureAndTextFolder == null)
+                            {
+                                PictureAndTextFolder = item.Add("Pictures-and-Texts", Folderstemplate);
+
+                                PictureAndTextFolder.Editing.BeginEdit();
+                                PictureAndTextFolder["__Masters"] = PictureAndTextTemplate.ID.ToString();
+                                PictureAndTextFolder.Editing.EndEdit();
+
+
+                            }
+                            Item picturesandtextItem = PictureAndTextFolder.Children.AsEnumerable().ToList().Where(x => x.Name.ToLower() == ("Pictures-and-Text" + i).ToLower()).FirstOrDefault();
+
+
+                            if (picturesandtextItem == null)
+                            {
+
+                                picturesandtextItem = PictureAndTextFolder.Add("Pictures-and-Text" + i, PictureAndTextTemplate);
+
+                            }
+
+                            PicturesAndTextBasic = PicturesAndTextBasic + 1;
+                            picturesandtextItem.Editing.BeginEdit();
+                            picturesandtextItem["Text"] = texti;
+                            picturesandtextItem["PictureSize1280x720Pix-SideImage"] = PictureiSize225x133Pix;
+                            picturesandtextItem["PictureSize1280x720Pix-BigImage"] = PictureiSize722x318Pix;
+                            picturesandtextItem["ClickOnPicture"] = ClickOnPicturei;
+                            picturesandtextItem["VideoFullWidth"] = TViFullWidth;
+                            picturesandtextItem["Old Id"] = i.ToString();
+                            picturesandtextItem.Editing.EndEdit();
+
+
+                            ////item = null;
+                            ////PictureAndTextFolder = null;
+                            ////picturesandtextItem = null;
+                            // replaced above line with the below
+                            Marshal.Release(Marshal.GetIUnknownForObject(item));
+                            Marshal.Release(Marshal.GetIUnknownForObject(PictureAndTextFolder));
+                            Marshal.Release(Marshal.GetIUnknownForObject(picturesandtextItem));
+
+                            if (PicturesAndTextBasic % 10 == 0)
+                            {
+                                Marshal.Release(Marshal.GetIUnknownForObject(masterDb));
+                          
+                                GC.Collect();
+                                GC.WaitForPendingFinalizers();             
+
+                                masterDb = Sitecore.Configuration.Factory.GetDatabase("master");
+                            }
                         }
 
-                        PublicationItemOne.Editing.BeginEdit();
-                        PublicationItemOne["HeaderForSubject"] = HeaderForSubjectOne;
-                        PublicationItemOne["LinkToFromPicture105x98PixForSubject"] = LinkToFromPicture105x98PixForSubjectOne;
-                        ParseTeaserForSubject(ref PublicationItemOne, TeaserForSubjectOne, LinkToFromPicture105x98PixForSubjectOne);
-                        PublicationItemOne["LinkToForSubject"] = LinkToForSubjectOne;
-                        PublicationItemOne["Picture105x98PixForSubject"] = Picture105x98PixForSubjectOne;
-                        PublicationItemOne["Old Id"] = i.ToString();
-                        PublicationItemOne.Editing.EndEdit();
-
                     }
-
-
-
-                    if (!string.IsNullOrEmpty(Item2))
-                    {
-                        Item PublicationItemTwo = HeaderSubjectItem.Children.AsEnumerable().ToList().Where(x => x.Name.ToLower() == ("Publication-Links-Or-News" + next).ToLower()).FirstOrDefault();
-
-                        if (PublicationItemTwo == null)
-                        {
-                            PublicationItemTwo = HeaderSubjectItem.Add("Publication-Links-Or-News" + next, PublicationLinksOrNewsTemplate);
-                        }
-                        PublicationItemTwo.Editing.BeginEdit();
-                        PublicationItemTwo["HeaderForSubject"] = HeaderForSubjectTwo;
-                        PublicationItemTwo["LinkToFromPicture105x98PixForSubject"] = LinkToFromPicture105x98PixForSubjectTwo;
-                        ParseTeaserForSubject(ref PublicationItemTwo, TeaserForSubjectTwo, LinkToFromPicture105x98PixForSubjectTwo);
-                        PublicationItemTwo["LinkToForSubject"] = LinkToForSubjectTwo;
-                        PublicationItemTwo["Picture105x98PixForSubject"] = Picture105x98PixForSubjectTwo;
-                        PublicationItemTwo["Old Id"] = next.ToString();
-                        PublicationItemTwo.Editing.EndEdit();
-                    }
-
-
+                }
+                catch (Exception ex)
+                {
+                    throw (ex);
                 }
             }
+        }
+
+        private void UpdatePuplications(ref Item item)
+        {
+            try
+            {
+                Item PublicationsFolder = item.Children.AsEnumerable().ToList().Where(x => x.Name.ToLower() == "Publications".ToLower()).FirstOrDefault();
+
+
+                for (var i = 1; i < 22; i = i + 2)
+                {
+                    int next = i + 1;
+
+                    string HeaderSubject = item["HeaderSubject" + i + "And" + next].ToString();
+
+                    string HeaderForSubjectOne = item["HeaderForSubject" + i].ToString();
+                    string TeaserForSubjectOne = item["TeaserForSubject" + i].ToString();
+                    string LinkToForSubjectOne = item["LinkToForSubject" + i].ToString();
+                    string Picture105x98PixForSubjectOne = item["Picture105x98PixForSubject" + i].ToString();
+                    string LinkToFromPicture105x98PixForSubjectOne = item["LinkToFromPicture105x98PixForSubject" + i].ToString();
+
+                    string Item1 = (HeaderForSubjectOne + TeaserForSubjectOne + LinkToForSubjectOne + Picture105x98PixForSubjectOne + LinkToFromPicture105x98PixForSubjectOne).Trim();
+                    string HeaderForSubjectTwo = item["HeaderForSubject" + next].ToString();
+                    string TeaserForSubjectTwo = item["TeaserForSubject" + next].ToString();
+                    string LinkToForSubjectTwo = item["LinkToForSubject" + next].ToString();
+                    string Picture105x98PixForSubjectTwo = item["Picture105x98PixForSubject" + next].ToString();
+                    string LinkToFromPicture105x98PixForSubjectTwo = item["LinkToFromPicture105x98PixForSubject" + next].ToString();
+
+                    string Item2 = (HeaderForSubjectTwo + TeaserForSubjectTwo + LinkToForSubjectTwo + Picture105x98PixForSubjectTwo + LinkToFromPicture105x98PixForSubjectTwo).Trim();
+
+
+                    if (!string.IsNullOrEmpty(HeaderSubject + Item1 + Item2))
+                    {
+
+                        if (PublicationsFolder == null)
+                        {
+                            PublicationsFolder = item.Add("Publications", Folderstemplate);
+                            using (new EditContext(PublicationsFolder))
+                            {
+
+                                // PublicationsFolder.Editing.BeginEdit();
+                                PublicationsFolder["__Masters"] = PublicationLinksOrNewsTemplate.ID.ToString();
+                                //   PublicationsFolder.Editing.EndEdit();
+                            }
+                        }
+
+                        Item HeaderSubjectItem = PublicationsFolder.Children.AsEnumerable().ToList().Where(x => x.Name.ToLower() == ("HeaderSubject" + i + "And" + next).ToLower()).FirstOrDefault();
+                        if (HeaderSubjectItem == null)
+                        {
+                            HeaderSubjectItem = PublicationsFolder.Add("HeaderSubject" + i + "And" + next, PublicationHeaderTemplate);
+
+
+                            using (new EditContext(HeaderSubjectItem))
+
+                            {
+
+
+                                // HeaderSubjectItem.Editing.BeginEdit();
+                                HeaderSubjectItem["HeaderSubject"] = HeaderSubject;
+                                HeaderSubjectItem["Old Id"] = +i + "And" + next;
+                                //  HeaderSubjectItem.Editing.EndEdit();
+                            }
+                        }
+
+
+                        if (!string.IsNullOrEmpty(Item1))
+                        {
+                            Item PublicationItemOne = HeaderSubjectItem.Children.AsEnumerable().ToList().Where(x => x.Name.ToLower() == ("Publication-Links-Or-News" + i).ToLower()).FirstOrDefault();
+                            if (PublicationItemOne == null)
+                            {
+                                PublicationItemOne = HeaderSubjectItem.Add("Publication-Links-Or-News" + i, PublicationLinksOrNewsTemplate);
+                            }
+
+
+                            using (new EditContext(PublicationItemOne))
+
+                            {
+                                // PublicationItemOne.Editing.BeginEdit();
+                                PublicationItemOne["HeaderForSubject"] = HeaderForSubjectOne;
+                                PublicationItemOne["LinkToFromPicture105x98PixForSubject"] = LinkToFromPicture105x98PixForSubjectOne;
+                                ParseTeaserForSubject(ref PublicationItemOne, TeaserForSubjectOne, LinkToFromPicture105x98PixForSubjectOne);
+                                PublicationItemOne["LinkToForSubject"] = LinkToForSubjectOne;
+                                PublicationItemOne["Picture105x98PixForSubject"] = Picture105x98PixForSubjectOne;
+                                PublicationItemOne["Old Id"] = i.ToString();
+                                //  PublicationItemOne.Editing.EndEdit();
+                            }
+
+                        }
+
+
+
+                        if (!string.IsNullOrEmpty(Item2))
+                        {
+                            Item PublicationItemTwo = HeaderSubjectItem.Children.AsEnumerable().ToList().Where(x => x.Name.ToLower() == ("Publication-Links-Or-News" + next).ToLower()).FirstOrDefault();
+
+                            if (PublicationItemTwo == null)
+                            {
+                                PublicationItemTwo = HeaderSubjectItem.Add("Publication-Links-Or-News" + next, PublicationLinksOrNewsTemplate);
+                            }
+
+
+                            using (new EditContext(PublicationItemTwo))
+
+                            {
+
+                                PublicationItemTwo["HeaderForSubject"] = HeaderForSubjectTwo;
+                                PublicationItemTwo["LinkToFromPicture105x98PixForSubject"] = LinkToFromPicture105x98PixForSubjectTwo;
+                                ParseTeaserForSubject(ref PublicationItemTwo, TeaserForSubjectTwo, LinkToFromPicture105x98PixForSubjectTwo);
+                                PublicationItemTwo["LinkToForSubject"] = LinkToForSubjectTwo;
+                                PublicationItemTwo["Picture105x98PixForSubject"] = Picture105x98PixForSubjectTwo;
+                                PublicationItemTwo["Old Id"] = next.ToString();
+
+                            }
+
+
+
+                            //PublicationItemTwo.Editing.BeginEdit();
+                            //PublicationItemTwo["HeaderForSubject"] = HeaderForSubjectTwo;
+                            //PublicationItemTwo["LinkToFromPicture105x98PixForSubject"] = LinkToFromPicture105x98PixForSubjectTwo;
+                            //ParseTeaserForSubject(ref PublicationItemTwo, TeaserForSubjectTwo, LinkToFromPicture105x98PixForSubjectTwo);
+                            //PublicationItemTwo["LinkToForSubject"] = LinkToForSubjectTwo;
+                            //PublicationItemTwo["Picture105x98PixForSubject"] = Picture105x98PixForSubjectTwo;
+                            //PublicationItemTwo["Old Id"] = next.ToString();
+                            //PublicationItemTwo.Editing.EndEdit();
+                            //PublicationItemTwo.Editing.()
+
+                        }
+
+
+                    }
+                }
             }
             catch (Exception ex)
             {
