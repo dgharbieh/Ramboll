@@ -111,7 +111,7 @@
                            <button type="button" class="close" data-dismiss="alert">&times;</button>
                            items:
                         <br/>
-                        <%=MoveData %>
+                        <%=Counter %>
                     </asp:Panel>
 
                        <asp:Button ID="Button1" runat="server" Text="Move" OnClick="Button1_Click" />
