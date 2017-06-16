@@ -23,17 +23,29 @@ namespace RambollImportData.sitecore.admin
 
         DataTable CountriesIds;
         public List<Result> FullWebsites = new List<Result>();
-        //"NewsReference", "EventsReference"
-        //, "RichPageReferenceCollection", "RichPageReference", "FeaturePageReference"
         public string[] Templates = { "Websites", "ServiceFocusPage" };
         public List<Result> FullWebsitesSubTree = new List<Result>();
         public string[] TemplatesSubtree = { "RichPageReference", "FeaturePageReference" };
+        public string[] ServicesTemplates = { "ServiceFocusPage" };
 
+        public int Counter = 0;
         public int UpdatedRecords = 0;
         public int InsertedVersionsRecords = 0;
         public int InsertedNewRecords = 0;
         public string ParentNotFound = "";
         public string MoveData = "";
+        private string OldWebsiteFolder = "/sitecore/content/Home/Websites";
+        private string NewWebsiteFolder = "/sitecore/content/Ramboll/Ramboll Countries";
+
+
+        public string[] ServicesBaseTemplates = { "Com5PicturesAndTextBasic", "Com22PublicationsLinksOrNewsBasic", "Com2ProjectsBasic", "Com6ProjectsBasic" };
+        public static Database masterDb = Helper.GetDatabase();
+        public static TemplateItem Folderstemplate = Helper.GetDatabase().GetItem("/sitecore/templates/Common/Folder");
+        public static TemplateItem PictureAndTextTemplate = masterDb.GetItem("{24CF86AE-37CE-4A72-A18B-DD30FF9515BD}");
+        public static TemplateItem PublicationLinksOrNewsTemplate = masterDb.GetItem("{BDC80C68-8123-4079-B007-C211B2FFA43D}");
+        public static TemplateItem PublicationHeaderTemplate = masterDb.GetItem("{CFCD9E3B-7E77-4994-9517-FDE19965286F}");
+
+        public static Item OldWebsiteFolderItem = masterDb.GetItem("/sitecore/content/Home/Websites");
 
 
         protected void Page_Load(object sender, EventArgs e)
@@ -47,6 +59,7 @@ namespace RambollImportData.sitecore.admin
                 FullWebsites.Add(result);
             }
         }
+
         protected void ImportData(object sender, EventArgs e)
         {
             try
@@ -72,6 +85,28 @@ namespace RambollImportData.sitecore.admin
             }
         }
 
+        protected void Move_Click(object sender, EventArgs e)
+        {
+            ParentNotFound = string.Empty;
+            Sitecore.Configuration.Settings.Indexing.Enabled = false;
+            using (new Sitecore.Data.DatabaseCacheDisabler())
+            {
+                foreach (Item item in OldWebsiteFolderItem.Children)
+                {
+                    MoveAndUpdate(item);
+
+                }
+                ImportSubtree();
+
+                if (!string.IsNullOrEmpty(ParentNotFound))
+                {
+                    pnParentNotFound.Visible = true;
+                }
+
+            }
+        }
+
+     
         protected void ImportMultiLanguageDataTable(Dictionary<string, DataTable> dataTables, Result result, string name, bool withMove= false)
         {
             UpdatedRecords = InsertedVersionsRecords = InsertedNewRecords = 0;
@@ -271,44 +306,9 @@ namespace RambollImportData.sitecore.admin
             }
             item.Editing.EndEdit();
             Helper.UpdateIds(ref Ids, item);
-        }
+        }  
 
-        private string OldWebsiteFolder = "/sitecore/content/Home/Websites";
-        private string NewWebsiteFolder = "/sitecore/content/Ramboll/Ramboll Countries";
-
-
-        protected void Button1_Click(object sender, EventArgs e)
-        {
-            Sitecore.Configuration.Settings.Indexing.Enabled = false;
-            using (new Sitecore.Data.DatabaseCacheDisabler())
-            {
-
-                masterDb = Sitecore.Configuration.Factory.GetDatabase("master");
-                Item OldWebsiteFolderItem = masterDb.GetItem(OldWebsiteFolder);
-                Folderstemplate = masterDb.GetItem("/sitecore/templates/Common/Folder");
-                PictureAndTextTemplate = masterDb.GetItem("{24CF86AE-37CE-4A72-A18B-DD30FF9515BD}");
-                PublicationLinksOrNewsTemplate = masterDb.GetItem("{BDC80C68-8123-4079-B007-C211B2FFA43D}");
-                PublicationHeaderTemplate = masterDb.GetItem("{CFCD9E3B-7E77-4994-9517-FDE19965286F}");
-
-                foreach (Item item in OldWebsiteFolderItem.Children)
-                {
-                    if (item.TemplateName == "StandardWebsite")
-                    {
-                        string NewWebsite = NewWebsiteFolder + "/" + item.Name;
-                        Item NewItem = masterDb.GetItem(NewWebsite);
-                        MoveAndUpdate(item, NewItem);
-                    }
-
-                    MovePartOneChild(item);
-
-                }
-
-                UpdatePartOne();
-
-            }
-        }
-
-        protected void MovePartOneChild(Item OldItem)
+        protected void MoveAndUpdate(Item OldItem)
         {
 
             //move the childs
@@ -319,20 +319,20 @@ namespace RambollImportData.sitecore.admin
                     string parentPath = temp.Parent.Paths.Path.Replace(OldWebsiteFolder, NewWebsiteFolder);
                     Item parentItem = masterDb.GetItem(parentPath);
                     temp.MoveTo(parentItem);
-
+                    UpdatedItemAndChild(temp);
 
                 }
                 else
 
                 {
-                    MovePartOneChild(temp);
+                    MoveAndUpdate(temp);
                 }
             }
 
 
         }
 
-        protected void UpdatePartOne()
+        protected void ImportSubtree()
         {
             //if (TemplatesSubtree.Contains(item.TemplateName))
             //{
@@ -362,48 +362,8 @@ namespace RambollImportData.sitecore.admin
 
         }
 
-        protected void Button2_Click(object sender, EventArgs e)
-        {
-            Sitecore.Configuration.Settings.Indexing.Enabled = false;
-            using (new Sitecore.Data.DatabaseCacheDisabler())
-            {
-                string NewItem = "/sitecore/content/Ramboll/Ramboll Countries/www.ramboll.com";
-                UpdatedItemAndChild(masterDb.GetItem(NewItem));
-                pnMove.Visible = true;
-            }
-        }
-
-        public string[] ServicesTemplates = { "ServiceFocusPage" };
-
-        protected void MoveAndUpdate(Item OldItem, Item NewItem)
-        {
-            Sitecore.Configuration.Settings.Indexing.Enabled = false;
-            using (new Sitecore.Data.DatabaseCacheDisabler())
-            {
-                foreach (Item item in OldItem.Children)
-                {
-                    if (!ServicesTemplates.Contains(item.TemplateName))
-                    {
-                        item.MoveTo(NewItem);
-                        MoveData += MoveData + "Move Item: " + NewItem.Paths.Path + "<br/>";
-                        UpdatedItemAndChild(NewItem);
-                        // break;
-                    }
-                }
-
-                UpdatedItemAndChild(NewItem);
-
-                pnMove.Visible = true;
-            }
-
-        }
-
-        public int Counter = 0;
-
         protected void UpdatedItemAndChild(Item item)
         {
-
-
             Sitecore.Configuration.Settings.Indexing.Enabled = false;
             using (new Sitecore.Data.DatabaseCacheDisabler())
             {
@@ -447,14 +407,6 @@ namespace RambollImportData.sitecore.admin
             }
         }
 
-
-        public string[] ServicesBaseTemplates = { "Com5PicturesAndTextBasic", "Com22PublicationsLinksOrNewsBasic", "Com2ProjectsBasic", "Com6ProjectsBasic" };
-
-        public static Database masterDb = Helper.GetDatabase();
-        public static TemplateItem Folderstemplate = Helper.GetDatabase().GetItem("/sitecore/templates/Common/Folder");
-        public static TemplateItem PictureAndTextTemplate = masterDb.GetItem("{24CF86AE-37CE-4A72-A18B-DD30FF9515BD}");
-        public static TemplateItem PublicationLinksOrNewsTemplate = masterDb.GetItem("{BDC80C68-8123-4079-B007-C211B2FFA43D}");
-        public static TemplateItem PublicationHeaderTemplate = masterDb.GetItem("{CFCD9E3B-7E77-4994-9517-FDE19965286F}");
 
         private static void UpdateProjectsBasic(ref Item item, int number, string field)
         {

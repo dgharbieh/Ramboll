@@ -107,15 +107,15 @@
                         <%=ParentNotFound %>
                     </asp:Panel>
 
-                     <asp:Panel ID="pnMove" Visible="false" CssClass="alert alert-error" runat="server">
+                     <asp:Panel ID="pnMove" Visible="false" CssClass="alert alert-success" runat="server">
                            <button type="button" class="close" data-dismiss="alert">&times;</button>
                            items:
                         <br/>
                         <%=Counter %>
                     </asp:Panel>
 
-                       <asp:Button ID="Button1" runat="server" Text="Move" OnClick="Button1_Click" />
-                       <asp:Button ID="Button2" runat="server" Text="Update" OnClick="Button2_Click" />
+                       <asp:Button ID="btnMove" runat="server" Text="Move" OnClick="Move_Click" />
+                    
                 </form>
             </div>
 
