@@ -16,9 +16,10 @@ namespace RambollExportData.sitecore.admin
 {
     public partial class ExportWebsites : System.Web.UI.Page
     {
-
+        
         public List<Result> FullWebsites = new List<Result>();
-        public string[]  Templates = { "Websites", "ServiceFocusPage", "RichPageReferenceCollection", "RichPageReference","FeaturePageReference", "NewsReference" , "EventsReference" };
+        // "NewsReference" , "EventsReference"
+        public string[]  Templates = { "Websites", "ServiceFocusPage", "RichPageReferenceCollection", "RichPageReference","FeaturePageReference" };
 
 
         protected void Page_Load(object sender, EventArgs e)

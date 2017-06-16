@@ -23,8 +23,11 @@ namespace RambollImportData.sitecore.admin
 
         DataTable CountriesIds;
         public List<Result> FullWebsites = new List<Result>();
-
-        public string[] Templates = { "Websites", "ServiceFocusPage", "RichPageReferenceCollection", "RichPageReference", "FeaturePageReference", "NewsReference", "EventsReference" };
+        //"NewsReference", "EventsReference"
+        //, "RichPageReferenceCollection", "RichPageReference", "FeaturePageReference"
+        public string[] Templates = { "Websites", "ServiceFocusPage" };
+        public List<Result> FullWebsitesSubTree = new List<Result>();
+        public string[] TemplatesSubtree = { "RichPageReference", "FeaturePageReference" };
 
         public int UpdatedRecords = 0;
         public int InsertedVersionsRecords = 0;
@@ -69,7 +72,7 @@ namespace RambollImportData.sitecore.admin
             }
         }
 
-        protected void ImportMultiLanguageDataTable(Dictionary<string, DataTable> dataTables, Result result, string name)
+        protected void ImportMultiLanguageDataTable(Dictionary<string, DataTable> dataTables, Result result, string name, bool withMove= false)
         {
             UpdatedRecords = InsertedVersionsRecords = InsertedNewRecords = 0;
             Database masterDb = Helper.GetDatabase();
@@ -103,7 +106,10 @@ namespace RambollImportData.sitecore.admin
                         }
                         if (parent != null)
                         {
-                            project = parent.Children.AsEnumerable().ToList().Where(x => x.Name.ToLower() == row["Name"].ToString().ToLower()).FirstOrDefault();
+
+                            Item old = parent.Children.AsEnumerable().ToList().Where(x => x.Name.ToLower() == row["Name"].ToString().ToLower()).FirstOrDefault();
+
+                            project = parent.Children.AsEnumerable().ToList().Where(x => x.Name.ToLower() == row["Name"].ToString().ToLower() && x.TemplateName== template.Name).FirstOrDefault();
 
 
                             if (project == null)
@@ -111,6 +117,20 @@ namespace RambollImportData.sitecore.admin
                                 Item newWebsites = parent.Add(row["Name"].ToString(), template);
 
                                 this.UpdateItem(ref newWebsites, row, ref Ids, ref result);
+
+                                if (withMove)
+                                {
+                                    if (old != null && old.TemplateName != newWebsites.TemplateName)
+                                    {
+                                        foreach (Item temp in old.Children)
+                                        {
+                                            temp.MoveTo(newWebsites);
+
+                                        }
+                                        old.Delete();
+                                    }
+
+                                }
                                 InsertedNewRecords = InsertedNewRecords + 1;
                             }
                             else
@@ -122,12 +142,45 @@ namespace RambollImportData.sitecore.admin
                                         Item[] versions = project.Versions.GetVersions();
 
                                         this.UpdateItem(ref versions[versionNumber - 1], row, ref Ids, ref result);
+
+                                        if (withMove)
+                                        {
+                                            if (old != null && old.TemplateName != versions[versionNumber - 1].TemplateName)
+                                            {
+                                                foreach (Item temp in old.Children)
+                                                {
+                                                    temp.MoveTo(versions[versionNumber - 1]);
+
+                                                }
+                                                old.Delete();
+                                            }
+
+                                        }
+
+
                                         UpdatedRecords = UpdatedRecords + 1;
                                     }
                                     else
                                     {
                                         Item newVersion = project.Versions.AddVersion();
                                         this.UpdateItem(ref newVersion, row, ref Ids, ref result);
+
+
+
+                                        if (withMove)
+                                        {
+                                            if (old != null && old.TemplateName != newVersion.TemplateName)
+                                            {
+                                                foreach (Item temp in old.Children)
+                                                {
+                                                    temp.MoveTo(newVersion);
+
+                                                }
+                                                old.Delete();
+                                            }
+                                          
+                                        }
+
                                         InsertedNewRecords = InsertedNewRecords + 1;
 
                                     }
@@ -137,6 +190,21 @@ namespace RambollImportData.sitecore.admin
                                 {
                                     Item newVersion = project.Versions.AddVersion();
                                     this.UpdateItem(ref newVersion, row, ref Ids, ref result);
+
+
+                                    if (withMove)
+                                    {
+                                        if (old != null && old.TemplateName != newVersion.TemplateName)
+                                        {
+                                            foreach (Item temp in old.Children)
+                                            {
+                                                temp.MoveTo(newVersion);
+
+                                            }
+                                            old.Delete();
+                                        }
+                                
+                                    }
                                     InsertedNewRecords = InsertedNewRecords + 1;
 
                                 }
@@ -205,25 +273,93 @@ namespace RambollImportData.sitecore.admin
             Helper.UpdateIds(ref Ids, item);
         }
 
+        private string OldWebsiteFolder = "/sitecore/content/Home/Websites";
+        private string NewWebsiteFolder = "/sitecore/content/Ramboll/Ramboll Countries";
+
+
         protected void Button1_Click(object sender, EventArgs e)
         {
             Sitecore.Configuration.Settings.Indexing.Enabled = false;
             using (new Sitecore.Data.DatabaseCacheDisabler())
             {
-                string OldWebsite = "/sitecore/content/Home/Websites/www.ramboll.com";
-                string NewWebsite = "/sitecore/content/Ramboll/Ramboll Countries/www.ramboll.com";
 
                 masterDb = Sitecore.Configuration.Factory.GetDatabase("master");
-                Item OldItem = masterDb.GetItem(OldWebsite);
-                Item NewItem = masterDb.GetItem(NewWebsite);
-
+                Item OldWebsiteFolderItem = masterDb.GetItem(OldWebsiteFolder);
                 Folderstemplate = masterDb.GetItem("/sitecore/templates/Common/Folder");
                 PictureAndTextTemplate = masterDb.GetItem("{24CF86AE-37CE-4A72-A18B-DD30FF9515BD}");
                 PublicationLinksOrNewsTemplate = masterDb.GetItem("{BDC80C68-8123-4079-B007-C211B2FFA43D}");
                 PublicationHeaderTemplate = masterDb.GetItem("{CFCD9E3B-7E77-4994-9517-FDE19965286F}");
 
-                MoveAndUpdate(OldItem, NewItem);
+                foreach (Item item in OldWebsiteFolderItem.Children)
+                {
+                    if (item.TemplateName == "StandardWebsite")
+                    {
+                        string NewWebsite = NewWebsiteFolder + "/" + item.Name;
+                        Item NewItem = masterDb.GetItem(NewWebsite);
+                        MoveAndUpdate(item, NewItem);
+                    }
+
+                    MovePartOneChild(item);
+
+                }
+
+                UpdatePartOne();
+
             }
+        }
+
+        protected void MovePartOneChild(Item OldItem)
+        {
+
+            //move the childs
+            foreach (Item temp in OldItem.Children)
+            {
+                if (!Templates.Contains(temp.TemplateName))
+                {
+                    string parentPath = temp.Parent.Paths.Path.Replace(OldWebsiteFolder, NewWebsiteFolder);
+                    Item parentItem = masterDb.GetItem(parentPath);
+                    temp.MoveTo(parentItem);
+
+
+                }
+                else
+
+                {
+                    MovePartOneChild(temp);
+                }
+            }
+
+
+        }
+
+        protected void UpdatePartOne()
+        {
+            //if (TemplatesSubtree.Contains(item.TemplateName))
+            //{
+            //    item.Delete();
+
+            //}
+
+
+            foreach (string temp in TemplatesSubtree)
+            {
+                Result result = new Result();
+
+                Helper.ParseMappingFile(ref result, temp, true);
+
+                FullWebsitesSubTree.Add(result);
+            }
+
+            CountriesIds = Helper.GetIdsMatchDataTable("Countries");
+            for (var i = 0; i < FullWebsitesSubTree.Count; i++)
+            {
+                ImportMultiLanguageDataTable(Helper.GetLanguagesDataTable(FullWebsitesSubTree[i]), FullWebsitesSubTree[i], TemplatesSubtree[i],true);
+            }
+            if (!string.IsNullOrEmpty(ParentNotFound))
+            {
+                pnParentNotFound.Visible = true;
+            }
+
         }
 
         protected void Button2_Click(object sender, EventArgs e)
@@ -250,7 +386,7 @@ namespace RambollImportData.sitecore.admin
                     {
                         item.MoveTo(NewItem);
                         MoveData += MoveData + "Move Item: " + NewItem.Paths.Path + "<br/>";
-                        // UpdatedItemAndChild(NewItem);
+                        UpdatedItemAndChild(NewItem);
                         // break;
                     }
                 }
@@ -266,6 +402,8 @@ namespace RambollImportData.sitecore.admin
 
         protected void UpdatedItemAndChild(Item item)
         {
+
+
             Sitecore.Configuration.Settings.Indexing.Enabled = false;
             using (new Sitecore.Data.DatabaseCacheDisabler())
             {
@@ -308,7 +446,6 @@ namespace RambollImportData.sitecore.admin
                 }
             }
         }
-
 
 
         public string[] ServicesBaseTemplates = { "Com5PicturesAndTextBasic", "Com22PublicationsLinksOrNewsBasic", "Com2ProjectsBasic", "Com6ProjectsBasic" };
