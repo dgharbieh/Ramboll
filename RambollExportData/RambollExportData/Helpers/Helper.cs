@@ -4,6 +4,7 @@ using Sitecore.ApplicationCenter.Applications;
 using Sitecore.Collections;
 using Sitecore.Configuration;
 using Sitecore.Data;
+using Sitecore.Data.Fields;
 using Sitecore.Data.Items;
 using Sitecore.Data.Managers;
 using Sitecore.Globalization;
@@ -194,6 +195,21 @@ namespace RambollExportData.Helpers
                                     break;
                                 case "templatename":
                                     fieldsValues = fieldsValues + version.TemplateName.ToString();
+                                    break;
+                                case "linktoitem":
+                                    LinkField link = version.Fields["LinkTo"];
+                                    if (link != null && link.IsInternal && link.TargetItem != null)
+                                    {
+                                        fieldsValues = fieldsValues + link.TargetItem.ID;
+                                    }
+                                    break;
+
+                                case "linktotemplate":
+                                    LinkField link2 = version.Fields["LinkTo"];
+                                    if (link2 != null && link2.IsInternal && link2.TargetItem != null)
+                                    {
+                                        fieldsValues = fieldsValues + link2.TargetItem.TemplateName;
+                                    }
                                     break;
                                 default:
                                     fieldsValues = fieldsValues + ReplaceComma(version.Fields[fields[i].ToString().Trim()].Value);
