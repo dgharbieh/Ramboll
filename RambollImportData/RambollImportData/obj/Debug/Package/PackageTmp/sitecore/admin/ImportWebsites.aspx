@@ -94,9 +94,6 @@
                     <asp:Panel ID="pnFailure" Visible="false" CssClass="alert alert-error" runat="server">
                         <button type="button" class="close" data-dismiss="alert">&times;</button>
                         <strong>Error</strong> there has been a problem with import data, please try again.
-                       Parent Not Found for:
-                        <br/>
-                        <%=ParentNotFound %>
                     </asp:Panel>
                     <!-- error message end -->
 
@@ -105,6 +102,30 @@
                             Parent Not Found for:
                         <br/>
                         <%=ParentNotFound %>
+                    </asp:Panel>
+
+                      <!-- success message begin -->
+                    <asp:Panel ID="pnSuccessSubtree" Visible="false" CssClass="alert alert-success" runat="server">
+                 <% foreach (var result in FullWebsitesSubTree)
+                           {%>
+                       <strong>Updated <%=result.TemplateName  %>:</strong>
+                        <br />
+                        <% foreach (var total in result.UpdateTotals)
+                            {%>
+                        <strong>language (<%=total.Key%>)   </strong>:<%=total.Value%>records.<br />
+                        <%}%>
+
+                        <br />
+                     
+                        <strong>Inserted <%=result.TemplateName  %>:</strong>
+                        <br />
+                        <% foreach (var total in result.InsertedNewTotals)
+                            {%>
+                        <strong>language (<%=total.Key%>)   </strong>:<%=total.Value%>records.<br />
+                        <%}%>
+                          <br />
+                   <%}%>
+                        <br />
                     </asp:Panel>
 
                      <asp:Panel ID="pnMove" Visible="false" CssClass="alert alert-success" runat="server">

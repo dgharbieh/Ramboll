@@ -87,6 +87,8 @@ namespace RambollImportData.sitecore.admin
 
         protected void Move_Click(object sender, EventArgs e)
         {
+            try
+            {
             ParentNotFound = string.Empty;
             Sitecore.Configuration.Settings.Indexing.Enabled = false;
             using (new Sitecore.Data.DatabaseCacheDisabler())
@@ -96,6 +98,9 @@ namespace RambollImportData.sitecore.admin
                     MoveAndUpdate(item);
 
                 }
+
+                pnMove.Visible = true;
+
                 ImportSubtree();
 
                 if (!string.IsNullOrEmpty(ParentNotFound))
@@ -103,6 +108,15 @@ namespace RambollImportData.sitecore.admin
                     pnParentNotFound.Visible = true;
                 }
 
+            }
+                pnSuccessSubtree.Visible = true;
+                pnFailure.Visible = false;
+
+            }
+            catch (Exception ex)
+            {
+                pnSuccessSubtree.Visible = false;
+                pnFailure.Visible = true;
             }
         }
 
