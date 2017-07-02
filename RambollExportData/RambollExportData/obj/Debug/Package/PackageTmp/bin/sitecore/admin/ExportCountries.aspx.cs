@@ -46,5 +46,30 @@ namespace RambollExportData.sitecore.admin
             }
 
         }
+
+
+        protected void ExportDataref(object sender, EventArgs e)
+        {
+            try
+            {
+               
+                using (new SecurityDisabler())
+                {
+                 
+                    Helper.GenerateReferrersFiles(Helper.GetDatabase().GetItem(Countries.StartPath), Countries, Countries.OutputName);
+                    
+                }
+
+                pnReferrersSuccess.Visible = true;
+                pnFailure.Visible = false;
+
+            }
+            catch (Exception ex)
+            {
+                pnReferrersSuccess.Visible = false;
+                pnFailure.Visible = true;
+            }
+
+        }
     }
 }

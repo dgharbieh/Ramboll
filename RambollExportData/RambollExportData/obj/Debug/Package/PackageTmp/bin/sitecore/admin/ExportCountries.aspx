@@ -50,6 +50,9 @@
                     <fieldset>
                         <asp:Button ID="btnExport" runat="server" Text="Export to CSV" OnClick="ExportData" />
                     </fieldset>
+                      <fieldset>
+                        <asp:Button ID="btnExportRef" runat="server" Text="Export Referrers Data to CSV" OnClick="ExportDataref" />
+                    </fieldset>
 
                     <hr />
 
@@ -62,10 +65,21 @@
                               {%>              
                             <strong>language (<%=total.Key%>)   </strong>:<%=total.Value%> records.<br />
                          <%}%> 
-                    
                     </asp:Panel>
-                    <!-- success message end -->
 
+
+                    <!-- success message begin -->
+                    <asp:Panel ID="pnReferrersSuccess" Visible="false" CssClass="alert alert-success" runat="server">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <strong>Success</strong> the export completed successfully.
+                        <br />
+                          
+                           <% foreach (var temp in Countries.ReferrersTemplateField)
+                              {%>              
+                            <strong>Tempalet Name: <%=temp.Key%>   </strong>Tempalet Field :<%=temp.Value%> .<br />
+                         <%}%> 
+                    </asp:Panel>
+                   
                     <!-- error message begin -->
                     <asp:Panel ID="pnFailure" Visible="false" CssClass="alert alert-error" runat="server">
                         <button type="button" class="close" data-dismiss="alert">&times;</button>

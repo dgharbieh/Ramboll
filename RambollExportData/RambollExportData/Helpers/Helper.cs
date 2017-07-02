@@ -8,6 +8,7 @@ using Sitecore.Data.Fields;
 using Sitecore.Data.Items;
 using Sitecore.Data.Managers;
 using Sitecore.Globalization;
+using Sitecore.Sites;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -25,6 +26,8 @@ namespace RambollExportData.Helpers
 {
     public class Helper
     {
+
+
         public static void ParseMappingFile(ref Result page, string fileName, bool vertical = false)
         {
             page = new Result();
@@ -131,30 +134,35 @@ namespace RambollExportData.Helpers
 
         public static void GenerateLanguagesFiles(Item parent, Result resultItem, string outputName, Dictionary<string, int> totals)
         {
+ 
 
             foreach (var lang in GetLanguages())
             {
                 int total = 0;
                 ArrayList fields = resultItem.Fields;
                 StringBuilder CSV = new StringBuilder();
+              
                 CSV.AppendLine(Helper.GetHeader(fields));
+               
                 foreach (var item in parent.Children.AsEnumerable())
                 {
                     Item sub = GetDatabase().GetItem(item.ID, lang);
+
                     string line = Helper.GetFieldsLineWithVersion(sub, ref resultItem, string.Empty);
+
                     if (!string.IsNullOrEmpty(line))
                     {
                         CSV.AppendLine(line);
                         total = total + item.Versions.Count;
-                    }
+                    } 
                 }
-                Helper.CreateFile(CSV.ToString(), outputName + "_" + lang.Name);
-
+                Helper.CreateFile(CSV.ToString(), outputName + "_" + lang.Name);          
                 totals.Add(lang.Name.ToString(), total);
+
             }
         }
 
-
+   
         public static string GetFieldsLineWithVersion(Item item, ref Result resultItem, string lang)
         {
             string fieldsValues = string.Empty;
@@ -245,7 +253,6 @@ namespace RambollExportData.Helpers
         }
 
 
-
         public static string GetFieldsLine(Item item, ArrayList fields)
         {
             string fieldsValues = string.Empty;
@@ -317,6 +324,70 @@ namespace RambollExportData.Helpers
             }
         }
 
+
+        public static void GenerateReferrersFiles(Item parent, Result resultItem, string outputName)
+        {
+            resultItem.ReferrersCSV.AppendLine("TemplateName,TemplateId,Fields");
+
+            foreach (var lang in GetLanguages())
+            {
+
+                foreach (var item in parent.Children.AsEnumerable())
+                {
+                    Item sub = GetDatabase().GetItem(item.ID, lang);
+
+
+                    Helper.GetReferrers(sub, ref resultItem);
+
+                }
+
+                Helper.CreateFile(resultItem.ReferrersCSV.ToString(), outputName + "Referrers");
+            }
+        }
+     
+
+        public static void GetReferrers(Item item, ref Result resultItem)
+        {
+            Item[] referrers = GetReferrersAsItems(ref item);
+
+            if (referrers != null)
+            {
+
+                foreach (Item referr in referrers)
+                {
+
+                    var FieldsNames = string.Join("|", referr.Fields.Where(x => x.Value.Contains(item.ID.ToString()))
+                                     .Select(p => p.Name.ToString()));
+
+                    if (!resultItem.ReferrersTemplateField.ContainsKey(referr.TemplateName))
+                    {
+
+
+                        resultItem.ReferrersTemplateField.Add(referr.TemplateName, FieldsNames);
+
+                        resultItem.ReferrersCSV.AppendLine(referr.TemplateName + "," + referr.TemplateID.ToString() + "," + FieldsNames);
+
+
+                    }
+
+                }
+
+            }
+        }
+
+        public static Item[] GetReferrersAsItems(ref Item item, bool includeStandardValues = false)
+        {
+            var links = Sitecore.Globals.LinkDatabase.GetReferrers(item);
+            if (links == null)
+                return new Item[0];
+            var linkedItems = links.Select(i => i.GetSourceItem()).Where(i => i != null);
+
+            linkedItems = linkedItems.Where(i => i.Paths.FullPath.StartsWith("/sitecore/content/Home", StringComparison.InvariantCultureIgnoreCase));
+
+            if (!includeStandardValues)
+                linkedItems = linkedItems.Where(i => !i.Name.Equals("__standard values", StringComparison.InvariantCultureIgnoreCase));
+            return linkedItems.ToArray();
+        }
 
 
 

@@ -31,6 +31,15 @@ namespace RambollExportData.sitecore.admin {
         protected global::System.Web.UI.WebControls.Button btnExport;
         
         /// <summary>
+        /// btnExportRef control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnExportRef;
+        
+        /// <summary>
         /// pnSuccess control.
         /// </summary>
         /// <remarks>
@@ -38,6 +47,15 @@ namespace RambollExportData.sitecore.admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel pnSuccess;
+        
+        /// <summary>
+        /// pnReferrersSuccess control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnReferrersSuccess;
         
         /// <summary>
         /// pnFailure control.
