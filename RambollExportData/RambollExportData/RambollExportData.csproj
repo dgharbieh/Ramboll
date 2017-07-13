@@ -104,6 +104,7 @@
     <Compile Include="Helpers\Helper.cs" />
     <Compile Include="Helpers\Log.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="sitecore\admin\Data.cs" />
     <Compile Include="sitecore\admin\ExportContactPersons.aspx.cs">
       <DependentUpon>ExportContactPersons.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -121,6 +122,13 @@
     <Compile Include="sitecore\admin\ExportNews.aspx.designer.cs">
       <DependentUpon>ExportNews.aspx</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="sitecore\admin\ExportRelatedTemplate.aspx.cs">
+      <DependentUpon>ExportRelatedTemplate.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="sitecore\admin\ExportRelatedTemplate.aspx.designer.cs">
+      <DependentUpon>ExportRelatedTemplate.aspx</DependentUpon>
     </Compile>
     <Compile Include="sitecore\admin\ExportWebsites.aspx.cs">
       <DependentUpon>ExportWebsites.aspx</DependentUpon>
@@ -202,6 +210,7 @@
     <Content Include="sitecore\admin\ExportNews.aspx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="sitecore\admin\ExportRelatedTemplate.aspx" />
     <Content Include="sitecore\admin\ExportWebsites.aspx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

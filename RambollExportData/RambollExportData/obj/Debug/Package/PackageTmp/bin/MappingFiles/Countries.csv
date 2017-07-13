@@ -1,5 +1,6 @@
 Start Path ,/sitecore/content/Home/Global/Countries,,,
 Include Language,TRUE,,,
 Include Versions,TRUE,,,
+Template Name,ComCountry
 Output Name,ExportedCountries,,,
 Exported Fields,ID,Name,CountryName,Version
