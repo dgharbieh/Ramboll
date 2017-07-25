@@ -2,6 +2,7 @@ Start Path,/sitecore/content/Ramboll/Ramboll Countries,
 Export Path,/sitecore/content/Home/Websites,
 Include Language,TRUE,
 Include Versions,TRUE,
+Old Template Name,StandardWebsite
 Template Name,/sitecore/templates/Foundation/Experience Accelerator/Multisite/Site,
 Output Name,ExportedWebsites,
 Exported Fields,Imported Fields

@@ -29,23 +29,32 @@ namespace RambollExportData.sitecore.admin
 
         public Dictionary<string, int> ReferrersTotals = new Dictionary<string, int>();
         public Dictionary<string, Data> ReferrersTemplateField = new Dictionary<string, Data>();
+        public Dictionary<string, Data2> ReferrersDetailsTemplateField = new Dictionary<string, Data2>();
+        List<Data2> DataCollection = new List<Data2>();
         StringBuilder ReferrersCSV = new StringBuilder();
+        StringBuilder DetailsReferrersCSV = new StringBuilder();
         public string Current = "";
 
+        public List<Result> ALLWebsite = new List<Result>();
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            Helper.ParseMappingFile(ref Countries, "Countries");
-            Helper.ParseMappingFile(ref Projects, "Projects", true);
-            Helper.ParseMappingFile(ref ContactPersons, "ContactPersons", true);
-            Helper.ParseMappingFile(ref News, "News", true);
-            Helper.ParseMappingFile(ref Aliases, "Aliases");
 
-            ALLresultItem.Add(Countries);
-            ALLresultItem.Add(Projects);
-            ALLresultItem.Add(ContactPersons);
-            ALLresultItem.Add(News);
-            ALLresultItem.Add(Aliases);
+
+
+           // Helper.ParseMappingFile(ref Countries, "Countries");
+           // Countries.ExcludedRelatedTemplates.Add("ComProject");
+
+           //Helper.ParseMappingFile(ref Projects, "Projects", true);
+           //Helper.ParseMappingFile(ref ContactPersons, "ContactPersons", true);
+       //   Helper.ParseMappingFile(ref News, "News", true);
+           //Helper.ParseMappingFile(ref Aliases, "Aliases");
+
+           // ALLresultItem.Add(Countries);
+           // ALLresultItem.Add(Projects);
+         // ALLresultItem.Add(ContactPersons);
+          //  ALLresultItem.Add(News);
+           // ALLresultItem.Add(Aliases);
 
             foreach (string temp in Templates)
             {
@@ -53,14 +62,14 @@ namespace RambollExportData.sitecore.admin
 
                 Helper.ParseMappingFile(ref result, temp, true);
 
-                ALLresultItem.Add(result);
+                ALLWebsite.Add(result);
             }
         }
         protected void ExportDataref(object sender, EventArgs e)
         {
             try
             {
-                ReferrersCSV.AppendLine("Mapping, RelatedTemplateName,RelatedTemplateId,Fields,Sample");
+             
                 using (new SecurityDisabler())
                 {
 
@@ -69,14 +78,80 @@ namespace RambollExportData.sitecore.admin
 
                     foreach (var result in ALLresultItem)
                     {
+                        ReferrersCSV.AppendLine("ItemTemplateName, RelatedTemplateName,Fields,Sample");
+                        DetailsReferrersCSV.AppendLine("ItemId,ItemTemplateName,RelatedId,RelatedTemplateName,RelatedTemplateId,Fields");
                         Item parent = masterDb.GetItem(result.StartPath.Trim());
                         GetReferrersData(result, parent);
+
+
+                         foreach (var item in DataCollection.Select(item =>item.ItemId + "," + item.ItemTemplateName + "," + item.RelatedId + "," + item.RelatedTemplateName + "," + item.RelatedTemplateId + "," +  item.Fields).Distinct())          
+                        {
+                            DetailsReferrersCSV.AppendLine(item);
+                        }
+
+
+                         foreach (var item in DataCollection.Select(x => new
+                         {
+                             x.ItemTemplateName,
+                             x.RelatedTemplateName,
+                             Fields = String.Join("|", DataCollection.Where(z => z.ItemTemplateName == x.ItemTemplateName && z.RelatedTemplateName == x.RelatedTemplateName && z.Fields != "").Select(m => m.Fields).Distinct()),
+                             Sample = String.Join("|", DataCollection.Where(z => z.ItemTemplateName == x.ItemTemplateName && z.RelatedTemplateName == x.RelatedTemplateName && z.Fields != "").Select(m => m.RelatedId).Distinct())
+                         }).Distinct())
+                         {
+                             ReferrersCSV.AppendLine( item.ItemTemplateName +"," + item.RelatedTemplateName + "," + item.Fields + ","+ item.Sample);
+                         }
+
+
+
+
+                        Helper.CreateFile(ReferrersCSV.ToString(), "Related"+result.fileName );
+                        Helper.CreateFile(DetailsReferrersCSV.ToString(), "DetailsRelated" + result.fileName);
+                        ReferrersTemplateField.Clear();
+                        ReferrersCSV.Clear();
+                        DetailsReferrersCSV.Clear();
                     }
-                    foreach (var item in ReferrersTemplateField)
+
+
+                   /////////////////////
+                    if (ALLWebsite.Count>0)
                     {
-                        ReferrersCSV.AppendLine(item.Value.Mapping + "," + item.Value.RelatedTemplateName + "," + item.Value.RelatedTemplateId + "," + string.Join("|", item.Value.Fields.ToArray()) + "," + string.Join("|", item.Value.Items.ToArray()));
+
+                        ReferrersCSV.AppendLine("ItemTemplateName, RelatedTemplateName,Fields,Sample");
+                        DetailsReferrersCSV.AppendLine("ItemId,ItemTemplateName,RelatedId,RelatedTemplateName,RelatedTemplateId,Fields");
+                        Item parent = masterDb.GetItem(ALLWebsite[0].StartPath.Trim());
+
+                        GetReferrersData(ALLWebsite, parent);
+
+                        foreach (var item in DataCollection.Select(item => item.ItemId + "," + item.ItemTemplateName + "," + item.RelatedId + "," + item.RelatedTemplateName + "," + item.RelatedTemplateId + "," + item.Fields).Distinct())
+                        {
+                            DetailsReferrersCSV.AppendLine(item);
+                        }
+
+
+                        foreach (var item in DataCollection.Select(x => new
+                        {
+                            x.ItemTemplateName,
+                            x.RelatedTemplateName,
+                            Fields = String.Join("|", DataCollection.Where(z => z.ItemTemplateName == x.ItemTemplateName && z.RelatedTemplateName == x.RelatedTemplateName && z.Fields != "").Select(m => m.Fields).Distinct()),
+                            Sample = String.Join("|", DataCollection.Where(z => z.ItemTemplateName == x.ItemTemplateName && z.RelatedTemplateName == x.RelatedTemplateName && z.Fields != "").Select(m => m.RelatedId).Distinct())
+                        }).Distinct())
+                        {
+                            ReferrersCSV.AppendLine(item.ItemTemplateName + "," + item.RelatedTemplateName + "," + item.Fields + "," + item.Sample);
+                        }
+
+
+
+
+                        Helper.CreateFile(ReferrersCSV.ToString(), "Related" + ALLWebsite[0].fileName);
+                        Helper.CreateFile(DetailsReferrersCSV.ToString(), "DetailsRelated" + ALLWebsite[0].fileName);
+                        ReferrersTemplateField.Clear();
+                        ReferrersCSV.Clear();
+                        DetailsReferrersCSV.Clear();
+
                     }
-                    Helper.CreateFile(ReferrersCSV.ToString(), "Referrers");
+                 
+
+
 
                 }
 
@@ -102,12 +177,11 @@ namespace RambollExportData.sitecore.admin
 
             foreach (Item sub in parent.Children.AsEnumerable())
             {
-                // Item sub = Helper.GetDatabase().GetItem(item.ID, lang);
 
                 if (sub.TemplateName.ToLower() == resultItem.TemplateName.Trim().ToLower())
                 {
 
-                    GetReferrers(sub);
+                    GetReferrers( resultItem,sub);
 
                 }
 
@@ -116,7 +190,26 @@ namespace RambollExportData.sitecore.admin
         }
 
 
-        public void GetReferrers(Item item)
+
+        private void GetReferrersData(List<Result> resultItems, Item parent)
+        {
+
+            if (parent.Children.Count == 0)
+                return;
+
+            foreach (Item sub in parent.Children.AsEnumerable())
+            {
+                var result = resultItems.Where(x => x.TemplateName.Trim().ToLower() == sub.TemplateName.ToLower()).FirstOrDefault();
+                if (result != null)
+                {
+                    GetReferrers(result, sub);
+                }
+
+                GetReferrersData(resultItems, sub);
+            }
+        }
+
+        public void GetReferrers(Result resultItem,Item item)
         {
             Item[] referrers = GetReferrersAsItems(ref item);
 
@@ -125,52 +218,26 @@ namespace RambollExportData.sitecore.admin
 
                 foreach (Item referr in referrers)
                 {
-                    var Fields = referr.Fields.Where(x => x.Value.Contains(item.ID.ToString()));
 
-                    var FieldsNames = string.Join("|", Fields.Where(x => x.Value.Contains(item.ID.ToString()))
-                                     .Select(p => p.Name.ToString()));
-
-                    if (!string.IsNullOrEmpty(FieldsNames))
+                    if (!resultItem.ExcludedRelatedTemplates.Contains(referr.TemplateName))
                     {
-                        if (ReferrersTemplateField.ContainsKey(referr.TemplateName))
-                        {
-                            try
-                            {
-                                foreach (var f in Fields)
-                                {
-                                    if (!ReferrersTemplateField[referr.TemplateName].Fields.Contains(f.Name.ToString()))
-                                    {
-                                        ReferrersTemplateField[referr.TemplateName].Fields.Add(f.Name.ToString());
-                                    }
-                                    ReferrersTemplateField[referr.TemplateName].Items.Add(referr.ID.ToString());
-                                }
 
-                            }
-                            catch (Exception ex)
-                            {
-                                throw ex;
-                            }
-
-                        }
-                        else
+                        var Fields = referr.Fields.Where(x => x.Value.Contains(item.ID.ToString()));
+                        if (Fields != null && Fields.Count() > 0)
                         {
-                            Data data = new Data();
-                            data.Mapping = item.TemplateName;
+                            Data2 data = new Data2();
+                            data.ItemId = item.ID.ToString(); ;
+                            data.ItemTemplateName = item.TemplateName;
+                            data.RelatedId = referr.ID.ToString();
                             data.RelatedTemplateName = referr.TemplateName;
                             data.RelatedTemplateId = referr.TemplateID.ToString();
-                            data.Items.Add(referr.ID.ToString());
+                            data.Fields = string.Join("|", Fields.Where(x => x.Value.Contains(item.ID.ToString()))
+                                        .Select(p => p.Name.ToString()));
 
-                            foreach (var f in Fields)
-                            {
-                                data.Fields.Add(f.Name.ToString());
-                            }
+                            DataCollection.Add(data);
 
-                            ReferrersTemplateField.Add(referr.TemplateName, data);
-                            //  ReferrersCSV.AppendLine(item.TemplateName + "," + referr.TemplateName + "," + referr.TemplateID.ToString() + "," + FieldsNames + "," + referr.ID.ToString());
                         }
-                    }
-
-
+                    }   
                 }
             }
         }

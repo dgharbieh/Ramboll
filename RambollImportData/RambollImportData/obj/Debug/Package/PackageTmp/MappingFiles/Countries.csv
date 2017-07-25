@@ -1,6 +1,7 @@
 Start Path ,/sitecore/system/Settings/Analytics/Lookups/Countries,,
 Include Language,True,,
 Include Versions,True,,
+Old Template Name,ComCountry
 Output Name,ExportedCountries,,
 Exported Fields,ID,Name,CountryName,Version
 Imported Fields,ID,Name,Name,Version

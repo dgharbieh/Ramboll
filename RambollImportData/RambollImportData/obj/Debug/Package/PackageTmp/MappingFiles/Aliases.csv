@@ -2,6 +2,7 @@ Start Path,/sitecore/system/Aliases,,,,
 Export Path,/sitecore/content/Home/Aliases,,,,
 Include Language,TRUE,,,,
 Include Versions,TRUE,,,,
+Old Template Name,ComAlias
 Template Name,/sitecore/templates/System/Alias ,,,,
 Output Name,ExportedAliases,,,,
 Exported Fields,ID,Version,Path,Name,LinkTo

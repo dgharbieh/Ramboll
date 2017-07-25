@@ -2,6 +2,7 @@ Start Path,/sitecore/content/Ramboll/Ramboll Countries,
 Export Path,/sitecore/content/Home/Websites,
 Include Language,TRUE,
 Include Versions,TRUE,
+Old Template Name,RichPageReferenceCollection
 Template Name,/sitecore/templates/Ramboll/Modules/SectionsFocus/RichPageReferenceCollection,
 Output Name,ExportedRichPageReferenceCollection,
 Exported Fields,Imported Fields

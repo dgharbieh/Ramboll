@@ -159,6 +159,13 @@
     <Compile Include="sitecore\admin\ImportWebsites.aspx.designer.cs">
       <DependentUpon>ImportWebsites.aspx</DependentUpon>
     </Compile>
+    <Compile Include="sitecore\admin\UpdateRelatedTemplates.aspx.cs">
+      <DependentUpon>UpdateRelatedTemplates.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="sitecore\admin\UpdateRelatedTemplates.aspx.designer.cs">
+      <DependentUpon>UpdateRelatedTemplates.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
@@ -186,6 +193,7 @@
     <Content Include="MappingFiles\FeaturePageReference.csv" />
     <Content Include="MappingFiles\NewsReference.csv" />
     <Content Include="MappingFiles\EventsReference.csv" />
+    <Content Include="sitecore\admin\UpdateRelatedTemplates.aspx" />
     <None Include="Properties\PublishProfiles\Local.pubxml" />
   </ItemGroup>
   <ItemGroup>

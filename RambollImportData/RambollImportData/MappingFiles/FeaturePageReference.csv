@@ -2,6 +2,7 @@ Start Path,/sitecore/content/Ramboll/Ramboll Countries,
 Export Path,/sitecore/content/Home/Websites,
 Include Language,TRUE,
 Include Versions,TRUE,
+Old Template Name,FeaturePageReference
 Template Name,/sitecore/templates/Project/Ramboll/Ramboll Countries/Page,
 Output Name,ExportedFeaturePageReference,
 Exported Fields,Imported Fields

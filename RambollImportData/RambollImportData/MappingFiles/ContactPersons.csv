@@ -2,7 +2,8 @@ Start Path,/sitecore/content/Ramboll/Global/Contacts/ContactPersons
 Export Path,/sitecore/content/Home/Global/Contacts/ContactPersons
 Include Language,TRUE
 Include Versions,TRUE
-Template Name,/sitecore/templates/Project/Ramboll/RambollCommon/ContactPerson
+Old Template Name,ComContactPerson
+Template Name,/sitecore/templates/Project/RambollCommon/ContactPerson
 Output Name,ExportedContactPersons
 Exported Fields,Imported Fields
 ID,

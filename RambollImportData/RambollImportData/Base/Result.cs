@@ -11,7 +11,7 @@ namespace RambollImportData.Base
     {
         public StringBuilder CSV = new StringBuilder();
         public int RecourdNumber;
-        public string StartPath = "", OutputName = "", TemplateName="";
+        public string StartPath = "", OutputName = "", TemplateName = "", FileName = "", OldTemplateName = "";
         public string ExportPath = ""; 
         public bool IncludeLanguage = false;
         public bool IncludeVersions = false;
@@ -23,6 +23,8 @@ namespace RambollImportData.Base
         public Dictionary<string, string> InsertedVersionsTotals = new Dictionary<string, string>();
         public Dictionary<string, string> InsertedNewTotals = new Dictionary<string, string>();
         public Dictionary<string, string> UpdateTotals = new Dictionary<string, string>();
+
+        public int UpdatedRelatedRecords = 0, NotFoundRelatedRecords = 0, LanguageVersionRelatedRecords = 0;
 
     }
 }

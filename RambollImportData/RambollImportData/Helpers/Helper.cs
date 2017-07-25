@@ -24,6 +24,7 @@ namespace RambollImportData.Helpers
         public static void ParseMappingFile(ref Result page, string fileName, bool vertical = false)
         {
             page = new Result();
+            page.FileName = fileName;
             fileName = HttpContext.Current.Server.MapPath("/MappingFiles/") + fileName + ".csv";
             if (File.Exists(fileName))
             {
@@ -51,6 +52,9 @@ namespace RambollImportData.Helpers
                             break;
                         case "template name":
                             page.TemplateName = Fields[1];
+                            break;
+                        case "old template name":
+                            page.OldTemplateName = Fields[1];
                             break;
                         case "exported fields":
                             if (!vertical)
@@ -186,6 +190,48 @@ namespace RambollImportData.Helpers
                 dt.Columns.Add("OldID");
                 dt.Columns.Add("NewID");
 
+            }
+
+            return dt;
+        }
+
+        public static DataTable GetDataTableFromCSV(string name)
+        {
+            DataTable dt = new DataTable();
+            string fileName = Settings.GetSetting("FolderPath") + "\\" + name + ".csv";
+            if (File.Exists(fileName))
+            {
+                bool isheader = true;
+                foreach (var line in File.ReadAllLines(fileName))
+                {
+                    string[] Fields = line.Split(new char[] { ',' });
+                    try
+                    {
+                        if (isheader)
+                        {
+                            isheader = false;
+                            foreach (var field in Fields)
+                            {
+                                dt.Columns.Add(field);
+                            }
+
+                        }
+                        else
+                        {
+                            DataRow row = dt.NewRow();
+                            for (var i = 0; i < Fields.Count(); i++)
+                            {
+                                row[i] = ReplaceComma(Fields[i]);
+                            }
+                            dt.Rows.Add(row);
+                        }
+
+                    }
+                    catch (Exception ex)
+                    {
+                        throw (ex);
+                    }
+                }
             }
 
             return dt;
