@@ -36,14 +36,14 @@ namespace RambollExportData.sitecore.admin
                 {
 
                     Database masterDb = Helper.GetDatabase();
-                    Item parent = masterDb.GetItem(Folders.StartPath.Trim());
+                    Item parent = masterDb.GetItem(News.StartPath.Trim());
                   
                     if (parent != null)
                     {
                      
-                       GeFolderstData(parent);
+                       //GeFolderstData(parent);
 
-                       Helper.CreateFile(Folders.CSV.ToString(), Folders.OutputName);
+                       //Helper.CreateFile(Folders.CSV.ToString(), Folders.OutputName);
 
                         foreach (var lang in parent.Languages)
                         {

@@ -31,7 +31,7 @@ namespace RambollExportData.Helpers
         public static void ParseMappingFile(ref Result page, string fileName, bool vertical = false)
         {
             page = new Result();
-
+            page.fileName = fileName;
             fileName = HttpContext.Current.Server.MapPath("/MappingFiles/") + fileName + ".csv";
             if (File.Exists(fileName))
             {

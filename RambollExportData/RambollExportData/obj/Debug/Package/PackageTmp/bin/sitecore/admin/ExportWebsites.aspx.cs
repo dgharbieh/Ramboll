@@ -45,9 +45,9 @@ namespace RambollExportData.sitecore.admin
                     var Websites = FullWebsites[0];
 
                     Database masterDb = Helper.GetDatabase();
-                    Item parent = masterDb.GetItem(Websites.StartPath);
+                   Item parent = masterDb.GetItem(Websites.StartPath);
                     //TestData
-                    // Item parent = masterDb.GetItem("{EBB0FBC2-F6F9-49A1-AE4C-01D284A759DC}");
+         
 
                     if (parent != null)
                     {
@@ -63,13 +63,16 @@ namespace RambollExportData.sitecore.admin
                                     result.Totals.Add(lang.ToString(), 0);
                                 }
 
+                                Item child = masterDb.GetItem("{EBB0FBC2-F6F9-49A1-AE4C-01D284A759DC}");
 
-                                foreach (Item child in parent.Children)
-                                {
-                                    if (child.TemplateName == "StandardWebsite")
-                                    {
-                                        string line = Helper.GetFieldsLineWithVersion(child, ref Websites, lang.ToString());
+                                //foreach (Item child in parent.Children)
+                                //{
+                                //    if (child.TemplateName == "StandardWebsite")
+                                //    {
+                                       // string line = Helper.GetFieldsLineWithVersion(child, ref Websites, lang.ToString());
 
+                             
+                                string line = Helper.GetFieldsLineWithVersion(child, ref Websites, lang.ToString());
                                         if (!string.IsNullOrEmpty(line))
                                         {
                                             Websites.CSV.AppendLine(line);
@@ -77,8 +80,8 @@ namespace RambollExportData.sitecore.admin
 
 
                                         GetMultiLanguageVersionData(child, lang);
-                                    }
-                                }
+                                //    }
+                                //}
 
                                 foreach (var result in FullWebsites)
                                 {

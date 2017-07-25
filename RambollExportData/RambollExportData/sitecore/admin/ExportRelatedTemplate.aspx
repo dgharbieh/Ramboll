@@ -52,10 +52,15 @@
                         <strong>Success</strong> the export completed successfully.
                         <br />
                           
-                           <% foreach (var temp in Countries.ReferrersTemplateField)
+                          <% foreach (var result in ALLresultItem)
+                             {%>     
+                        <%=result.fileName %>
+                       <%--   <% foreach (var temp in result.ReferrersTemplateField)
                               {%>              
                             <strong>Tempalet Name: <%=temp.Key%>   </strong>Tempalet Field :<%=temp.Value%> .<br />
-                         <%}%> 
+                         <%}%> --%>
+                             <%}%> 
+
                     </asp:Panel>
                    
                     <!-- error message begin -->
