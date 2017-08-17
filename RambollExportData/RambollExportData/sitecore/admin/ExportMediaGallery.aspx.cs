@@ -2,10 +2,14 @@
 using RambollExportData.Helpers;
 using Sitecore.Data;
 using Sitecore.Data.Items;
+using Sitecore.Globalization;
+using Sitecore.Resources.Media;
 using Sitecore.SecurityModel;
 using System;
 using System.Data;
+using System.IO;
 using System.Linq;
+using System.Web;
 using System.Web.UI.WebControls;
 
 namespace RambollExportData.sitecore.admin
@@ -24,6 +28,11 @@ namespace RambollExportData.sitecore.admin
             {
                 txtStartPath.Text = MediaGalleryItems.StartPath;
             }
+
+            pnSuccess.Visible = false;
+            pnFailure.Visible = false;
+            pnSuccessUpdate.Visible = false;
+            pnFailureUpdate.Visible = false;
         }
 
         protected void ExportData(object sender, EventArgs e)
@@ -109,6 +118,105 @@ namespace RambollExportData.sitecore.admin
             GridItems.DataBind();
 
         }
+
+        protected void FireRowCommand(object sender, GridViewCommandEventArgs e)
+        {
+
+            string command = e.CommandName;
+            if (command == "FireRowCommand")
+            {
+                string autoId = e.CommandArgument.ToString();
+
+                if (FileUploadControl.HasFile)
+                {
+                    try
+                    {
+                        Item mediaItem = Helper.GetDatabase().GetItem(autoId);
+
+
+                        string fileNameWithExtension = Path.GetFileName(FileUploadControl.FileName);
+                        string extention = Path.GetExtension(FileUploadControl.FileName);
+                        string filename = fileNameWithExtension.Replace(extention, "");
+
+                        MemoryStream memStream = new MemoryStream(FileUploadControl.FileBytes);
+
+                        var options = new MediaCreatorOptions();
+                        options.FileBased = false;
+                        options.IncludeExtensionInItemName = false;
+                        options.KeepExisting = true;
+                        options.Versioned = false;
+                        options.Destination = mediaItem.Parent.Paths.FullPath + "/" + filename;
+                        options.Database = Helper.GetDatabase();
+
+
+                        var creator = new MediaCreator();
+
+                        //Create a new item
+                        var newItem = creator.CreateFromStream(memStream, fileNameWithExtension, options);
+                        newItem.Editing.BeginEdit();
+                        newItem.Fields["Title"].Value = filename;
+                        newItem.Fields["Alt"].Value = mediaItem.Fields["Alt"].Value;
+                        newItem.Editing.EndEdit();
+
+                        Item[] referrers = Helper.GetReferrersAsItems(ref mediaItem);
+
+                        if (referrers != null)
+                        {
+                            Sitecore.Data.Items.MediaItem newMediaItem = new Sitecore.Data.Items.MediaItem(newItem);
+
+                            foreach (Item referr in referrers)
+                            {
+                                var Fields = referr.Fields.Where(x => x.Value.Contains(mediaItem.ID.ToString()));
+                                if (Fields != null && Fields.Count() > 0)
+                                {
+                                    referr.Editing.BeginEdit();
+
+                                    foreach (var field in Fields)
+                                    {
+                                        if (field.Type == "Image")
+                                        {
+
+                                            Sitecore.Data.Fields.ImageField imageField = referr.Fields[field.Name];
+
+                                            var alt = imageField.Alt;
+                                            var sclass = imageField.Class;
+                                            imageField.Clear();
+                                            imageField.MediaID = newMediaItem.ID;
+                                            imageField.Alt = alt;
+                                            imageField.Class = sclass;
+                                        }
+                                        else
+                                        {
+                                            referr.Fields[field.Name].Value = referr.Fields[field.Name].Value.Replace(mediaItem.ID.ToString(), newItem.ID.ToString());
+
+                                        }
+                                    }
+
+                                    referr.Editing.EndEdit();
+
+                                }
+
+                            }
+                        }
+
+
+                        pnSuccessUpdate.Visible = true;
+
+                    }
+                    catch (Exception ex)
+                    {
+                        pnFailureUpdate.Visible = true;
+
+                    }
+                }
+                else
+                {
+                    pnFailureUpdate.Visible = true;
+                }
+            }
+        }
+
+
         protected void GridItems_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             DataTable data = (DataTable)Cache["data"];
