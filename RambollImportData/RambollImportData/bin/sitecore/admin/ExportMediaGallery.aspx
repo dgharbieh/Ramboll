@@ -45,7 +45,7 @@
                     </fieldset>
                     <fieldset>
                         <strong>Exported Fields :</strong>
-                        <% foreach (var field in MediaGalleryItems.Fields)
+                        <% foreach (var field in MediaGalleryItems.ExportedFields)
                            {%>
                         <%=field.ToString()%> |
                          <%}%>

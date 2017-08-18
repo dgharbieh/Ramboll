@@ -431,7 +431,7 @@ namespace RambollImportData.Helpers
                 return new Item[0];
             var linkedItems = links.Select(i => i.GetSourceItem()).Where(i => i != null);
 
-            linkedItems = linkedItems.Where(i => i.Paths.FullPath.StartsWith("/sitecore/content/Home", StringComparison.InvariantCultureIgnoreCase));
+       //     linkedItems = linkedItems.Where(i => i.Paths.FullPath.StartsWith("/sitecore/content/Home", StringComparison.InvariantCultureIgnoreCase));
 
             if (!includeStandardValues)
                 linkedItems = linkedItems.Where(i => !i.Name.Equals("__standard values", StringComparison.InvariantCultureIgnoreCase));
