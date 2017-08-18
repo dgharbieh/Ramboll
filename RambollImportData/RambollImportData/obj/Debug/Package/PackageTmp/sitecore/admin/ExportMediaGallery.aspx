@@ -1,5 +1,4 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ExportMediaGallery.aspx.cs" Inherits="RambollImportData.sitecore.admin.ExportMediaGallery" %>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,9 +9,9 @@
     <link rel="stylesheet" type="text/css" href="/includes/css/custom.css">
     <title>Export- Delete - Media Gallary</title>
     <style>
-
-        .customimage{
-            width:20px;height:20px;
+        .customimage {
+            width: 20px;
+            height: 20px;
         }
     </style>
 </head>
@@ -31,29 +30,30 @@
                 <hr />
 
                 <form class="form-inline" id="form2" runat="server">
-                     <fieldset>
-                       <strong> Start Path :</strong> <asp:TextBox ID="txtStartPath" Text="400" runat="server"></asp:TextBox>
+                    <fieldset>
+                        <strong>Start Path :</strong>
+                        <asp:TextBox ID="txtStartPath" Text="400" runat="server"></asp:TextBox>
                     </fieldset>
                     <fieldset>
                         <strong>Output Name :</strong> <%=MediaGalleryItems.OutputName %>
                     </fieldset>
                     <fieldset>
-                       <strong> Include Language :</strong> <%=MediaGalleryItems.IncludeLanguage.ToString() %>
+                        <strong>Include Language :</strong> <%=MediaGalleryItems.IncludeLanguage.ToString() %>
                     </fieldset>
                     <fieldset>
                         <strong>Include Versions :</strong> <%=MediaGalleryItems.IncludeVersions.ToString()%>
                     </fieldset>
                     <fieldset>
-                     <strong>Exported Fields :</strong>
-                          <% foreach (var field in MediaGalleryItems.ExportedFields)
-                             {%>              
-                         <%=field.ToString()%> |
+                        <strong>Exported Fields :</strong>
+                        <% foreach (var field in MediaGalleryItems.Fields)
+                           {%>
+                        <%=field.ToString()%> |
                          <%}%>
                     </fieldset>
-                      <hr />
+                    <hr />
 
                     <fieldset>
-                      <strong>  Width&nbsp; : </strong> 
+                        <strong>Width&nbsp; : </strong>
                         <asp:TextBox ID="txtWidth" Text="270" runat="server"></asp:TextBox>
                     </fieldset>
                     <br />
@@ -61,9 +61,9 @@
                         <strong>Height :  </strong>
                         <asp:TextBox ID="txtHeight" Text="270" runat="server"></asp:TextBox>
                     </fieldset>
-                   <br />
-                     <fieldset>
-                        <asp:Button ID="btnExport" runat="server" Text="Export to CSV" OnClick="ExportData" />
+                    <br />
+                    <fieldset>
+                        <asp:Button ID="btnExport" runat="server" Text="Generate" OnClick="ExportData" />
                     </fieldset>
 
                     <hr />
@@ -81,33 +81,53 @@
                         <strong>Error</strong> there has been a problem with extract data, please try again.
                     </asp:Panel>
                     <!-- error message end -->
-                    <asp:GridView 
-                        ID="GridItems" 
-                        runat="server" 
-                        DataKeyNames="ID" 
+
+                    <!-- success message begin -->
+                    <asp:Panel ID="pnSuccessUpdate" Visible="false" CssClass="alert alert-success" runat="server">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <strong>Success</strong> Image replaced 
+                    </asp:Panel>
+                    <!-- success message end -->
+
+                     <!-- error message begin -->
+                    <asp:Panel ID="pnFailureUpdate" Visible="false" CssClass="alert alert-error" runat="server">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <strong>Error</strong>  The file could not be uploaded.make sure you select image.
+                    </asp:Panel>
+                    <!-- error message end -->
+
+                    <br />
+                    <asp:FileUpload ID="FileUploadControl" runat="server" />
+                 
+                    <asp:GridView
+                        ID="GridItems"
+                        runat="server"
+                        DataKeyNames="ID"
                         EnablePersistedSelection="true"
-                        SelectedRowStyle-BackColor="Yellow" 
-                        AllowPaging="true" 
+                        SelectedRowStyle-BackColor="Yellow"
+                        AllowPaging="true"
                         AllowSorting="true"
-                        PageSize = "20" 
-                        AutoGenerateColumns="false" 
+                        PageSize="20"
+                        AutoGenerateColumns="false"
                         OnRowDeleting="GridItems_RowDeleting"
-                       OnPageIndexChanging="GridItems_PageIndexChanging"
-                      
-                        >
+                        OnRowCommand="FireRowCommand"
+                        OnPageIndexChanging="GridItems_PageIndexChanging">
                         <Columns>
-                          <asp:CommandField  ControlStyle-CssClass="customimage"  ShowDeleteButton="true" ButtonType="Image"  DeleteImageUrl="~/includes/images/delete.png"   /> 
-                            <asp:BoundField DataField="ID" HeaderText="ID"  ReadOnly="True" />
-                            <asp:BoundField DataField="Name" HeaderText="Name"  ReadOnly="True" />
-                            <asp:BoundField DataField="Path" HeaderText="Path"  ReadOnly="True" />
-                             <asp:BoundField DataField="Height" HeaderText="Height"  ReadOnly="True" />
-                             <asp:BoundField DataField="Width" HeaderText="Width"  ReadOnly="True" />
-                            
+                            <asp:CommandField ControlStyle-CssClass="customimage" ShowDeleteButton="true" ButtonType="Image" DeleteImageUrl="~/includes/images/delete.png" />
+                            <asp:TemplateField ShowHeader="False">
+                                <ItemTemplate>
+                                    <asp:Button ID="Button1" runat="server" CausesValidation="false" CommandName="FireRowCommand"
+                                        Text="Upload" CommandArgument='<%# Eval("ID") %>' />
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:BoundField DataField="ID" HeaderText="ID" ReadOnly="True" />
+                            <asp:BoundField DataField="Name" HeaderText="Name" ReadOnly="True" />
+                            <asp:BoundField DataField="Path" HeaderText="Path" ReadOnly="True" />
+                            <asp:BoundField DataField="Height" HeaderText="Height" ReadOnly="True" />
+                            <asp:BoundField DataField="Width" HeaderText="Width" ReadOnly="True" />
+
                         </Columns>
                     </asp:GridView>
-
-
-
                 </form>
             </div>
 

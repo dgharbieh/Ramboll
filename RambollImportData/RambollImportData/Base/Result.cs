@@ -17,6 +17,7 @@ namespace RambollImportData.Base
         public bool IncludeVersions = false;
         public ArrayList ExportedFields = new ArrayList();
         public ArrayList ImportedFields = new ArrayList();
+
         public Dictionary<string, int> Totals = new Dictionary<string, int>();
         public int UpdatedRecords=0, InsertedNewRecords = 0;
 

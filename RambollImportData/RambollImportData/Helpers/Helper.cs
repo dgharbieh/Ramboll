@@ -424,6 +424,20 @@ namespace RambollImportData.Helpers
 
         }
 
+        public static Item[] GetReferrersAsItems(ref Item item, bool includeStandardValues = false)
+        {
+            var links = Sitecore.Globals.LinkDatabase.GetReferrers(item);
+            if (links == null)
+                return new Item[0];
+            var linkedItems = links.Select(i => i.GetSourceItem()).Where(i => i != null);
+
+            linkedItems = linkedItems.Where(i => i.Paths.FullPath.StartsWith("/sitecore/content/Home", StringComparison.InvariantCultureIgnoreCase));
+
+            if (!includeStandardValues)
+                linkedItems = linkedItems.Where(i => !i.Name.Equals("__standard values", StringComparison.InvariantCultureIgnoreCase));
+            return linkedItems.ToArray();
+        }
+
     }
 
 }
